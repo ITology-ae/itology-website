@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITology — Information Technology Consultants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --white: #FFFFFF;
+      --off-white: #F4F7FC;
+      --light-gray: #EBF0F9;
+      --border: #D8E3F4;
+      --navy: #081840;
+      --navy-mid: #0D2460;
+      --navy-light: #1A3A8A;
+      --blue: #1E4DB7;
+      --accent: #2563EB;
+      --accent-bright: #3B82F6;
+      --accent-soft: rgba(37, 99, 235, 0.08);
+      --text-main: #081840;
+      --text-body: #2D3F6A;
+      --text-muted: #6B80B0;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--text-main);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--off-white);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 900;
+      padding: 0 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    nav.scrolled {
+      border-color: var(--border);
+      box-shadow: 0 2px 24px rgba(8, 24, 64, 0.07);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .nav-logo .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5);
+      }
+
+      50% {
+        box-shadow: 0 0 0 6px rgba(37, 99, 235, 0);
+      }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-body);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s;
+      border-radius: 2px;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .mobile-menu a.active {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .nav-cta {
+      background: var(--navy) !important;
+      color: var(--white) !important;
+      padding: 0.55rem 1.4rem;
+      border-radius: 6px;
+      transition: background 0.2s, transform 0.2s !important;
+    }
+
+    .nav-cta::after {
+      display: none !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent) !important;
+      transform: translateY(-1px);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--navy);
+      transition: all 0.3s;
+      display: block;
+      border-radius: 2px;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      padding: 2rem 6%;
+      z-index: 899;
+      border-bottom: 1px solid var(--border);
+      flex-direction: column;
+      gap: 1.4rem;
+      box-shadow: 0 8px 32px rgba(8, 24, 64, 0.1);
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      color: var(--text-body);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--accent);
+    }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 6% 80px;
+      position: relative;
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 60% at 80% 50%, rgba(37, 99, 235, 0.06) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 10% 80%, rgba(8, 24, 64, 0.04) 0%, transparent 60%);
+    }
+
+    /* Dot pattern */
+    .hero-dots {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 55%;
+      height: 100%;
+      background-image: radial-gradient(circle, rgba(37, 99, 235, 0.12) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.5) 0%, transparent 80%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      padding: 0.45rem 1rem;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.6rem, 5.5vw, 5rem);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: var(--navy);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 .outline {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--navy-light);
+    }
+
+    h1 .blue {
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin-bottom: 2.8rem;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: var(--navy);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-ghost {
+      color: var(--navy);
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .hero-kpis {
+      display: flex;
+      gap: 3rem;
+      margin-top: 3.5rem;
+      flex-wrap: wrap;
+    }
+
+    .kpi {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .kpi-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .kpi-val span {
+      color: var(--accent);
+    }
+
+    .kpi-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .kpi-sep {
+      width: 1px;
+      background: var(--border);
+      align-self: stretch;
+    }
+
+    .hero-container {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .hero-img-card {
+      position: relative;
+      border-radius: 28px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 40px 80px rgba(8, 24, 64, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .hero-img-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      display: block;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .floating-badge {
+      position: absolute;
+      top: 20%;
+      left: -20px;
+      background: var(--white);
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      box-shadow: 0 15px 35px rgba(8, 24, 64, 0.12);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .floating-badge .icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent-bright);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 0.9rem;
+    }
+
+    .floating-badge .text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .floating-badge .text span:first-child {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--navy);
+    }
+
+    .floating-badge .text span:last-child {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    /* ── SECTION COMMON ── */
+    section {
+      padding: 96px 6%;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-tag::before {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.9rem, 3.5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.75;
+      max-width: 500px;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--off-white);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .about-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.6rem 1.8rem;
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+    .about-card:hover {
+      box-shadow: 0 8px 30px rgba(8, 24, 64, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .about-card-icon {
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+      background: var(--accent-soft);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+    }
+
+    .about-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.35rem;
+    }
+
+    .about-card p {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    .about-detail-list {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .detail-row {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      min-width: 80px;
+      padding-top: 2px;
+      font-weight: 500;
+    }
+
+    .detail-value {
+      font-size: 0.9rem;
+      color: var(--text-body);
+      font-weight: 400;
+    }
+
+    /* ── SERVICES ── */
+    #services {
+      background: var(--white);
+    }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.2rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.35s;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .service-card:hover {
+      background: var(--white);
+      border-color: rgba(37, 99, 235, 0.3);
+      box-shadow: 0 12px 36px rgba(8, 24, 64, 0.1);
+      transform: translateY(-4px);
+    }
+
+    .service-card:hover::after {
+      transform: scaleY(1);
+    }
+
+    .service-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.4rem;
+      font-weight: 700;
+      opacity: 0.7;
+    }
+
+    .service-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .service-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.7rem;
+      line-height: 1.3;
+    }
+
+    .service-card p {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      line-height: 1.65;
+    }
+
+    /* ── INDUSTRIES ── */
+    #industries {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #industries::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 600px;
+      height: 100%;
+      background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #industries .section-tag {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    #industries .section-tag::before {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    #industries h2 {
+      color: var(--white);
+    }
+
+    #industries .section-sub {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .ind-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .industries-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .industry-item {
+      background: var(--navy);
+      padding: 2rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      transition: background 0.3s;
+      cursor: default;
+    }
+
+    .industry-item:hover {
+      background: var(--navy-mid);
+    }
+
+    .industry-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(37, 99, 235, 0.15);
+      border: 1px solid rgba(37, 99, 235, 0.25);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: background 0.3s;
+    }
+
+    .industry-item:hover .industry-icon {
+      background: rgba(37, 99, 235, 0.3);
+    }
+
+    .industry-item h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.3;
+    }
+
+    .industry-item p {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--off-white);
+    }
+
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2.2rem;
+    }
+
+    .contact-block h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-block p,
+    .contact-block a {
+      color: var(--text-body);
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: color 0.2s;
+      line-height: 1.65;
+    }
+
+    .contact-block a:hover {
+      color: var(--accent);
+    }
+
+    .contact-form {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2.8rem;
+      box-shadow: 0 8px 40px rgba(8, 24, 64, 0.06);
+    }
+
+    .form-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 1.8rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .form-group label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: var(--off-white);
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      padding: 0.75rem 1rem;
+      color: var(--text-main);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+      width: 100%;
+      -webkit-appearance: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--accent);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .form-group select option {
+      background: var(--white);
+      color: var(--text-main);
+    }
+
+    .form-submit button {
+      width: 100%;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      padding: 0.9rem 2rem;
+      border-radius: 7px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit button:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(37, 99, 235, 0.3);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 2.2rem 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .footer-logo .dot-sm {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-bright);
+      border-radius: 50%;
+    }
+
+    .footer-text {
+      color: rgba(255, 255, 255, 0.35);
+      font-size: 0.82rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0;
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .reveal-delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .reveal-delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    .reveal-delay-4 {
+      transition-delay: 0.4s;
+    }
+
+    .reveal-delay-5 {
+      transition-delay: 0.5s;
+    }
+
+    .reveal-delay-6 {
+      transition-delay: 0.6s;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .industries-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .contact-wrapper {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      section {
+        padding: 70px 5%;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2.6rem;
+      }
+
+      #home {
+        padding-top: 140px;
+      }
+
+      .hero-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        text-align: center;
+      }
+
+      .hero-content {
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-desc {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-kpis {
+        justify-content: center;
+        gap: 1.5rem;
+      }
+
+      .hero-image-wrapper {
+        justify-content: center;
+        margin-top: 1rem;
+      }
+
+      .floating-badge {
+        left: 10%;
+      }
+
+      .kpi-sep {
+        display: none;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .industries-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2.1rem;
+      }
+
+      .contact-form {
+        padding: 1.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="#home" class="nav-logo">
+      <span class="dot"></span>ITOLOGY
+    </a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#industries">Industries</a></li>
+      <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home" onclick="closeMobile()">Home</a>
+    <a href="#about" onclick="closeMobile()">About Us</a>
+    <a href="#services" onclick="closeMobile()">Services</a>
+    <a href="#industries" onclick="closeMobile()">Industries</a>
+    <a href="#contact" onclick="closeMobile()">Contact Us</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-dots"></div>
+
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="reveal">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            IT Consultancy — Dubai, UAE
+          </div>
+
+          <h1>
+            Smarter Tech.<br>
+            <span class="blue">Stronger</span><br>
+            <span class="outline">Business.</span>
+          </h1>
+
+          <p class="hero-desc">
+            ITology delivers expert IT consulting solutions that help organizations across the UAE modernize, scale, and
+            compete with confidence.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#services" class="btn-primary">
+              Our Services
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </a>
+            <a href="#contact" class="btn-ghost">Get in Touch</a>
+          </div>
+
+          <div class="hero-kpis">
+            <div class="kpi">
+              <span class="kpi-val">Dubai<span>.</span></span>
+              <span class="kpi-label">Headquarters</span>
+            </div>
+            <div class="kpi-sep"></div>
+            <div class="kpi">
+              <span class="kpi-val">UAE<span>.</span></span>
+              <span class="kpi-label">Licensed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-image-wrapper reveal reveal-delay-3">
+        <div class="hero-img-card">
+          <img src="https://picsum.photos/seed/itology-tech/800/800" alt="Technology and Business Growth">
+          <div class="floating-badge">
+            <div class="icon">✨</div>
+            <div class="text">
+              <span>99% Success</span>
+              <span>Client Satisfaction</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="reveal">
+        <span class="section-tag">Who We Are</span>
+        <h2>Your Partner in<br>Technology Growth</h2>
+        <p class="section-sub">
+          ITology is a Dubai-based IT consultancy dedicated to helping businesses harness technology as a true
+          competitive advantage — from strategy to execution.
+        </p>
+
+        <div class="about-detail-list">
+          <div class="detail-row">
+            <span class="detail-label">Company</span>
+            <span class="detail-value">ITology For Information Technology Consultants Co. L.L.C</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Location</span>
+            <span class="detail-value">Office 9-315, Al Khabeesi, Deira, Dubai, UAE</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Email</span>
+            <span class="detail-value">info@ITology.ae</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-right reveal reveal-delay-2">
+        <div class="about-card">
+          <div class="about-card-icon">🎯</div>
+          <div>
+            <h3>Our Mission</h3>
+            <p>Empowering organizations through intelligent technology advisory and cutting-edge digital solutions
+              tailored to their unique needs.</p>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">🔭</div>
+          <div>
+            <h3>Our Vision</h3>
+            <p>To be the UAE's most trusted IT consultancy, bridging the gap between technology potential and real
+              business value.</p>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">⚡</div>
+          <div>
+            <h3>Agile Approach</h3>
+            <p>Fast, iterative delivery cycles that ensure quick time-to-value and continuous improvement aligned with
+              your goals.</p>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">🤝</div>
+          <div>
+            <h3>Client-First</h3>
+            <p>Every engagement is built on transparency, responsiveness, and a genuine commitment to your success.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-header">
+      <div class="reveal">
+        <span class="section-tag">What We Do</span>
+        <h2>Core Services</h2>
+        <p class="section-sub" style="margin-bottom:0;">
+          Comprehensive IT consulting across strategy, cloud, security, data, and infrastructure.
+        </p>
+      </div>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <span class="service-icon">💡</span>
+        <h3>IT Strategy &amp; Consulting</h3>
+        <p>Craft technology roadmaps that align IT investments with your core business objectives and long-term growth
+          ambitions.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-num">02</div>
+        <span class="service-icon">☁️</span>
+        <h3>Cloud Solutions &amp; Migration</h3>
+        <p>Seamless cloud adoption — from infrastructure assessment to full migration, optimization, and managed cloud
+          operations.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">03</div>
+        <span class="service-icon">🔒</span>
+        <h3>Cybersecurity Services</h3>
+        <p>Protect your digital assets with comprehensive security audits, threat modeling, and robust cyber defense
+          frameworks.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-num">04</div>
+        <span class="service-icon">⚙️</span>
+        <h3>Digital Transformation</h3>
+        <p>End-to-end programs that modernize legacy systems, automate workflows, and unlock new operational
+          efficiencies.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-4">
+        <div class="service-num">05</div>
+        <span class="service-icon">📊</span>
+        <h3>Data &amp; Analytics</h3>
+        <p>Turn raw data into actionable intelligence with advanced analytics pipelines, live dashboards, and AI-driven
+          insights.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-5">
+        <div class="service-num">06</div>
+        <span class="service-icon">🖥️</span>
+        <h3>IT Infrastructure &amp; Support</h3>
+        <p>Design, deploy, and manage robust IT infrastructure built to scale with your business now and into the
+          future.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INDUSTRIES -->
+  <section id="industries">
+    <div class="ind-header">
+      <div class="reveal">
+        <span class="section-tag">Who We Serve</span>
+        <h2>Industries &amp;<br>Sectors</h2>
+        <p class="section-sub" style="margin-bottom:0;">
+          Deep domain expertise across the industries shaping the UAE's digital economy.
+        </p>
+      </div>
+    </div>
+
+    <div class="industries-grid">
+      <div class="industry-item reveal">
+        <div class="industry-icon">🏦</div>
+        <h3>Banking &amp; Finance</h3>
+        <p>Secure platforms, compliance frameworks, and fintech integrations.</p>
+      </div>
+      <div class="industry-item reveal reveal-delay-1">
+        <div class="industry-icon">🏥</div>
+        <h3>Healthcare</h3>
+        <p>Digital health systems and patient data management solutions.</p>
+      </div>
+      <div class="industry-item reveal reveal-delay-2">
+        <div class="industry-icon">🏗️</div>
+        <h3>Real Estate</h3>
+        <p>PropTech platforms, smart building systems, and project tools.</p>
+      </div>
+      <div class="industry-item reveal reveal-delay-3">
+        <div class="industry-icon">🛒</div>
+        <h3>Retail &amp; E-Commerce</h3>
+        <p>Omnichannel platforms, ERP integration, and CX optimization.</p>
+      </div>
+      <div class="industry-item reveal reveal-delay-1">
+        <div class="industry-icon">🏭</div>
+        <h3>Manufacturing</h3>
+        <p>Supply chain digitalization, IoT integration, and automation.</p>
+      </div>
+      <div class="industry-item reveal reveal-delay-2">
+        <div class="industry-icon">🎓</div>
+        <h3>Education</h3>
+        <p>Learning management systems and digital campus infrastructure.</p>
+      </div>
+      <div class="industry-item reveal reveal-delay-3">
+        <div class="industry-icon">⚡</div>
+        <h3>Energy &amp; Utilities</h3>
+        <p>Smart grid tech, asset management, and operational analytics.</p>
+      </div>
+      <div class="industry-item reveal reveal-delay-4">
+        <div class="industry-icon">🏛️</div>
+        <h3>Government</h3>
+        <p>e-Government solutions and smart city infrastructure platforms.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-wrapper">
+      <div class="contact-info reveal">
+        <div>
+          <span class="section-tag">Get In Touch</span>
+          <h2>Let's Build Something Great</h2>
+          <p class="section-sub" style="margin-bottom:0;">
+            Have a project in mind or just want to explore how ITology can help? We'd love to hear from you.
+          </p>
+        </div>
+
+        <div class="contact-block">
+          <h3>Address</h3>
+          <p>Office No. 9-315, Al Khabeesi<br>Deira, Dubai, UAE</p>
+        </div>
+
+
+        <div class="contact-block">
+          <h3>Email</h3>
+          <a href="mailto:info@ITology.ae">info@ITology.ae</a>
+        </div>
+      </div>
+
+      <form action="https://formsubmit.co/info@itology.ae" method="POST" class="contact-form reveal reveal-delay-2">
+        <input type="hidden" name="_subject" value="New Inquiry from ITology Website">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <p class="form-title">Send us a message</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" name="first_name" placeholder="First Name" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" name="last_name" placeholder="Last Name" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" name="email" placeholder="you@company.com" required>
+        </div>
+        <div class="form-group">
+          <label>Company</label>
+          <input type="text" name="company" placeholder="Your Company Name">
+        </div>
+        <div class="form-group">
+          <label>Service Interested In</label>
+          <select name="service">
+            <option value="" disabled selected>Select a service...</option>
+            <option>IT Strategy &amp; Consulting</option>
+            <option>Cloud Solutions &amp; Migration</option>
+            <option>Cybersecurity Services</option>
+            <option>Digital Transformation</option>
+            <option>Data &amp; Analytics</option>
+            <option>IT Infrastructure &amp; Support</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea name="message" placeholder="Tell us about your project or requirements..." required></textarea>
+        </div>
+        <div class="form-submit">
+          <button type="submit" id="sendBtn">
+            Send Message
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 8L14 8M10 4L14 8L10 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <span class="dot-sm"></span>ITOLOGY
+    </div>
+    <p class="footer-text">© 2026 ITology For Information Technology Consultants Co. L.L.C — Dubai, UAE</p>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#industries">Industries</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('open');
+    });
+
+    function closeMobile() {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('open');
+    }
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!nav.contains(e.target) && !mobileMenu.contains(e.target)) {
+        closeMobile();
+      }
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // Active nav link
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 100) {
+          current = sec.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+
+      const mobileLinks = document.querySelectorAll('.mobile-menu a');
+      mobileLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+    });
+
+    // Form submission helper
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function () {
+        const btn = document.getElementById('sendBtn');
+        btn.textContent = '✓ Sending...';
+        btn.style.background = '#1a7a4a';
+      });
+    }
+  </script>
+</body>
+
+</html>

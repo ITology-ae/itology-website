@@ -2,1618 +2,1313 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ITology — Information Technology Consultants</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
-    rel="stylesheet">
-  <style>
-    :root {
-      --white: #FFFFFF;
-      --off-white: #F4F7FC;
-      --light-gray: #EBF0F9;
-      --border: #D8E3F4;
-      --navy: #081840;
-      --navy-mid: #0D2460;
-      --navy-light: #1A3A8A;
-      --blue: #1E4DB7;
-      --accent: #2563EB;
-      --accent-bright: #3B82F6;
-      --accent-soft: rgba(37, 99, 235, 0.08);
-      --text-main: #081840;
-      --text-body: #2D3F6A;
-      --text-muted: #6B80B0;
-    }
-
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--white);
-      color: var(--text-main);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-
-    ::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--off-white);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 2px;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 900;
-      padding: 0 6%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 70px;
-      background: rgba(255, 255, 255, 0.96);
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-
-    nav.scrolled {
-      border-color: var(--border);
-      box-shadow: 0 2px 24px rgba(8, 24, 64, 0.07);
-    }
-
-    .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.45rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: var(--navy);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-    }
-
-    .nav-logo .dot {
-      width: 7px;
-      height: 7px;
-      background: var(--accent);
-      border-radius: 50%;
-      display: inline-block;
-      animation: pulse 2.5s infinite;
-    }
-
-    @keyframes pulse {
-
-      0%,
-      100% {
-        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5);
-      }
-
-      50% {
-        box-shadow: 0 0 0 6px rgba(37, 99, 235, 0);
-      }
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.2rem;
-      list-style: none;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: var(--text-body);
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      transition: color 0.2s;
-      position: relative;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--accent);
-      transition: width 0.3s;
-      border-radius: 2px;
-    }
-
-    .nav-links a:hover {
-      color: var(--accent);
-    }
-
-    .nav-links a.active::after {
-      width: 100%;
-    }
-
-    .mobile-menu a.active {
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    .nav-cta {
-      background: var(--navy) !important;
-      color: var(--white) !important;
-      padding: 0.55rem 1.4rem;
-      border-radius: 6px;
-      transition: background 0.2s, transform 0.2s !important;
-    }
-
-    .nav-cta::after {
-      display: none !important;
-    }
-
-    .nav-cta:hover {
-      background: var(--accent) !important;
-      transform: translateY(-1px);
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 4px;
-    }
-
-    .hamburger span {
-      width: 24px;
-      height: 2px;
-      background: var(--navy);
-      transition: all 0.3s;
-      display: block;
-      border-radius: 2px;
-    }
-
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(5px, -5px);
-    }
-
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 70px;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(20px);
-      padding: 2rem 6%;
-      z-index: 899;
-      border-bottom: 1px solid var(--border);
-      flex-direction: column;
-      gap: 1.4rem;
-      box-shadow: 0 8px 32px rgba(8, 24, 64, 0.1);
-    }
-
-    .mobile-menu.open {
-      display: flex;
-    }
-
-    .mobile-menu a {
-      color: var(--text-body);
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    .mobile-menu a:hover {
-      color: var(--accent);
-    }
-
-    /* ── HERO ── */
-    #home {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 120px 6% 80px;
-      position: relative;
-      overflow: hidden;
-      background: var(--white);
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse 70% 60% at 80% 50%, rgba(37, 99, 235, 0.06) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 40% at 10% 80%, rgba(8, 24, 64, 0.04) 0%, transparent 60%);
-    }
-
-    /* Dot pattern */
-    .hero-dots {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 55%;
-      height: 100%;
-      background-image: radial-gradient(circle, rgba(37, 99, 235, 0.12) 1px, transparent 1px);
-      background-size: 28px 28px;
-      pointer-events: none;
-      mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.5) 0%, transparent 80%);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 680px;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--accent-soft);
-      border: 1px solid rgba(37, 99, 235, 0.2);
-      padding: 0.45rem 1rem;
-      border-radius: 100px;
-      font-size: 0.78rem;
-      color: var(--accent);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-      font-weight: 600;
-    }
-
-    .badge-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.6rem, 5.5vw, 5rem);
-      font-weight: 800;
-      line-height: 1.06;
-      letter-spacing: -0.03em;
-      color: var(--navy);
-      margin-bottom: 1.5rem;
-    }
-
-    h1 .outline {
-      color: transparent;
-      -webkit-text-stroke: 2px var(--navy-light);
-    }
-
-    h1 .blue {
-      color: var(--accent);
-    }
-
-    .hero-desc {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      max-width: 500px;
-      margin-bottom: 2.8rem;
-      font-weight: 300;
-      line-height: 1.8;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .btn-primary {
-      background: var(--navy);
-      color: var(--white);
-      padding: 0.85rem 2rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.95rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.25s;
-      letter-spacing: 0.01em;
-    }
-
-    .btn-primary:hover {
-      background: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 28px rgba(37, 99, 235, 0.3);
-    }
-
-    .btn-ghost {
-      color: var(--navy);
-      text-decoration: none;
-      padding: 0.85rem 2rem;
-      border: 1.5px solid var(--border);
-      border-radius: 6px;
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: all 0.25s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-soft);
-    }
-
-    .hero-kpis {
-      display: flex;
-      gap: 3rem;
-      margin-top: 3.5rem;
-      flex-wrap: wrap;
-    }
-
-    .kpi {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    .kpi-val {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--navy);
-      line-height: 1;
-    }
-
-    .kpi-val span {
-      color: var(--accent);
-    }
-
-    .kpi-label {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      font-weight: 400;
-    }
-
-    .kpi-sep {
-      width: 1px;
-      background: var(--border);
-      align-self: stretch;
-    }
-
-    .hero-container {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 4rem;
-      align-items: center;
-      width: 100%;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-image-wrapper {
-      position: relative;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-    }
-
-    .hero-img-card {
-      position: relative;
-      border-radius: 28px;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      box-shadow: 0 40px 80px rgba(8, 24, 64, 0.1);
-      width: 100%;
-      max-width: 500px;
-    }
-
-    .hero-img-card img {
-      width: 100%;
-      height: auto;
-      border-radius: 20px;
-      display: block;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    }
-
-    .floating-badge {
-      position: absolute;
-      top: 20%;
-      left: -20px;
-      background: var(--white);
-      padding: 0.8rem 1.2rem;
-      border-radius: 12px;
-      box-shadow: 0 15px 35px rgba(8, 24, 64, 0.12);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      animation: float 5s ease-in-out infinite;
-    }
-
-    .floating-badge .icon {
-      width: 32px;
-      height: 32px;
-      background: var(--accent-bright);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      font-size: 0.9rem;
-    }
-
-    .floating-badge .text {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .floating-badge .text span:first-child {
-      font-weight: 700;
-      font-size: 0.85rem;
-      color: var(--navy);
-    }
-
-    .floating-badge .text span:last-child {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-    }
-
-    @keyframes float {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-15px);
-      }
-    }
-
-    /* ── SECTION COMMON ── */
-    section {
-      padding: 96px 6%;
-    }
-
-    .section-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--accent);
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      font-weight: 700;
-      margin-bottom: 0.8rem;
-    }
-
-    .section-tag::before {
-      content: '';
-      width: 24px;
-      height: 2px;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-
-    h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.9rem, 3.5vw, 3rem);
-      font-weight: 800;
-      line-height: 1.12;
-      letter-spacing: -0.025em;
-      color: var(--navy);
-      margin-bottom: 1rem;
-    }
-
-    .section-sub {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      font-weight: 300;
-      line-height: 1.75;
-      max-width: 500px;
-      margin-bottom: 3.5rem;
-    }
-
-    /* ── ABOUT ── */
-    #about {
-      background: var(--off-white);
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 6rem;
-      align-items: center;
-    }
-
-    .about-right {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .about-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.6rem 1.8rem;
-      display: flex;
-      gap: 1.2rem;
-      align-items: flex-start;
-      transition: box-shadow 0.3s, transform 0.3s;
-    }
-
-    .about-card:hover {
-      box-shadow: 0 8px 30px rgba(8, 24, 64, 0.08);
-      transform: translateY(-2px);
-    }
-
-    .about-card-icon {
-      width: 42px;
-      height: 42px;
-      flex-shrink: 0;
-      background: var(--accent-soft);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.15rem;
-    }
-
-    .about-card h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 0.35rem;
-    }
-
-    .about-card p {
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      line-height: 1.6;
-    }
-
-    .about-detail-list {
-      margin-top: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .detail-row {
-      display: flex;
-      gap: 1.5rem;
-      align-items: flex-start;
-      padding: 0.9rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .detail-row:last-child {
-      border-bottom: none;
-    }
-
-    .detail-label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      min-width: 80px;
-      padding-top: 2px;
-      font-weight: 500;
-    }
-
-    .detail-value {
-      font-size: 0.9rem;
-      color: var(--text-body);
-      font-weight: 400;
-    }
-
-    /* ── SERVICES ── */
-    #services {
-      background: var(--white);
-    }
-
-    .services-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-
-    .service-card {
-      background: var(--off-white);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2.2rem 2rem;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s;
-      cursor: default;
-    }
-
-    .service-card::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: var(--accent);
-      transform: scaleY(0);
-      transform-origin: top;
-      transition: transform 0.35s;
-      border-radius: 0 2px 2px 0;
-    }
-
-    .service-card:hover {
-      background: var(--white);
-      border-color: rgba(37, 99, 235, 0.3);
-      box-shadow: 0 12px 36px rgba(8, 24, 64, 0.1);
-      transform: translateY(-4px);
-    }
-
-    .service-card:hover::after {
-      transform: scaleY(1);
-    }
-
-    .service-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.68rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      margin-bottom: 1.4rem;
-      font-weight: 700;
-      opacity: 0.7;
-    }
-
-    .service-icon {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-
-    .service-card h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 0.7rem;
-      line-height: 1.3;
-    }
-
-    .service-card p {
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      line-height: 1.65;
-    }
-
-    /* ── INDUSTRIES ── */
-    #industries {
-      background: var(--navy);
-      position: relative;
-      overflow: hidden;
-    }
-
-    #industries::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 600px;
-      height: 100%;
-      background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    #industries .section-tag {
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    #industries .section-tag::before {
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    #industries h2 {
-      color: var(--white);
-    }
-
-    #industries .section-sub {
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .ind-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      gap: 2rem;
-      margin-bottom: 3.5rem;
-    }
-
-    .industries-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 14px;
-      overflow: hidden;
-    }
-
-    .industry-item {
-      background: var(--navy);
-      padding: 2rem 1.6rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-      transition: background 0.3s;
-      cursor: default;
-    }
-
-    .industry-item:hover {
-      background: var(--navy-mid);
-    }
-
-    .industry-icon {
-      width: 40px;
-      height: 40px;
-      background: rgba(37, 99, 235, 0.15);
-      border: 1px solid rgba(37, 99, 235, 0.25);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      transition: background 0.3s;
-    }
-
-    .industry-item:hover .industry-icon {
-      background: rgba(37, 99, 235, 0.3);
-    }
-
-    .industry-item h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.9);
-      line-height: 1.3;
-    }
-
-    .industry-item p {
-      color: rgba(255, 255, 255, 0.4);
-      font-size: 0.8rem;
-      line-height: 1.6;
-    }
-
-    /* ── CONTACT ── */
-    #contact {
-      background: var(--off-white);
-    }
-
-    .contact-wrapper {
-      display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      gap: 5rem;
-      align-items: start;
-    }
-
-    .contact-info {
-      display: flex;
-      flex-direction: column;
-      gap: 2.2rem;
-    }
-
-    .contact-block h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-
-    .contact-block p,
-    .contact-block a {
-      color: var(--text-body);
-      font-size: 0.95rem;
-      text-decoration: none;
-      transition: color 0.2s;
-      line-height: 1.65;
-    }
-
-    .contact-block a:hover {
-      color: var(--accent);
-    }
-
-    .contact-form {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 2.8rem;
-      box-shadow: 0 8px 40px rgba(8, 24, 64, 0.06);
-    }
-
-    .form-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 1.8rem;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-      margin-bottom: 1.1rem;
-    }
-
-    .form-group label {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-weight: 600;
-    }
-
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      background: var(--off-white);
-      border: 1.5px solid var(--border);
-      border-radius: 7px;
-      padding: 0.75rem 1rem;
-      color: var(--text-main);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      transition: border-color 0.2s, background 0.2s;
-      outline: none;
-      width: 100%;
-      -webkit-appearance: none;
-    }
-
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: var(--text-muted);
-      opacity: 0.6;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-      border-color: var(--accent);
-      background: var(--white);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 110px;
-    }
-
-    .form-group select option {
-      background: var(--white);
-      color: var(--text-main);
-    }
-
-    .form-submit button {
-      width: 100%;
-      background: var(--navy);
-      color: var(--white);
-      border: none;
-      padding: 0.9rem 2rem;
-      border-radius: 7px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.25s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 0.5rem;
-    }
-
-    .form-submit button:hover {
-      background: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 28px rgba(37, 99, 235, 0.3);
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--navy);
-      padding: 2.2rem 6%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .footer-logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--white);
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .footer-logo .dot-sm {
-      width: 6px;
-      height: 6px;
-      background: var(--accent-bright);
-      border-radius: 50%;
-    }
-
-    .footer-text {
-      color: rgba(255, 255, 255, 0.35);
-      font-size: 0.82rem;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: rgba(255, 255, 255, 0.4);
-      text-decoration: none;
-      font-size: 0.82rem;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover {
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    /* ── DIVIDER ── */
-    .section-divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 0;
-    }
-
-    /* ── REVEAL ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .reveal-delay-1 {
-      transition-delay: 0.1s;
-    }
-
-    .reveal-delay-2 {
-      transition-delay: 0.2s;
-    }
-
-    .reveal-delay-3 {
-      transition-delay: 0.3s;
-    }
-
-    .reveal-delay-4 {
-      transition-delay: 0.4s;
-    }
-
-    .reveal-delay-5 {
-      transition-delay: 0.5s;
-    }
-
-    .reveal-delay-6 {
-      transition-delay: 0.6s;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 1100px) {
-      .about-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-
-      .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .industries-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .contact-wrapper {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-
-      section {
-        padding: 70px 5%;
-      }
-
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-
-      h1 {
-        font-size: 2.6rem;
-      }
-
-      #home {
-        padding-top: 140px;
-      }
-
-      .hero-container {
-        grid-template-columns: 1fr;
-        gap: 4rem;
-        text-align: center;
-      }
-
-      .hero-content {
-        max-width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .hero-desc {
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .hero-actions {
-        justify-content: center;
-      }
-
-      .hero-kpis {
-        justify-content: center;
-        gap: 1.5rem;
-      }
-
-      .hero-image-wrapper {
-        justify-content: center;
-        margin-top: 1rem;
-      }
-
-      .floating-badge {
-        left: 10%;
-      }
-
-      .kpi-sep {
-        display: none;
-      }
-
-      footer {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .industries-grid {
-        grid-template-columns: 1fr;
-      }
-
-      h1 {
-        font-size: 2.1rem;
-      }
-
-      .contact-form {
-        padding: 1.8rem;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>ITology | Oil & Gas Technology, Risk & Asset Decision Support</title>
+<meta name="description" content="ITology helps Oil & Gas and energy organizations connect subsurface, reservoir, geospatial, operations, supply-chain, and OT/IT risk decisions to protect production and value.">
+<meta name="keywords" content="Oil and Gas technology, reservoir management, drilling, GIS for energy, OT IT cybersecurity, FAIR CRQ, enterprise architecture, energy risk, geostatistics, geophysics">
+<meta name="theme-color" content="#081840">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --dark:#081840;
+    --dark-2:#0d2460;
+    --dark-3:#1a3a8a;
+    --mint:#3b82f6;
+    --mint-deep:#2563eb;
+    --cream-1:#ffffff;
+    --cream-2:#f4f7fc;
+    --cream-3:#ebf0f9;
+    --cream-4:#f4f7fc;
+    --ink:#081840;
+    --ink-soft:#2d3f6a;
+    --body-light:#5b6d99;
+    --body-dark:#aebde3;
+    --border-light:rgba(8,24,64,0.12);
+    --border-dark:rgba(255,255,255,0.14);
+    --white:#ffffff;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--cream-1);
+    overflow-x:hidden;
+    line-height:1.65;
+  }
+  h1,h2,h3,.font-display{
+    font-family:'Sora',sans-serif;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    line-height:1.08;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  ::-webkit-scrollbar{width:5px;}
+  ::-webkit-scrollbar-track{background:var(--cream-1);}
+  ::-webkit-scrollbar-thumb{background:var(--mint-deep);border-radius:3px;}
+
+  .eyebrow{
+    display:flex;align-items:center;gap:0.7rem;
+    font-size:0.78rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--mint-deep);margin-bottom:1.4rem;
+  }
+  .eyebrow::before{content:'';width:22px;height:2px;background:var(--mint-deep);display:inline-block;}
+  section.dark .eyebrow{color:var(--mint);}
+  section.dark .eyebrow::before{background:var(--mint);}
+
+  .wrap{max-width:1360px;margin:0 auto;padding:0 6%;}
+  section{padding:100px 0;position:relative;}
+  .split{display:grid;grid-template-columns:1.15fr 1fr;gap:4rem;align-items:end;}
+  .split .lede{color:var(--body-light);font-size:1.05rem;max-width:440px;}
+  section.dark .split .lede{color:var(--body-dark);}
+  .section-head{margin-bottom:3.5rem;}
+  .section-head h2{font-size:clamp(2.1rem,3.6vw,3.1rem);}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 6%;height:76px;
+    background:var(--dark);
+    border-bottom:1px solid transparent;transition:border-color .3s;
+  }
+  nav.scrolled{border-color:var(--border-dark);}
+  .nav-logo{display:flex;align-items:center;gap:9px;color:var(--white);font-family:'Sora',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.01em;}
+  .nav-logo .dot{width:7px;height:7px;background:var(--mint);border-radius:50%;display:inline-block;animation:pulse 2.5s infinite;}
+  .nav-links{display:flex;gap:1.9rem;list-style:none;align-items:center;}
+  .nav-links a{font-size:0.86rem;font-weight:500;color:var(--body-dark);transition:color .2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--white);}
+  .nav-cta{
+    border:1px solid var(--mint);color:var(--mint) !important;
+    padding:0.55rem 1.3rem;border-radius:100px;font-size:0.8rem !important;
+    font-weight:600 !important;letter-spacing:0.04em;transition:background .2s,color .2s;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--mint);color:var(--dark) !important;}
+  .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+  .hamburger span{width:22px;height:2px;background:var(--white);display:block;border-radius:2px;}
+  .mobile-menu{
+    display:none;position:fixed;top:76px;left:0;right:0;z-index:899;
+    background:var(--dark-2);padding:2rem 6%;flex-direction:column;gap:1.3rem;
+    border-bottom:1px solid var(--border-dark);
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{color:var(--body-dark);font-size:1rem;}
+
+  /* BUTTONS */
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--mint);color:var(--dark);
+    padding:0.85rem 1.6rem;border-radius:100px;
+    font-weight:600;font-size:0.92rem;transition:transform .2s,box-shadow .2s;
+    border:none;cursor:pointer;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(37,99,235,0.28);}
+  .btn-ghost{
+    display:inline-flex;align-items:center;
+    border:1px solid var(--border-dark);color:var(--white);
+    padding:0.85rem 1.6rem;border-radius:100px;font-weight:600;font-size:0.92rem;
+    transition:border-color .2s,background .2s;
+  }
+  section:not(.dark) .btn-ghost{border-color:var(--border-light);color:var(--ink);}
+  .btn-ghost:hover{background:rgba(255,255,255,0.06);}
+  section:not(.dark) .btn-ghost:hover{background:rgba(12,33,28,0.05);}
+  .text-link{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--mint-deep);border-bottom:2px solid var(--mint-deep);padding-bottom:2px;}
+  section.dark .text-link{color:var(--mint);border-color:var(--mint);}
+
+  /* HERO */
+  #home{
+    min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    padding:150px 0 0;background:var(--dark);color:var(--white);position:relative;overflow:hidden;
+  }
+  .hero-bg-img{
+    position:absolute;inset:0;
+    background:
+      linear-gradient(90deg, var(--dark) 10%, rgba(8,24,64,0.55) 55%, rgba(8,24,64,0.85) 100%),
+      radial-gradient(circle at 78% 45%, rgba(37,99,235,0.12), transparent 55%);
+    z-index:0;
+  }
+  .hero-bg-img::after{
+    content:'';position:absolute;inset:0;
+    background-image:url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w=1600&auto=format&fit=crop');
+    background-size:cover;background-position:center;
+    opacity:0.4;mix-blend-mode:luminosity;z-index:-1;
+  }
+  .hero-inner{position:relative;z-index:2;}
+  #home h1{font-size:clamp(2.6rem,6vw,4.6rem);max-width:820px;}
+  #home h1 .mint{color:var(--mint);}
+  .hero-desc{color:var(--body-dark);font-size:1.05rem;max-width:640px;margin:1.6rem 0 2.4rem;}
+  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;}
+  .hero-bottom{
+    margin-top:5rem;display:flex;justify-content:space-between;align-items:flex-end;
+    border-top:1px solid var(--border-dark);padding:1.6rem 0;flex-wrap:wrap;gap:1.5rem;
+  }
+  .live-signal{text-align:right;}
+  .live-signal .tag{display:flex;align-items:center;gap:6px;justify-content:flex-end;font-size:0.72rem;letter-spacing:0.12em;color:var(--mint);text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .live-dot{width:7px;height:7px;border-radius:50%;background:var(--mint);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(37,99,235,.5);}50%{box-shadow:0 0 0 6px rgba(37,99,235,0);}}
+  .live-signal p{color:var(--body-dark);font-size:0.92rem;max-width:280px;}
+  .field-tag{font-size:0.72rem;letter-spacing:0.1em;color:var(--body-dark);text-transform:uppercase;}
+
+  /* PLATFORM */
+  #platform{background:var(--cream-1);}
+  .fair-card{
+    background:linear-gradient(160deg,var(--dark) 0%, #0d2460 100%);
+    border-radius:20px;padding:2.4rem;color:var(--white);position:relative;overflow:hidden;
+  }
+  .fair-card .fc-label{font-size:0.75rem;letter-spacing:0.12em;color:var(--mint);text-transform:uppercase;font-weight:600;margin-bottom:1.6rem;}
+  .fc-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;position:relative;z-index:2;}
+  .fc-steps .step-num{font-family:'Sora',sans-serif;font-size:2.1rem;font-weight:800;margin-bottom:0.6rem;}
+  .fc-steps .step-label{font-size:0.8rem;letter-spacing:0.08em;color:var(--mint);font-weight:700;text-transform:uppercase;margin-bottom:0.3rem;}
+  .fc-steps .step-desc{font-size:0.88rem;color:var(--body-dark);}
+  .fc-visual{height:150px;margin-top:2rem;border-radius:14px;background:
+      radial-gradient(circle at 60% 40%, rgba(37,99,235,0.2), transparent 60%),
+      repeating-linear-gradient(115deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 26px);
+      position:relative;z-index:1;}
+  .checklist{display:flex;gap:2.5rem;margin-top:3rem;border-top:1px solid var(--border-light);padding-top:1.6rem;flex-wrap:wrap;}
+  .checklist div{display:flex;align-items:center;gap:8px;font-weight:600;font-size:0.95rem;}
+  .checklist .tick{width:18px;height:18px;border-radius:50%;background:var(--mint);color:var(--dark);display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0;}
+
+  /* CARD GRIDS */
+  .card-grid{display:grid;gap:0;border-top:1px solid var(--border-light);}
+  section.dark .card-grid{border-color:var(--border-dark);}
+  .card-grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .card-grid.cols-4{grid-template-columns:repeat(4,1fr);}
+  .card-grid.cols-2{grid-template-columns:repeat(2,1fr);}
+  .g-card{border-right:1px solid var(--border-light);padding:2rem 1.8rem;}
+  section.dark .g-card{border-color:var(--border-dark);}
+  .card-grid.cols-4 .g-card:last-child,
+  .card-grid.cols-3 .g-card:last-child,
+  .card-grid.cols-2 .g-card:last-child{border-right:none;}
+  .g-card .gc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.4rem;}
+  .g-card .gc-eyebrow{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--mint-deep);}
+  section.dark .g-card .gc-eyebrow{color:var(--mint);}
+  .g-card .gc-num{font-size:0.85rem;color:var(--body-light);}
+  .g-card h3{font-size:1.22rem;margin-bottom:0.8rem;line-height:1.25;}
+  .g-card p{font-size:0.92rem;color:var(--body-light);}
+  section.dark .g-card p{color:var(--body-dark);}
+
+  /* SUPPLY RESILIENCE */
+  #supply{background:var(--cream-3);}
+
+  /* GOVERNANCE */
+  #governance{background:var(--cream-1);}
+
+  /* CAPABILITIES (dark) */
+  #capabilities{background:var(--dark);color:var(--white);}
+  #capabilities h2{color:var(--white);}
+  .cap-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;margin-top:3rem;}
+  .cap-card{border:1px solid var(--border-dark);border-radius:16px;padding:2.2rem;background:rgba(255,255,255,0.02);}
+  .cap-card .cap-num{color:var(--mint);font-family:'Sora',sans-serif;font-weight:800;font-size:1.3rem;margin-bottom:2.5rem;}
+  .cap-card .cap-tag{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--body-dark);margin-bottom:0.8rem;}
+  .cap-card h3{font-size:1.35rem;margin-bottom:1rem;}
+  .cap-card p{color:var(--body-dark);font-size:0.92rem;}
+
+  /* SERVICES & PRODUCTS */
+  #services{background:var(--cream-2);padding-bottom:0;}
+  .sp-grid{display:grid;grid-template-columns:1.1fr 0.9fr;}
+  .sp-col{padding:3rem 0;}
+  .sp-col.services{padding-right:3rem;}
+  .sp-col.products{background:var(--dark);color:var(--white);padding:3rem 3rem;margin-right:-6vw;padding-right:6vw;}
+  .sp-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--border-light);padding-bottom:1rem;margin-bottom:0.5rem;}
+  .sp-col.products .sp-head{border-color:var(--border-dark);}
+  .sp-eyebrow{font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--mint-deep);}
+  .sp-col.products .sp-eyebrow{color:var(--mint);}
+  .service-list{display:grid;grid-template-columns:1fr 1fr;}
+  .service-item{border-bottom:1px solid var(--border-light);padding:1.6rem 1.4rem 1.6rem 0;}
+  .service-item:nth-child(odd){padding-right:1.6rem;border-right:1px solid var(--border-light);}
+  .service-item h4{font-size:1.02rem;margin-bottom:0.6rem;}
+  .service-item p{font-size:0.86rem;color:var(--body-light);}
+  .product-item{border-bottom:1px solid var(--border-dark);padding:1.6rem 0;}
+  .product-item .p-tag{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--mint);margin-bottom:0.5rem;font-weight:600;}
+  .product-item h4{font-size:1.2rem;margin-bottom:0.6rem;}
+  .product-item p{font-size:0.88rem;color:var(--body-dark);}
+
+  /* SECTORS */
+  #sectors{background:var(--cream-1);}
+  .sector-grid{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--border-light);}
+  .sector-item{border-right:1px solid var(--border-light);padding:2.2rem 1.4rem;}
+  .sector-item:last-child{border-right:none;}
+  .sector-item .s-num{color:var(--mint-deep);font-size:0.82rem;font-weight:700;margin-bottom:2.5rem;}
+  .sector-item h3{font-size:1.15rem;margin-bottom:1rem;}
+  .sector-item .arrow{color:var(--mint-deep);font-size:1.1rem;}
+
+  /* USE CASES */
+  #usecases{background:var(--cream-2);}
+  .uc-layout{display:grid;grid-template-columns:0.9fr 1.1fr;gap:0;border-top:1px solid var(--border-light);}
+  .uc-intro{padding:2.5rem 2rem 2.5rem 0;}
+  .uc-intro h2{font-size:clamp(2rem,3.4vw,2.8rem);margin-bottom:1.2rem;}
+  .uc-list{display:grid;grid-template-columns:1fr 1fr;border-left:1px solid var(--border-light);}
+  .uc-item{border-bottom:1px solid var(--border-light);border-right:1px solid var(--border-light);padding:1.8rem 1.6rem;}
+  .uc-item .uc-tag{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--mint-deep);font-weight:700;margin-bottom:1rem;}
+  .uc-item h4{font-size:1.08rem;margin-bottom:0.7rem;}
+  .uc-item p{font-size:0.86rem;color:var(--body-light);}
+  .resilience-note{grid-column:1 / -1;padding:2rem 1.6rem;border-bottom:1px solid var(--border-light);}
+
+  /* ABOUT */
+  #about{background:var(--dark);color:var(--white);}
+  #about h2{color:var(--white);font-size:clamp(2.2rem,4.4vw,3.4rem);max-width:760px;}
+  .about-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:3rem;align-items:center;margin-top:3rem;}
+  .about-photo{
+    border-radius:16px;overflow:hidden;position:relative;min-height:280px;
+    background:linear-gradient(135deg,#0d2460,#081840);
+    display:flex;align-items:flex-end;padding:1.6rem;
+  }
+  .about-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55;}
+  .about-stat{position:relative;z-index:2;border-left:2px solid var(--mint);padding-left:1rem;}
+  .about-stat .num{font-family:'Sora',sans-serif;font-size:2.4rem;font-weight:800;}
+  .about-stat .label{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--mint);}
+  .about-copy p{color:var(--body-dark);margin-bottom:1.2rem;font-size:1rem;}
+  .about-copy strong{color:var(--white);}
+
+  /* CONTACT */
+  #contact{background:var(--dark-2);color:var(--white);}
+  .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;}
+  #contact h2{color:var(--white);font-size:clamp(2.2rem,4.4vw,3.2rem);}
+  .contact-lede{color:var(--body-dark);margin-top:1.4rem;max-width:420px;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem 2.5rem;}
+  .form-group{grid-column:span 1;border-bottom:1px solid var(--border-dark);padding-bottom:0.7rem;}
+  .form-group.full{grid-column:1 / -1;}
+  .form-group label{display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--body-dark);margin-bottom:0.6rem;font-weight:600;}
+  .form-group input,.form-group select,.form-group textarea{
+    width:100%;background:transparent;border:none;color:var(--white);
+    font-family:'Inter',sans-serif;font-size:0.98rem;outline:none;
+  }
+  .form-group select option{background:var(--dark);}
+  .form-group textarea{resize:vertical;min-height:60px;}
+  .form-group input::placeholder,.form-group textarea::placeholder{color:var(--body-dark);opacity:0.7;}
+  .form-submit{margin-top:1rem;}
+
+  /* FOOTER */
+  footer{background:var(--dark);padding:2.4rem 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:1px solid var(--border-dark);}
+  .footer-text{color:var(--body-dark);font-size:0.82rem;}
+  .footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+  .footer-links a{color:var(--body-dark);font-size:0.82rem;}
+  .footer-links a:hover{color:var(--white);}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  /* LANGUAGE TOGGLE */
+  .lang-toggle{
+    background:none;border:1px solid var(--border-dark);color:var(--body-dark);
+    padding:0.5rem 1rem;border-radius:100px;font-size:0.8rem;font-weight:600;
+    cursor:pointer;transition:border-color .2s,color .2s;font-family:'Inter',sans-serif;
+  }
+  .lang-toggle:hover{color:var(--white);border-color:var(--white);}
+
+  /* ARABIC / RTL MODE */
+  html[dir="rtl"] body{font-family:'Tajawal',sans-serif;}
+  html[dir="rtl"] h1,html[dir="rtl"] h2,html[dir="rtl"] h3,html[dir="rtl"] .font-display{
+    font-family:'Tajawal',sans-serif;font-weight:800;letter-spacing:0;
+  }
+  html[dir="rtl"] .eyebrow::before{margin-left:0;}
+  html[dir="rtl"] .nav-logo{direction:ltr;}
+  html[dir="rtl"] .checklist .tick,
+  html[dir="rtl"] .live-signal .tag,
+  html[dir="rtl"] .field-tag{direction:ltr;}
+  html[dir="rtl"] .g-card,html[dir="rtl"] .service-item,html[dir="rtl"] .sector-item{border-right:none;border-left:1px solid var(--border-light);}
+  html[dir="rtl"] section.dark .g-card{border-color:var(--border-dark);}
+  html[dir="rtl"] .card-grid.cols-4 .g-card:last-child,
+  html[dir="rtl"] .card-grid.cols-3 .g-card:last-child,
+  html[dir="rtl"] .sector-item:last-child{border-left:none;}
+  html[dir="rtl"] .service-item:nth-child(odd){border-right:none;border-left:1px solid var(--border-light);padding-right:0;padding-left:1.6rem;}
+  html[dir="rtl"] .about-stat{border-left:none;border-right:2px solid var(--mint);padding-left:0;padding-right:1rem;}
+
+  @media (max-width:1100px){
+    .split,.about-grid,.contact-grid,.sp-grid,.uc-layout{grid-template-columns:1fr;}
+    .card-grid.cols-3,.card-grid.cols-4,.cap-cards{grid-template-columns:repeat(2,1fr);}
+    .sector-grid{grid-template-columns:repeat(3,1fr);}
+    .g-card{border-right:none !important;border-bottom:1px solid var(--border-light);}
+    .sp-col.products{margin-right:0;padding:3rem 2rem;}
+    .uc-list{grid-template-columns:1fr;border-left:none;}
+  }
+  @media (max-width:768px){
+    .nav-links{display:none;}
+    .hamburger{display:flex;}
+    section{padding:64px 0;}
+    .card-grid.cols-3,.card-grid.cols-4,.cap-cards{grid-template-columns:1fr;}
+    .service-list{grid-template-columns:1fr;}
+    .service-item:nth-child(odd){border-right:none;}
+    .sector-grid{grid-template-columns:repeat(2,1fr);}
+    .form-grid{grid-template-columns:1fr;}
+    .hero-bottom{flex-direction:column;align-items:flex-start;}
+    .live-signal{text-align:left;}
+    .live-signal .tag{justify-content:flex-start;}
+  }
+</style>
 </head>
 
 <body>
 
-  <!-- NAV -->
-  <nav id="mainNav">
-    <a href="#home" class="nav-logo">
-      <span class="dot"></span>ITOLOGY
-    </a>
-    <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#industries">Industries</a></li>
-      <li><a href="#contact" class="nav-cta">Contact Us</a></li>
-    </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
+<nav id="mainNav">
+  <a href="#home" class="nav-logo">
+    <span class="dot"></span>ITOLOGY
+  </a>
+  <ul class="nav-links" id="navLinksList">
+    <li><a href="#platform">Platform</a></li>
+    <li><a href="#team">For Your Team</a></li>
+    <li><a href="#governance">Governance</a></li>
+    <li><a href="#supply">Supply Resilience</a></li>
+    <li><a href="#services">Services & Products</a></li>
+    <li><a href="#capabilities">Capabilities</a></li>
+    <li><a href="#sectors">Sectors</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Request a Briefing</a></li>
+    <li><button id="langToggle" class="lang-toggle" type="button">العربية</button></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
 
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#home" onclick="closeMobile()">Home</a>
-    <a href="#about" onclick="closeMobile()">About Us</a>
-    <a href="#services" onclick="closeMobile()">Services</a>
-    <a href="#industries" onclick="closeMobile()">Industries</a>
-    <a href="#contact" onclick="closeMobile()">Contact Us</a>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#platform" onclick="closeMobile()">Platform</a>
+  <a href="#team" onclick="closeMobile()">For Your Team</a>
+  <a href="#governance" onclick="closeMobile()">Governance</a>
+  <a href="#supply" onclick="closeMobile()">Supply Resilience</a>
+  <a href="#services" onclick="closeMobile()">Services & Products</a>
+  <a href="#capabilities" onclick="closeMobile()">Capabilities</a>
+  <a href="#sectors" onclick="closeMobile()">Sectors</a>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#contact" onclick="closeMobile()">Request a Briefing</a>
+  <button id="langToggleMobile" class="lang-toggle" type="button" style="align-self:flex-start;">العربية</button>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg-img"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow reveal visible">Energy Assets / Quantitative Risk Economics</div>
+    <h1 class="reveal visible">Make every risk decision <span class="mint">accountable to the asset.</span></h1>
+    <p class="hero-desc reveal visible">ITology connects subsurface, reservoir, geospatial, operational, and supply-chain expertise with FAIR-led quantification to show how uncertainty, route disruption, and OT/IT threats can affect production, integrity, continuity, and capital — and which treatments deserve action.</p>
+    <div class="hero-actions reveal visible">
+      <a href="#platform" class="btn-primary">See the decision pathway
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#contact" class="btn-ghost">Request an executive briefing</a>
+    </div>
+    <div class="hero-bottom reveal visible">
+      <span class="field-tag">Field / IT-OT / Risk / Decision</span>
+      <div class="live-signal">
+        <div class="tag"><span class="live-dot"></span>Live Signal</div>
+        <p>From asset dependency to a defensible capital decision.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM -->
+<section id="platform">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <div class="eyebrow">Flagship Platform</div>
+        <h2>From the asset to a defensible treatment decision.</h2>
+      </div>
+      <p class="lede reveal">FAIR-ARCHRIQ structures the path from a defined threat event to a decision-ready economic view: affected assets and dependencies, loss frequency and magnitude, control conditions, uncertainty, and treatment choices.</p>
+    </div>
+
+    <div class="fair-card reveal" style="margin-top:3rem;">
+      <div class="fc-label">FAIR-ARCHRIQ / Core Pathway</div>
+      <div class="fc-steps">
+        <div>
+          <div class="step-num">01</div>
+          <div class="step-label">Define</div>
+          <div class="step-desc">Asset & threat scope</div>
+        </div>
+        <div>
+          <div class="step-num">02</div>
+          <div class="step-label">Quantify</div>
+          <div class="step-desc">Loss distribution</div>
+        </div>
+        <div>
+          <div class="step-num">03</div>
+          <div class="step-label">Decide</div>
+          <div class="step-desc">Treatment economics</div>
+        </div>
+      </div>
+      <div class="fc-visual"></div>
+    </div>
+
+    <div class="checklist reveal">
+      <div><span class="tick">&#10003;</span>Asset governance</div>
+      <div><span class="tick">&#10003;</span>Dependency visibility</div>
+      <div><span class="tick">&#10003;</span>Decision intelligence</div>
+    </div>
+    <a href="#contact" class="text-link" style="margin-top:2.5rem;display:inline-flex;">Discuss the platform &#8599;</a>
+  </div>
+</section>
+
+<!-- FOR YOUR TEAM -->
+<section id="team" style="background:var(--cream-2);">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <div class="eyebrow">The Leadership Lens</div>
+        <h2>Value is created when every team can act on the same evidence.</h2>
+      </div>
+      <p class="lede reveal">ITology turns technical depth into practical value for every level of the operating model: leadership, assets, operations, risk, OT/IT, engineering, and data teams.</p>
+    </div>
+
+    <div class="card-grid cols-3 reveal" style="margin-top:3rem;">
+      <div class="g-card">
+        <div class="gc-top"><span class="gc-eyebrow">Value</span><span class="gc-num">01</span></div>
+        <h3>Make value visible before action.</h3>
+        <p>Compare loss exposure, treatment cost, avoided disruption, and operating value before a decision is made.</p>
+      </div>
+      <div class="g-card">
+        <div class="gc-top"><span class="gc-eyebrow">Resilience</span><span class="gc-num">02</span></div>
+        <h3>Reduce threats without losing sight of production.</h3>
+        <p>Connect cyber-physical scenarios to the assets, processes, and decisions that keep energy moving.</p>
+      </div>
+      <div class="g-card">
+        <div class="gc-top"><span class="gc-eyebrow">Efficiency</span><span class="gc-num">03</span></div>
+        <h3>Remove the cost of uncertainty and waste.</h3>
+        <p>Use models, monitoring, and decision intelligence to expose avoidable loss, rework, delay, and resource leakage.</p>
+      </div>
+      <div class="g-card">
+        <div class="gc-top"><span class="gc-eyebrow">Competitiveness</span><span class="gc-num">04</span></div>
+        <h3>Build an operation that can perform globally.</h3>
+        <p>Strengthen technical discipline, data confidence, and management speed across complex energy portfolios.</p>
+      </div>
+      <div class="g-card">
+        <div class="gc-top"><span class="gc-eyebrow">Responsibility</span><span class="gc-num">05</span></div>
+        <h3>Protect performance and environmental commitments.</h3>
+        <p>Give leaders better visibility into operational conditions, integrity priorities, and the consequences of delayed action.</p>
+      </div>
+      <div class="g-card">
+        <div class="gc-top"><span class="gc-eyebrow">AI / Development</span><span class="gc-num">06</span></div>
+        <h3>Turn knowledge into capability.</h3>
+        <p>Apply AI and analytics where they improve engineering judgment, workforce capability, and alignment with energy-development priorities.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE BY DECISION LEVEL -->
+<section id="valuelevel" style="background:var(--cream-3);">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <div class="eyebrow">Value by Decision Level</div>
+        <h2>One operating picture. Different decisions. Shared value.</h2>
+      </div>
+      <p class="lede reveal">ITology meets each team where its decision is made, then connects the evidence across the organization so technical work translates into business outcomes.</p>
+    </div>
+
+    <div class="card-grid cols-4 reveal" style="margin-top:3rem;">
+      <div class="g-card">
+        <div class="gc-eyebrow">Executive Leadership</div>
+        <h3 style="margin-top:1.2rem;">See where value, resilience, and exposure meet.</h3>
+        <p>A decision brief that links production continuity, risk appetite, cost, sustainability, and investment priorities across the portfolio.</p>
+      </div>
+      <div class="g-card">
+        <div class="gc-eyebrow">Asset & Operations</div>
+        <h3 style="margin-top:1.2rem;">Protect performance at the point of operation.</h3>
+        <p>Asset context, dependency visibility, and scenario analysis that help teams reduce disruption, waste, and avoidable operating cost.</p>
+      </div>
+      <div class="g-card">
+        <div class="gc-eyebrow">Risk & OT/IT</div>
+        <h3 style="margin-top:1.2rem;">Defend the treatment with evidence.</h3>
+        <p>Threat scenarios, control conditions, loss distributions, uncertainty, and prioritized actions that can stand up to review.</p>
+      </div>
+      <div class="g-card">
+        <div class="gc-eyebrow">Engineering & Data</div>
+        <h3 style="margin-top:1.2rem;">Turn technical knowledge into repeatable advantage.</h3>
+        <p>Models, monitoring, analytics, and AI-enabled workflows that help specialists work faster and transfer knowledge across the organization.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPLY RESILIENCE -->
+<section id="supply">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <div class="eyebrow">Supply / Routes / Continuity</div>
+        <h2>When a route changes, value depends on what you can see next.</h2>
+      </div>
+      <p class="lede reveal">Hormuz is a visible reminder that energy resilience is not only a shipping question. It is a connected decision across maritime trade, pipelines, land transport, ports, terminals, storage, suppliers, insurance, OT/IT, and production commitments.</p>
+    </div>
+
+    <div class="card-grid cols-3 reveal" style="margin-top:3rem;">
+      <div class="g-card">
+        <span class="gc-eyebrow">Baseline Operating State</span>
+        <h3 style="margin-top:1.2rem;">Routes are available, dependencies are easy to underestimate.</h3>
+        <p>Sea lanes, pipelines, ports, roads, rail, storage, terminals, and digital controls appear stable — while concentration risk and unused alternatives remain hidden.</p>
+      </div>
+      <div class="g-card">
+        <span class="gc-eyebrow">Disruption-Exposed State</span>
+        <h3 style="margin-top:1.2rem;">A route change becomes an enterprise decision.</h3>
+        <p>Rerouting changes lead times, capacity, insurance exposure, storage needs, port constraints, operating cost, and the consequences of delayed supply.</p>
+      </div>
+      <div class="g-card">
+        <span class="gc-eyebrow">ITology Decision Layer</span>
+        <h3 style="margin-top:1.2rem;">Compare options before the disruption decides for you.</h3>
+        <p>Map dependencies, test multimodal alternatives, quantify loss and recovery, and prioritize actions across sea, land, pipeline, asset, and OT/IT layers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNANCE -->
+<section id="governance">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <div class="eyebrow">Governance That Stays Alive</div>
+        <h2>Protect the information, design the enterprise, improve the result.</h2>
+      </div>
+      <p class="lede reveal">ITology helps energy organizations use practical frameworks as operating disciplines: maintaining security measures, shaping an energy-fit architecture, improving data interoperability, and turning governance into measurable performance.</p>
+    </div>
+
+    <div class="card-grid cols-4 reveal" style="margin-top:3rem;">
+      <div class="g-card">
+        <span class="gc-eyebrow">Cybersecurity & Information Security</span>
+        <h3 style="margin-top:1.2rem;">Keep policies, controls, and measures alive.</h3>
+        <p>Establish, maintain, test, and improve governance measures so security remains part of daily operations rather than a one-time assessment.</p>
+      </div>
+      <div class="g-card">
+        <span class="gc-eyebrow">Energy Enterprise Architecture</span>
+        <h3 style="margin-top:1.2rem;">Design the operating model around the energy asset.</h3>
+        <p>Align business, data, applications, technology, OT, and infrastructure decisions through an Enterprise Architecture approach suited to energy operations.</p>
+      </div>
+      <div class="g-card">
+        <span class="gc-eyebrow">Data & Interoperability</span>
+        <h3 style="margin-top:1.2rem;">Make information usable across systems and teams.</h3>
+        <p>Apply DAMA-informed data governance and OGC/ISO-aligned information practices to improve quality, lineage, exchange, and trusted reuse.</p>
+      </div>
+      <div class="g-card">
+        <span class="gc-eyebrow">Organizational Excellence</span>
+        <h3 style="margin-top:1.2rem;">Turn governance into measurable performance.</h3>
+        <p>Use EFQM-aligned thinking to connect leadership, people, processes, innovation, stakeholder value, and results without treating excellence as a certificate alone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES (dark) -->
+<section id="capabilities" class="dark">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <div class="eyebrow">What We Do</div>
+        <h2>Governance, architecture.<br><span style="color:var(--mint);">Decision intelligence.</span></h2>
+      </div>
+      <p class="lede reveal">We translate reservoir context, operational performance, OT/IT dependencies, and governance requirements into financial exposure, treatment economics, efficiency opportunities, and decisions leaders can defend.</p>
+    </div>
+
+    <div class="cap-cards reveal">
+      <div class="cap-card">
+        <div class="cap-num">01</div>
+        <div class="cap-tag">Risk Governance</div>
+        <h3>Create structured clarity across the asset lifecycle.</h3>
+        <p>Assess control environments, document evidence, align stakeholders, and turn governance requirements into practical action plans.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">02</div>
+        <div class="cap-tag">Energy Architecture</div>
+        <h3>Map the systems behind critical operations.</h3>
+        <p>Connect enterprise architecture, IT/OT dependencies, data ownership, infrastructure, and industrial assets into one operating view.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">03</div>
+        <div class="cap-tag">Risk & Performance Intelligence</div>
+        <h3>Turn signals into prioritized decisions.</h3>
+        <p>Combine FAIR/CRQ analysis, KPI/KRI intelligence, gap analysis, and treatment economics to focus investment where it matters most.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES & PRODUCTS -->
+<section id="services">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <div class="eyebrow">What ITology Delivers</div>
+        <h2>Engineering depth converted into outcomes leaders can act on.</h2>
+      </div>
+      <p class="lede reveal">From geoscience, drilling, and reservoir studies to cyber-risk economics, ITology combines energy-domain expertise with practical data and digital tools that help leaders protect value, reduce waste, and direct decisions with greater confidence.</p>
+    </div>
   </div>
 
-  <!-- HERO -->
-  <section id="home">
-    <div class="hero-bg"></div>
-    <div class="hero-dots"></div>
-
-    <div class="hero-container">
-      <div class="hero-content">
-        <div class="reveal">
-          <div class="hero-badge">
-            <span class="badge-dot"></span>
-            IT Consultancy — Dubai, UAE
-          </div>
-
-          <h1>
-            Smarter Tech.<br>
-            <span class="blue">Stronger</span><br>
-            <span class="outline">Business.</span>
-          </h1>
-
-          <p class="hero-desc">
-            ITology delivers expert IT consulting solutions that help organizations across the UAE modernize, scale, and
-            compete with confidence.
-          </p>
-
-          <div class="hero-actions">
-            <a href="#services" class="btn-primary">
-              Our Services
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-            </a>
-            <a href="#contact" class="btn-ghost">Get in Touch</a>
-          </div>
-
-          <div class="hero-kpis">
-            <div class="kpi">
-              <span class="kpi-val">Dubai<span>.</span></span>
-              <span class="kpi-label">Headquarters</span>
-            </div>
-            <div class="kpi-sep"></div>
-            <div class="kpi">
-              <span class="kpi-val">UAE<span>.</span></span>
-              <span class="kpi-label">Licensed</span>
-            </div>
-          </div>
-        </div>
+  <div class="wrap sp-grid" style="margin-top:2rem;">
+    <div class="sp-col services">
+      <div class="sp-head"><span class="sp-eyebrow">Services / Advisory</span></div>
+      <div class="service-list">
+        <div class="service-item"><h4>Reservoir management &amp; performance</h4><p>Convert reservoir performance, production constraints, and operating signals into priorities that protect value and improve the return on existing assets.</p></div>
+        <div class="service-item"><h4>Drilling &amp; well delivery</h4><p>Connect well objectives, subsurface uncertainty, geotechnical and geophysical evidence, execution risk, cost, safety, and delivery performance from plan to production.</p></div>
+        <div class="service-item"><h4>Oil &amp; Gas supply chain &amp; logistics resilience</h4><p>Map and assess the movement of hydrocarbons and critical materials across maritime routes, pipelines, roads, rail, ports, terminals, storage, and suppliers.</p></div>
+        <div class="service-item"><h4>Multimodal transport &amp; route scenarios</h4><p>Compare route availability, capacity, lead time, insurance exposure, cost, and operational consequences before a chokepoint or infrastructure failure forces a response.</p></div>
+        <div class="service-item"><h4>Reservoir simulation &amp; modeling</h4><p>Test field behavior, uncertainty, production choices, and development scenarios before they become expensive operating or capital decisions.</p></div>
+        <div class="service-item"><h4>Technical studies &amp; development planning</h4><p>Connect subsurface evidence, development options, production targets, facilities, and investment choices in one decision narrative for asset leadership.</p></div>
+        <div class="service-item"><h4>Recovery improvement &amp; injection optimization</h4><p>Improve recovery and injection performance while reducing avoidable losses, energy waste, operating friction, and uncertainty in the plan.</p></div>
+        <div class="service-item"><h4>Energy asset digital transformation</h4><p>Connect asset models, digital monitoring, data pathways, and AI-enabled analytics so leaders can see performance, dependencies, waste, and emerging exposure.</p></div>
+        <div class="service-item"><h4>Technical advisory &amp; decision support</h4><p>Translate engineering evidence into priorities that operators, owners, finance leaders, and boards can sponsor, measure, and defend.</p></div>
+        <div class="service-item"><h4>Oil &amp; Gas geospatial asset &amp; corridor analysis</h4><p>Connect wells, fields, facilities, pipelines, concessions, ports, terminals, transport corridors, risk zones, and field activity so location supports the operating decision.</p></div>
+        <div class="service-item"><h4>Systems integration &amp; AI enablement</h4><p>Extend existing investments with interoperable data pathways and governed, locally suitable AI workflows that teams can use in context.</p></div>
+        <div class="service-item"><h4>Geostatistics &amp; uncertainty modeling</h4><p>Quantify spatial variability, subsurface uncertainty, and confidence so reservoir and development decisions are based on ranges rather than false precision.</p></div>
+        <div class="service-item"><h4>Geotechnical &amp; geomechanics integration</h4><p>Bring geotechnical, geomechanical, integrity, and operating constraints into development planning, field performance, and risk decisions.</p></div>
+        <div class="service-item"><h4>Geophysics &amp; subsurface interpretation</h4><p>Connect seismic, well, geological, petrophysical, and reservoir evidence into a consistent view for characterization and scenario planning.</p></div>
+        <div class="service-item"><h4>Large-data engineering for energy</h4><p>Organize, quality-check, integrate, and analyze large volumes of spatial, subsurface, operational, and risk data for AI-ready decisions.</p></div>
+        <div class="service-item"><h4>Continuous cybersecurity &amp; information security</h4><p>Maintain policies, control measures, risk registers, evidence, testing, and improvement actions across the operating environment.</p></div>
+        <div class="service-item"><h4>Energy Enterprise Architecture</h4><p>Design and govern the relationships between business capabilities, data, applications, IT/OT, infrastructure, and asset operations.</p></div>
+        <div class="service-item"><h4>Data governance &amp; standards alignment</h4><p>Improve ownership, quality, lineage, metadata, exchange, and interoperability using DAMA-informed and OGC/ISO-aligned practices.</p></div>
+        <div class="service-item"><h4>Performance &amp; organizational excellence</h4><p>Connect governance, people, process, innovation, stakeholder value, and results through an EFQM-aligned improvement approach.</p></div>
       </div>
+    </div>
 
-      <div class="hero-image-wrapper reveal reveal-delay-3">
-        <div class="hero-img-card">
-          <img src="https://picsum.photos/seed/itology-tech/800/800" alt="Technology and Business Growth">
-          <div class="floating-badge">
-            <div class="icon">✨</div>
-            <div class="text">
-              <span>99% Success</span>
-              <span>Client Satisfaction</span>
-            </div>
-          </div>
+    <div class="sp-col products dark">
+      <div class="sp-head"><span class="sp-eyebrow">Products / Solutions</span></div>
+      <div class="product-list">
+        <div class="product-item"><div class="p-tag">Flagship Platform</div><h4>FAIR-ARCHRIQ</h4><p>Quantitative risk intelligence that connects threat scenarios, technical exposure, IT/OT dependencies, loss distributions, and the economics of treatment.</p></div>
+        <div class="product-item"><div class="p-tag">Digital Energy</div><h4>Integrated Asset Model solutions</h4><p>Connected models and data pathways that bring reservoir, production, infrastructure, and operational context into one reviewable asset and investment view.</p></div>
+        <div class="product-item"><div class="p-tag">Operational Intelligence</div><h4>Digital reservoir monitoring</h4><p>Decision dashboards and monitoring workflows for performance conditions that should trigger management attention.</p></div>
+        <div class="product-item"><div class="p-tag">Decision Support</div><h4>Energy performance &amp; risk dashboards</h4><p>Executive-ready KPI/KRI, risk, cost, and performance views that help leaders compare scenarios, treatment options, residual exposure, and capital priorities.</p></div>
+        <div class="product-item"><div class="p-tag">Asset Dependency Analysis</div><h4>Oil &amp; Gas asset &amp; dependency analysis</h4><p>Map and analyze wells, facilities, pipelines, terminals, ports, transport corridors, operational dependencies, integrity priorities, and response context for energy operations.</p></div>
+        <div class="product-item"><div class="p-tag">Adoption &amp; ROI</div><h4>Existing systems + localized AI</h4><p>Integration patterns and governed AI use cases that improve the value of current platforms, data, and workforce knowledge before new spend is introduced.</p></div>
+        <div class="product-item"><div class="p-tag">Subsurface Intelligence</div><h4>Subsurface data and uncertainty workbench</h4><p>A scoped solution for integrating geoscience data, quality controls, spatial variability, uncertainty ranges, and scenario outputs into reviewable decisions.</p></div>
+        <div class="product-item"><div class="p-tag">Data & AI Enablement</div><h4>Large-data and AI readiness layer</h4><p>A practical data foundation that connects existing systems and enables localized analytics, knowledge workflows, and AI use cases within organizational controls.</p></div>
+        <div class="product-item"><div class="p-tag">Security Governance</div><h4>Security and information governance control room</h4><p>A practical view of policies, controls, evidence, measures, exceptions, risk treatment, and continuous improvement across the organization.</p></div>
+        <div class="product-item"><div class="p-tag">Enterprise Architecture</div><h4>Energy architecture blueprint</h4><p>A reviewable blueprint connecting capabilities, processes, data, applications, technology, OT, and infrastructure to the asset strategy.</p></div>
+        <div class="product-item"><div class="p-tag">Drilling & Wells</div><h4>Well delivery decision workspace</h4><p>A scoped solution for connecting well planning, geological and geophysical inputs, drilling performance, cost, integrity, risk, and handover to production.</p></div>
+        <div class="product-item" style="border-bottom:none;"><div class="p-tag">Supply & Logistics</div><h4>Oil &amp; Gas supply chain resilience room</h4><p>A scenario workspace for comparing maritime, pipeline, road, rail, port, terminal, storage, and supplier dependencies before and after a route disruption.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTORS -->
+<section id="sectors">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <div class="eyebrow">Built for Complex Operations</div>
+        <h2>Built for the assets where risk and return must speak together.</h2>
+      </div>
+      <p class="lede reveal">Our first wedge is Oil &amp; Gas: operators, asset teams, finance leaders, insurers, and critical suppliers working across interconnected, high-consequence environments.</p>
+    </div>
+
+    <div class="sector-grid reveal" style="margin-top:3rem;">
+      <div class="sector-item"><div class="s-num">01</div><h3>Oil &amp; Gas Operators</h3><span class="arrow">&#8594;</span></div>
+      <div class="sector-item"><div class="s-num">02</div><h3>Energy &amp; Utilities</h3><span class="arrow">&#8594;</span></div>
+      <div class="sector-item"><div class="s-num">03</div><h3>Industrial Operations</h3><span class="arrow">&#8594;</span></div>
+      <div class="sector-item"><div class="s-num">04</div><h3>Renewable Energy</h3><span class="arrow">&#8594;</span></div>
+      <div class="sector-item"><div class="s-num">05</div><h3>Government Infrastructure</h3><span class="arrow">&#8594;</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section id="usecases">
+  <div class="wrap">
+    <div class="uc-layout reveal">
+      <div class="uc-intro">
+        <div class="eyebrow">Use Cases</div>
+        <h2>Align. Quantify. Prioritize.</h2>
+        <p class="lede">A repeatable FAIR-led workflow from stakeholder alignment to probability-weighted investment choices.</p>
+      </div>
+      <div class="uc-list">
+        <div class="uc-item"><div class="uc-tag">Wells</div><h4>Drilling and well delivery assurance</h4><p>Connect well objectives, subsurface evidence, execution constraints, cost, safety, integrity, and handover decisions across the well lifecycle.</p></div>
+        <div class="uc-item"><div class="uc-tag">Govern</div><h4>Asset governance and assessment</h4><p>Build structured assessment evidence, compliance visibility, and action planning around critical energy assets.</p></div>
+        <div class="uc-item"><div class="uc-tag">Architect</div><h4>Enterprise and IT/OT architecture</h4><p>Map systems, dependencies, data ownership, and control environments so operational blind spots become visible.</p></div>
+        <div class="uc-item"><div class="uc-tag">Intelligence</div><h4>Operational performance intelligence</h4><p>Transform KPI and KRI signals into management views that reveal maturity, gaps, trends, and emerging priorities.</p></div>
+        <div class="resilience-note">
+          <span class="gc-eyebrow">Resilience</span>
+          <h4 style="font-size:1.08rem;margin:0.7rem 0;">Critical infrastructure resilience</h4>
+          <p style="font-size:0.86rem;color:var(--body-light);">Combine risk quantification, geospatial context, industrial gap analysis, and treatment economics for high-consequence operations.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ABOUT -->
-  <section id="about">
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow">The People Behind It</div>
+    <h2>The model starts with the asset — and ends with value, resilience, and accountability.</h2>
+
     <div class="about-grid">
+      <div class="about-photo reveal">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop" alt="Energy operations control room">
+        <div class="about-stat">
+          <div class="num">22+</div>
+          <div class="label">Years in Reservoir Engineering</div>
+        </div>
+      </div>
+      <div class="about-copy reveal">
+        <p>ITology was founded by <strong>Eng. Omar Hilal Saeed Alzaabi</strong>, a UAE national and former Oil &amp; Gas leader whose career across ADNOC Onshore spans reservoir management, reservoir simulation, technical studies, and efficiency experience.</p>
+        <p>That experience shapes how we build: grounded in the asset, fluent in the operation, and focused on translating technical uncertainty into financial clarity for business, risk, and investment leaders.</p>
+        <a href="#contact" class="text-link">Meet the founder &#8594;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
       <div class="reveal">
-        <span class="section-tag">Who We Are</span>
-        <h2>Your Partner in<br>Technology Growth</h2>
-        <p class="section-sub">
-          ITology is a Dubai-based IT consultancy dedicated to helping businesses harness technology as a true
-          competitive advantage — from strategy to execution.
-        </p>
-
-        <div class="about-detail-list">
-          <div class="detail-row">
-            <span class="detail-label">Company</span>
-            <span class="detail-value">ITology For Information Technology Consultants Co. L.L.C</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Location</span>
-            <span class="detail-value">Office 9-315, Al Khabeesi, Deira, Dubai, UAE</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Email</span>
-            <span class="detail-value">info@ITology.ae</span>
-          </div>
-        </div>
+        <div class="eyebrow">Start with the Asset</div>
+        <h2>Bring the decision that needs evidence.</h2>
+        <p class="contact-lede">Tell us where an operational, cyber, environmental, efficiency, or capital decision is difficult to compare. We will start with the asset, the scenario, and the evidence — not a product pitch.</p>
       </div>
 
-      <div class="about-right reveal reveal-delay-2">
-        <div class="about-card">
-          <div class="about-card-icon">🎯</div>
-          <div>
-            <h3>Our Mission</h3>
-            <p>Empowering organizations through intelligent technology advisory and cutting-edge digital solutions
-              tailored to their unique needs.</p>
-          </div>
-        </div>
-        <div class="about-card">
-          <div class="about-card-icon">🔭</div>
-          <div>
-            <h3>Our Vision</h3>
-            <p>To be the UAE's most trusted IT consultancy, bridging the gap between technology potential and real
-              business value.</p>
-          </div>
-        </div>
-        <div class="about-card">
-          <div class="about-card-icon">⚡</div>
-          <div>
-            <h3>Agile Approach</h3>
-            <p>Fast, iterative delivery cycles that ensure quick time-to-value and continuous improvement aligned with
-              your goals.</p>
-          </div>
-        </div>
-        <div class="about-card">
-          <div class="about-card-icon">🤝</div>
-          <div>
-            <h3>Client-First</h3>
-            <p>Every engagement is built on transparency, responsiveness, and a genuine commitment to your success.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- SERVICES -->
-  <section id="services">
-    <div class="services-header">
-      <div class="reveal">
-        <span class="section-tag">What We Do</span>
-        <h2>Core Services</h2>
-        <p class="section-sub" style="margin-bottom:0;">
-          Comprehensive IT consulting across strategy, cloud, security, data, and infrastructure.
-        </p>
-      </div>
-    </div>
-
-    <div class="services-grid">
-      <div class="service-card reveal">
-        <div class="service-num">01</div>
-        <span class="service-icon">💡</span>
-        <h3>IT Strategy &amp; Consulting</h3>
-        <p>Craft technology roadmaps that align IT investments with your core business objectives and long-term growth
-          ambitions.</p>
-      </div>
-      <div class="service-card reveal reveal-delay-1">
-        <div class="service-num">02</div>
-        <span class="service-icon">☁️</span>
-        <h3>Cloud Solutions &amp; Migration</h3>
-        <p>Seamless cloud adoption — from infrastructure assessment to full migration, optimization, and managed cloud
-          operations.</p>
-      </div>
-      <div class="service-card reveal reveal-delay-2">
-        <div class="service-num">03</div>
-        <span class="service-icon">🔒</span>
-        <h3>Cybersecurity Services</h3>
-        <p>Protect your digital assets with comprehensive security audits, threat modeling, and robust cyber defense
-          frameworks.</p>
-      </div>
-      <div class="service-card reveal reveal-delay-3">
-        <div class="service-num">04</div>
-        <span class="service-icon">⚙️</span>
-        <h3>Digital Transformation</h3>
-        <p>End-to-end programs that modernize legacy systems, automate workflows, and unlock new operational
-          efficiencies.</p>
-      </div>
-      <div class="service-card reveal reveal-delay-4">
-        <div class="service-num">05</div>
-        <span class="service-icon">📊</span>
-        <h3>Data &amp; Analytics</h3>
-        <p>Turn raw data into actionable intelligence with advanced analytics pipelines, live dashboards, and AI-driven
-          insights.</p>
-      </div>
-      <div class="service-card reveal reveal-delay-5">
-        <div class="service-num">06</div>
-        <span class="service-icon">🖥️</span>
-        <h3>IT Infrastructure &amp; Support</h3>
-        <p>Design, deploy, and manage robust IT infrastructure built to scale with your business now and into the
-          future.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- INDUSTRIES -->
-  <section id="industries">
-    <div class="ind-header">
-      <div class="reveal">
-        <span class="section-tag">Who We Serve</span>
-        <h2>Industries &amp;<br>Sectors</h2>
-        <p class="section-sub" style="margin-bottom:0;">
-          Deep domain expertise across the industries shaping the UAE's digital economy.
-        </p>
-      </div>
-    </div>
-
-    <div class="industries-grid">
-      <div class="industry-item reveal">
-        <div class="industry-icon">🏦</div>
-        <h3>Banking &amp; Finance</h3>
-        <p>Secure platforms, compliance frameworks, and fintech integrations.</p>
-      </div>
-      <div class="industry-item reveal reveal-delay-1">
-        <div class="industry-icon">🏥</div>
-        <h3>Healthcare</h3>
-        <p>Digital health systems and patient data management solutions.</p>
-      </div>
-      <div class="industry-item reveal reveal-delay-2">
-        <div class="industry-icon">🏗️</div>
-        <h3>Real Estate</h3>
-        <p>PropTech platforms, smart building systems, and project tools.</p>
-      </div>
-      <div class="industry-item reveal reveal-delay-3">
-        <div class="industry-icon">🛒</div>
-        <h3>Retail &amp; E-Commerce</h3>
-        <p>Omnichannel platforms, ERP integration, and CX optimization.</p>
-      </div>
-      <div class="industry-item reveal reveal-delay-1">
-        <div class="industry-icon">🏭</div>
-        <h3>Manufacturing</h3>
-        <p>Supply chain digitalization, IoT integration, and automation.</p>
-      </div>
-      <div class="industry-item reveal reveal-delay-2">
-        <div class="industry-icon">🎓</div>
-        <h3>Education</h3>
-        <p>Learning management systems and digital campus infrastructure.</p>
-      </div>
-      <div class="industry-item reveal reveal-delay-3">
-        <div class="industry-icon">⚡</div>
-        <h3>Energy &amp; Utilities</h3>
-        <p>Smart grid tech, asset management, and operational analytics.</p>
-      </div>
-      <div class="industry-item reveal reveal-delay-4">
-        <div class="industry-icon">🏛️</div>
-        <h3>Government</h3>
-        <p>e-Government solutions and smart city infrastructure platforms.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="contact-wrapper">
-      <div class="contact-info reveal">
-        <div>
-          <span class="section-tag">Get In Touch</span>
-          <h2>Let's Build Something Great</h2>
-          <p class="section-sub" style="margin-bottom:0;">
-            Have a project in mind or just want to explore how ITology can help? We'd love to hear from you.
-          </p>
-        </div>
-
-        <div class="contact-block">
-          <h3>Address</h3>
-          <p>Office No. 9-315, Al Khabeesi<br>Deira, Dubai, UAE</p>
-        </div>
-
-
-        <div class="contact-block">
-          <h3>Email</h3>
-          <a href="mailto:info@ITology.ae">info@ITology.ae</a>
-        </div>
-      </div>
-
-      <form action="https://formsubmit.co/802ad4028d7cdf587421787219a7a80d" method="POST"
-        class="contact-form reveal reveal-delay-2">
+      <form action="https://formsubmit.co/802ad4028d7cdf587421787219a7a80d" method="POST" class="reveal">
         <input type="hidden" name="_subject" value="New Inquiry from ITology Website">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
-        <p class="form-title">Send us a message</p>
-        <div class="form-row">
+        <div class="form-grid">
           <div class="form-group">
-            <label>First Name</label>
-            <input type="text" name="first_name" placeholder="First Name" required>
+            <label>Your Name</label>
+            <input type="text" name="full_name" placeholder="Full name" required>
           </div>
           <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" name="last_name" placeholder="Last Name" required>
+            <label>Work Email</label>
+            <input type="email" name="email" placeholder="you@company.com" required>
           </div>
-        </div>
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" name="email" placeholder="you@company.com" required>
-        </div>
-        <div class="form-group">
-          <label>Company</label>
-          <input type="text" name="company" placeholder="Your Company Name">
-        </div>
-        <div class="form-group">
-          <label>Service Interested In</label>
-          <select name="service">
-            <option value="" disabled selected>Select a service...</option>
-            <option>IT Strategy &amp; Consulting</option>
-            <option>Cloud Solutions &amp; Migration</option>
-            <option>Cybersecurity Services</option>
-            <option>Digital Transformation</option>
-            <option>Data &amp; Analytics</option>
-            <option>IT Infrastructure &amp; Support</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea name="message" placeholder="Tell us about your project or requirements..." required></textarea>
+          <div class="form-group">
+            <label>Organization</label>
+            <input type="text" name="organization" placeholder="Company or asset">
+          </div>
+          <div class="form-group">
+            <label>Area of Interest</label>
+            <select name="area_of_interest">
+              <option>Executive risk and value briefing</option>
+              <option>FAIR-ARCHRIQ platform</option>
+              <option>Reservoir & subsurface engagement</option>
+              <option>Supply chain & route resilience</option>
+              <option>Governance, EA & cybersecurity</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>The Challenge</label>
+            <textarea name="message" placeholder="Which asset, risk, efficiency, sustainability, or investment decision needs a defensible view?" required></textarea>
+          </div>
         </div>
         <div class="form-submit">
-          <button type="submit" id="sendBtn">
-            Send Message
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M2 8L14 8M10 4L14 8L10 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
+          <button type="submit" id="sendBtn" class="btn-primary" style="border:none;">
+            Send message
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8L14 8M10 4L14 8L10 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
       </form>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">
-      <span class="dot-sm"></span>ITOLOGY
-    </div>
-    <p class="footer-text">© 2026 ITology For Information Technology Consultants Co. L.L.C — Dubai, UAE</p>
-    <div class="footer-links">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#industries">Industries</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </footer>
+<!-- FOOTER -->
+<footer>
+  <div class="nav-logo">
+    <span class="dot"></span>ITOLOGY
+  </div>
+  <p class="footer-text">&copy; 2026 ITology For Information Technology Consultants Co. L.L.C — Dubai, UAE</p>
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#platform">Platform</a>
+    <a href="#services">Services</a>
+    <a href="#sectors">Sectors</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
 
-  <script>
-    // Nav scroll effect
-    const nav = document.getElementById('mainNav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
+<script>
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile(){ mobileMenu.classList.remove('open'); }
+  document.addEventListener('click', (e) => {
+    if (!nav.contains(e.target) && !mobileMenu.contains(e.target)) closeMobile();
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){ entry.target.classList.add('visible'); observer.unobserve(entry.target); }
     });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Mobile menu
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => { if (window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id'); });
+    document.querySelectorAll('.nav-links a').forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + current));
+  });
 
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      mobileMenu.classList.toggle('open');
-    });
-
-    function closeMobile() {
-      hamburger.classList.remove('active');
-      mobileMenu.classList.remove('open');
-    }
-
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !mobileMenu.contains(e.target)) {
-        closeMobile();
-      }
-    });
-
-    // Scroll reveal
-    const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-    revealEls.forEach(el => observer.observe(el));
-
-    // Active nav link
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(sec => {
-        if (window.scrollY >= sec.offsetTop - 100) {
-          current = sec.getAttribute('id');
-        }
-      });
-
-      navLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
-      });
-
-      const mobileLinks = document.querySelectorAll('.mobile-menu a');
-      mobileLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
-      });
-    });
-
-    // Form submission helper
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-      contactForm.addEventListener('submit', function () {
+  function attachContactFormHandler(){
+    const contactForm = document.querySelector('#contact form');
+    if (contactForm){
+      contactForm.addEventListener('submit', function(){
         const btn = document.getElementById('sendBtn');
-        btn.textContent = '✓ Sending...';
-        btn.style.background = '#1a7a4a';
+        if (btn) btn.textContent = (document.documentElement.lang === 'ar') ? 'جارٍ الإرسال...' : 'Sending...';
       });
     }
-  </script>
-</body>
+  }
+  attachContactFormHandler();
 
+  /* ================= LANGUAGE TOGGLE ================= */
+  const I18N_IDS = ['navLinksList','mobileMenu','home','platform','team','valuelevel','supply','governance','capabilities','services','sectors','usecases','about','contact'];
+  const originalHTML = {};
+  I18N_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) originalHTML[id] = el.innerHTML;
+  });
+
+  const arHTML = {
+    navLinksList: `
+      <li><a href="#platform">المنصة</a></li>
+      <li><a href="#team">لفريقك</a></li>
+      <li><a href="#governance">الحوكمة</a></li>
+      <li><a href="#supply">مرونة الإمداد</a></li>
+      <li><a href="#services">الخدمات والمنتجات</a></li>
+      <li><a href="#capabilities">القدرات</a></li>
+      <li><a href="#sectors">القطاعات</a></li>
+      <li><a href="#about">من نحن</a></li>
+      <li><a href="#contact" class="nav-cta">اطلب إحاطة</a></li>
+      <li><button id="langToggle" class="lang-toggle" type="button">English</button></li>
+    `,
+    mobileMenu: `
+      <a href="#platform" onclick="closeMobile()">المنصة</a>
+      <a href="#team" onclick="closeMobile()">لفريقك</a>
+      <a href="#governance" onclick="closeMobile()">الحوكمة</a>
+      <a href="#supply" onclick="closeMobile()">مرونة الإمداد</a>
+      <a href="#services" onclick="closeMobile()">الخدمات والمنتجات</a>
+      <a href="#capabilities" onclick="closeMobile()">القدرات</a>
+      <a href="#sectors" onclick="closeMobile()">القطاعات</a>
+      <a href="#about" onclick="closeMobile()">من نحن</a>
+      <a href="#contact" onclick="closeMobile()">اطلب إحاطة</a>
+      <button id="langToggleMobile" class="lang-toggle" type="button" style="align-self:flex-start;">English</button>
+    `,
+    home: `
+      <div class="hero-bg-img"></div>
+      <div class="wrap hero-inner">
+        <div class="eyebrow reveal visible">الأصول الطاقوية / اقتصاديات المخاطر الكمية</div>
+        <h1 class="reveal visible">اجعل كل قرار للمخاطر <span class="mint">خاضعاً للمساءلة تجاه الأصل.</span></h1>
+        <p class="hero-desc reveal visible">تربط آيتولوجي الخبرات دون السطحية والمكامن والجغرافيا المكانية والتشغيل وسلسلة الإمداد بتقييم كمي قائم على منهجية FAIR، لبيان كيف يمكن لعدم اليقين واضطراب المسارات وتهديدات التقنية التشغيلية والمعلوماتية أن تؤثر على الإنتاج والسلامة والاستمرارية ورأس المال — وأي المعالجات تستحق اتخاذ إجراء.</p>
+        <div class="hero-actions reveal visible">
+          <a href="#platform" class="btn-primary">استعرض مسار القرار
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#contact" class="btn-ghost">اطلب إحاطة تنفيذية</a>
+        </div>
+        <div class="hero-bottom reveal visible">
+          <span class="field-tag">الحقل / التقنية التشغيلية والمعلوماتية / المخاطر / القرار</span>
+          <div class="live-signal">
+            <div class="tag"><span class="live-dot"></span>إشارة حيّة</div>
+            <p>من الاعتماد على الأصل إلى قرار استثماري قابل للدفاع عنه.</p>
+          </div>
+        </div>
+      </div>
+    `,
+    platform: `
+      <div class="split">
+        <div class="reveal">
+          <div class="eyebrow">المنصة الرئيسية</div>
+          <h2>من الأصل إلى قرار معالجة قابل للدفاع عنه.</h2>
+        </div>
+        <p class="lede reveal">يُنظّم FAIR-ARCHRIQ المسار من حدث تهديد محدد إلى رؤية اقتصادية جاهزة لاتخاذ القرار: الأصول والتبعيات المتأثرة، وتكرار الخسائر وحجمها، وحالة الضوابط، وعدم اليقين، وخيارات المعالجة.</p>
+      </div>
+
+      <div class="fair-card reveal" style="margin-top:3rem;">
+        <div class="fc-label">FAIR-ARCHRIQ / المسار الأساسي</div>
+        <div class="fc-steps">
+          <div>
+            <div class="step-num">01</div>
+            <div class="step-label">تحديد</div>
+            <div class="step-desc">نطاق الأصل والتهديد</div>
+          </div>
+          <div>
+            <div class="step-num">02</div>
+            <div class="step-label">تقييم كمي</div>
+            <div class="step-desc">توزيع الخسائر</div>
+          </div>
+          <div>
+            <div class="step-num">03</div>
+            <div class="step-label">اتخاذ القرار</div>
+            <div class="step-desc">اقتصاديات المعالجة</div>
+          </div>
+        </div>
+        <div class="fc-visual"></div>
+      </div>
+
+      <div class="checklist reveal">
+        <div><span class="tick">&#10003;</span>حوكمة الأصول</div>
+        <div><span class="tick">&#10003;</span>رؤية التبعيات</div>
+        <div><span class="tick">&#10003;</span>ذكاء القرار</div>
+      </div>
+      <a href="#contact" class="text-link" style="margin-top:2.5rem;display:inline-flex;">ناقش المنصة &#8599;</a>
+    `,
+    team: `
+      <div class="split">
+        <div class="reveal">
+          <div class="eyebrow">منظور القيادة</div>
+          <h2>تُخلق القيمة عندما يعمل كل فريق استناداً إلى الأدلة ذاتها.</h2>
+        </div>
+        <p class="lede reveal">تحوّل آيتولوجي العمق التقني إلى قيمة عملية لكل مستوى من نموذج التشغيل: القيادة، والأصول، والعمليات، والمخاطر، والتقنية التشغيلية والمعلوماتية، والهندسة، وفرق البيانات.</p>
+      </div>
+
+      <div class="card-grid cols-3 reveal" style="margin-top:3rem;">
+        <div class="g-card">
+          <div class="gc-top"><span class="gc-eyebrow">القيمة</span><span class="gc-num">01</span></div>
+          <h3>اجعل القيمة مرئية قبل اتخاذ الإجراء.</h3>
+          <p>قارن التعرض للخسائر وتكلفة المعالجة والاضطراب المُتجنَّب والقيمة التشغيلية قبل اتخاذ القرار.</p>
+        </div>
+        <div class="g-card">
+          <div class="gc-top"><span class="gc-eyebrow">المرونة</span><span class="gc-num">02</span></div>
+          <h3>قلّص التهديدات دون إغفال الإنتاج.</h3>
+          <p>اربط سيناريوهات الفضاء السيبراني - المادي بالأصول والعمليات والقرارات التي تُبقي الطاقة في حركة.</p>
+        </div>
+        <div class="g-card">
+          <div class="gc-top"><span class="gc-eyebrow">الكفاءة</span><span class="gc-num">03</span></div>
+          <h3>أزِل تكلفة عدم اليقين والهدر.</h3>
+          <p>استخدم النماذج والمراقبة وذكاء القرار للكشف عن الخسائر التي يمكن تجنبها وإعادة العمل والتأخير وتسرب الموارد.</p>
+        </div>
+        <div class="g-card">
+          <div class="gc-top"><span class="gc-eyebrow">التنافسية</span><span class="gc-num">04</span></div>
+          <h3>ابنِ عملية قادرة على الأداء عالمياً.</h3>
+          <p>عزّز الانضباط التقني والثقة بالبيانات وسرعة الإدارة عبر محافظ طاقة معقدة.</p>
+        </div>
+        <div class="g-card">
+          <div class="gc-top"><span class="gc-eyebrow">المسؤولية</span><span class="gc-num">05</span></div>
+          <h3>احمِ الأداء والالتزامات البيئية.</h3>
+          <p>امنح القادة رؤية أفضل للظروف التشغيلية وأولويات السلامة وتبعات تأخير الإجراء.</p>
+        </div>
+        <div class="g-card">
+          <div class="gc-top"><span class="gc-eyebrow">الذكاء الاصطناعي / التطوير</span><span class="gc-num">06</span></div>
+          <h3>حوّل المعرفة إلى قدرة.</h3>
+          <p>طبّق الذكاء الاصطناعي والتحليلات حيث تُحسّن الحكم الهندسي وقدرة الكوادر والتوافق مع أولويات تطوير الطاقة.</p>
+        </div>
+      </div>
+    `,
+    valuelevel: `
+      <div class="split">
+        <div class="reveal">
+          <div class="eyebrow">القيمة بحسب مستوى القرار</div>
+          <h2>صورة تشغيلية واحدة. قرارات مختلفة. قيمة مشتركة.</h2>
+        </div>
+        <p class="lede reveal">تصل آيتولوجي إلى كل فريق في موضع اتخاذ قراره، ثم تربط الأدلة عبر المؤسسة بحيث يتحول العمل التقني إلى نتائج أعمال.</p>
+      </div>
+
+      <div class="card-grid cols-4 reveal" style="margin-top:3rem;">
+        <div class="g-card">
+          <div class="gc-eyebrow">القيادة التنفيذية</div>
+          <h3 style="margin-top:1.2rem;">تعرّف أين تلتقي القيمة والمرونة والتعرض للمخاطر.</h3>
+          <p>موجز قرار يربط استمرارية الإنتاج وشهية المخاطرة والتكلفة والاستدامة وأولويات الاستثمار عبر المحفظة.</p>
+        </div>
+        <div class="g-card">
+          <div class="gc-eyebrow">الأصول والعمليات</div>
+          <h3 style="margin-top:1.2rem;">احمِ الأداء عند نقطة التشغيل.</h3>
+          <p>سياق الأصل ورؤية التبعيات وتحليل السيناريوهات التي تساعد الفرق على تقليل الاضطراب والهدر والتكلفة التشغيلية التي يمكن تجنبها.</p>
+        </div>
+        <div class="g-card">
+          <div class="gc-eyebrow">المخاطر والتقنية التشغيلية والمعلوماتية</div>
+          <h3 style="margin-top:1.2rem;">دافع عن المعالجة بالأدلة.</h3>
+          <p>سيناريوهات التهديد وحالة الضوابط وتوزيعات الخسائر وعدم اليقين وإجراءات ذات أولوية تصمد أمام المراجعة.</p>
+        </div>
+        <div class="g-card">
+          <div class="gc-eyebrow">الهندسة والبيانات</div>
+          <h3 style="margin-top:1.2rem;">حوّل المعرفة التقنية إلى ميزة قابلة للتكرار.</h3>
+          <p>نماذج ومراقبة وتحليلات وسير عمل مدعوم بالذكاء الاصطناعي يساعد المختصين على العمل بسرعة أكبر ونقل المعرفة عبر المؤسسة.</p>
+        </div>
+      </div>
+    `,
+    supply: `
+      <div class="split">
+        <div class="reveal">
+          <div class="eyebrow">الإمداد / المسارات / الاستمرارية</div>
+          <h2>عندما يتغيّر المسار، تعتمد القيمة على ما يمكنك رؤيته تالياً.</h2>
+        </div>
+        <p class="lede reveal">يمثّل مضيق هرمز تذكيراً واضحاً بأن مرونة الطاقة ليست مسألة شحن بحري فحسب، بل قرار مترابط يشمل التجارة البحرية وخطوط الأنابيب والنقل البري والموانئ والمحطات والتخزين والموردين والتأمين والتقنية التشغيلية والمعلوماتية والتزامات الإنتاج.</p>
+      </div>
+
+      <div class="card-grid cols-3 reveal" style="margin-top:3rem;">
+        <div class="g-card">
+          <span class="gc-eyebrow">حالة التشغيل الأساسية</span>
+          <h3 style="margin-top:1.2rem;">المسارات متاحة، ويسهل التقليل من شأن التبعيات.</h3>
+          <p>تبدو الممرات البحرية وخطوط الأنابيب والموانئ والطرق والسكك الحديدية والتخزين والمحطات والضوابط الرقمية مستقرة — بينما يظل تركّز المخاطر والبدائل غير المستخدمة مخفياً.</p>
+        </div>
+        <div class="g-card">
+          <span class="gc-eyebrow">حالة التعرض للاضطراب</span>
+          <h3 style="margin-top:1.2rem;">يصبح تغيير المسار قراراً على مستوى المؤسسة.</h3>
+          <p>تُغيّر إعادة التوجيه المهل الزمنية والسعة والتعرض التأميني واحتياجات التخزين وقيود الموانئ والتكلفة التشغيلية وتبعات تأخر الإمداد.</p>
+        </div>
+        <div class="g-card">
+          <span class="gc-eyebrow">طبقة قرار آيتولوجي</span>
+          <h3 style="margin-top:1.2rem;">قارن الخيارات قبل أن يقرر الاضطراب نيابة عنك.</h3>
+          <p>ارسم التبعيات، واختبر بدائل متعددة الوسائط، وقيّم الخسارة والتعافي كمياً، ورتّب أولويات الإجراءات عبر طبقات البحر والبر وخطوط الأنابيب والأصول والتقنية التشغيلية والمعلوماتية.</p>
+        </div>
+      </div>
+    `,
+    governance: `
+      <div class="split">
+        <div class="reveal">
+          <div class="eyebrow">حوكمة تبقى حيّة</div>
+          <h2>احمِ المعلومات، صمّم المؤسسة، حسّن النتيجة.</h2>
+        </div>
+        <p class="lede reveal">تساعد آيتولوجي مؤسسات الطاقة على استخدام أطر عملية كمنهجيات تشغيلية: صون تدابير الأمن، وتشكيل معمارية ملائمة لقطاع الطاقة، وتحسين قابلية تبادل البيانات، وتحويل الحوكمة إلى أداء قابل للقياس.</p>
+      </div>
+
+      <div class="card-grid cols-4 reveal" style="margin-top:3rem;">
+        <div class="g-card">
+          <span class="gc-eyebrow">الأمن السيبراني وأمن المعلومات</span>
+          <h3 style="margin-top:1.2rem;">أبقِ السياسات والضوابط والتدابير حيّة.</h3>
+          <p>أنشئ تدابير الحوكمة وصُنها واختبرها وحسّنها بحيث يظل الأمن جزءاً من العمليات اليومية بدلاً من تقييم لمرة واحدة.</p>
+        </div>
+        <div class="g-card">
+          <span class="gc-eyebrow">معمارية المؤسسة الطاقوية</span>
+          <h3 style="margin-top:1.2rem;">صمّم نموذج التشغيل حول الأصل الطاقوي.</h3>
+          <p>وائم قرارات الأعمال والبيانات والتطبيقات والتقنية والتقنية التشغيلية والبنية التحتية من خلال نهج معماري مؤسسي ملائم لعمليات الطاقة.</p>
+        </div>
+        <div class="g-card">
+          <span class="gc-eyebrow">البيانات وقابلية التشغيل البيني</span>
+          <h3 style="margin-top:1.2rem;">اجعل المعلومات قابلة للاستخدام عبر الأنظمة والفرق.</h3>
+          <p>طبّق حوكمة بيانات مستندة إلى DAMA وممارسات معلوماتية متوافقة مع OGC/ISO لتحسين الجودة والتتبع والتبادل وإعادة الاستخدام الموثوق.</p>
+        </div>
+        <div class="g-card">
+          <span class="gc-eyebrow">التميّز المؤسسي</span>
+          <h3 style="margin-top:1.2rem;">حوّل الحوكمة إلى أداء قابل للقياس.</h3>
+          <p>استخدم تفكيراً متوافقاً مع نموذج EFQM لربط القيادة والأفراد والعمليات والابتكار وقيمة أصحاب المصلحة والنتائج، دون معاملة التميّز كشهادة فقط.</p>
+        </div>
+      </div>
+    `,
+    capabilities: `
+      <div class="split">
+        <div class="reveal">
+          <div class="eyebrow">ماذا نفعل</div>
+          <h2>الحوكمة، والمعمارية.<br><span style="color:var(--mint);">ذكاء القرار.</span></h2>
+        </div>
+        <p class="lede reveal">نترجم سياق المكامن والأداء التشغيلي وتبعات التقنية التشغيلية والمعلوماتية ومتطلبات الحوكمة إلى تعرض مالي واقتصاديات معالجة وفرص كفاءة وقرارات يمكن للقادة الدفاع عنها.</p>
+      </div>
+
+      <div class="cap-cards reveal">
+        <div class="cap-card">
+          <div class="cap-num">01</div>
+          <div class="cap-tag">حوكمة المخاطر</div>
+          <h3>أوجِد وضوحاً مُنظّماً عبر دورة حياة الأصل.</h3>
+          <p>قيّم بيئات الضبط، ووثّق الأدلة، ووائم أصحاب المصلحة، وحوّل متطلبات الحوكمة إلى خطط عمل عملية.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num">02</div>
+          <div class="cap-tag">معمارية الطاقة</div>
+          <h3>ارسم الأنظمة وراء العمليات الحرجة.</h3>
+          <p>اربط المعمارية المؤسسية وتبعات التقنية التشغيلية والمعلوماتية وملكية البيانات والبنية التحتية والأصول الصناعية في رؤية تشغيلية واحدة.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num">03</div>
+          <div class="cap-tag">ذكاء المخاطر والأداء</div>
+          <h3>حوّل الإشارات إلى قرارات مرتّبة بالأولوية.</h3>
+          <p>اجمع بين تحليل FAIR/CRQ وذكاء مؤشرات الأداء والمخاطر وتحليل الفجوات واقتصاديات المعالجة لتركيز الاستثمار حيث يكون أكثر أهمية.</p>
+        </div>
+      </div>
+    `,
+    sectors: `
+      <div class="split">
+        <div class="reveal">
+          <div class="eyebrow">مصمم للعمليات المعقدة</div>
+          <h2>مصمم للأصول التي يجب أن يتحدث فيها الخطر والعائد بلغة واحدة.</h2>
+        </div>
+        <p class="lede reveal">نقطة انطلاقنا الأولى هي قطاع النفط والغاز: المشغّلون وفرق الأصول وقادة التمويل وشركات التأمين والموردون الحيويون العاملون عبر بيئات مترابطة وعالية التبعات.</p>
+      </div>
+
+      <div class="sector-grid reveal" style="margin-top:3rem;">
+        <div class="sector-item"><div class="s-num">01</div><h3>مشغّلو النفط والغاز</h3><span class="arrow">&#8592;</span></div>
+        <div class="sector-item"><div class="s-num">02</div><h3>الطاقة والمرافق</h3><span class="arrow">&#8592;</span></div>
+        <div class="sector-item"><div class="s-num">03</div><h3>العمليات الصناعية</h3><span class="arrow">&#8592;</span></div>
+        <div class="sector-item"><div class="s-num">04</div><h3>الطاقة المتجددة</h3><span class="arrow">&#8592;</span></div>
+        <div class="sector-item"><div class="s-num">05</div><h3>البنية التحتية الحكومية</h3><span class="arrow">&#8592;</span></div>
+      </div>
+    `,
+    usecases: `
+      <div class="uc-layout reveal">
+        <div class="uc-intro">
+          <div class="eyebrow">حالات الاستخدام</div>
+          <h2>وائم. قيّم كمياً. رتّب الأولويات.</h2>
+          <p class="lede">سير عمل قابل للتكرار قائم على منهجية FAIR، من مواءمة أصحاب المصلحة إلى خيارات استثمارية مرجّحة بالاحتمالية.</p>
+        </div>
+        <div class="uc-list">
+          <div class="uc-item"><div class="uc-tag">الآبار</div><h4>ضمان الحفر وتسليم الآبار</h4><p>اربط أهداف البئر والأدلة دون السطحية وقيود التنفيذ والتكلفة والسلامة والسلامة الإنشائية وقرارات التسليم عبر دورة حياة البئر.</p></div>
+          <div class="uc-item"><div class="uc-tag">الحوكمة</div><h4>حوكمة الأصول وتقييمها</h4><p>ابنِ أدلة تقييم منظمة ورؤية امتثال وتخطيط إجراءات حول الأصول الطاقوية الحرجة.</p></div>
+          <div class="uc-item"><div class="uc-tag">المعمارية</div><h4>معمارية المؤسسة والتقنية التشغيلية والمعلوماتية</h4><p>ارسم الأنظمة والتبعيات وملكية البيانات وبيئات الضبط بحيث تصبح النقاط العمياء التشغيلية مرئية.</p></div>
+          <div class="uc-item"><div class="uc-tag">الذكاء</div><h4>ذكاء الأداء التشغيلي</h4><p>حوّل إشارات مؤشرات الأداء والمخاطر إلى رؤى إدارية تكشف النضج والفجوات والاتجاهات والأولويات الناشئة.</p></div>
+          <div class="resilience-note">
+            <span class="gc-eyebrow">المرونة</span>
+            <h4 style="font-size:1.08rem;margin:0.7rem 0;">مرونة البنية التحتية الحرجة</h4>
+            <p style="font-size:0.86rem;color:var(--body-light);">اجمع بين التقييم الكمي للمخاطر والسياق الجغرافي المكاني وتحليل الفجوات الصناعية واقتصاديات المعالجة للعمليات عالية التبعات.</p>
+          </div>
+        </div>
+      </div>
+    `,
+    about: `
+      <div class="eyebrow">الأشخاص وراء المشروع</div>
+      <h2>يبدأ النموذج بالأصل — وينتهي بالقيمة والمرونة والمساءلة.</h2>
+
+      <div class="about-grid">
+        <div class="about-photo reveal">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop" alt="غرفة تحكم عمليات الطاقة">
+          <div class="about-stat">
+            <div class="num">22+</div>
+            <div class="label">عاماً في هندسة المكامن</div>
+          </div>
+        </div>
+        <div class="about-copy reveal">
+          <p>تأسست آيتولوجي على يد المهندس <strong>عمر هلال سعيد الزعابي</strong>، وهو مواطن إماراتي وقائد سابق في قطاع النفط والغاز، امتدت مسيرته المهنية في أدنوك البرّية عبر إدارة المكامن ومحاكاتها والدراسات الفنية وخبرة تحسين الكفاءة.</p>
+          <p>تشكّل هذه الخبرة الطريقة التي نبني بها: متجذرون في الأصل، وملمّون بالعملية، ومركّزون على ترجمة عدم اليقين التقني إلى وضوح مالي لقادة الأعمال والمخاطر والاستثمار.</p>
+          <a href="#contact" class="text-link">تعرّف على المؤسس &#8592;</a>
+        </div>
+      </div>
+    `,
+    contact: `
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="eyebrow">ابدأ بالأصل</div>
+          <h2>اطرح القرار الذي يحتاج إلى دليل.</h2>
+          <p class="contact-lede">أخبرنا أين يصعب مقارنة قرار تشغيلي أو سيبراني أو بيئي أو متعلق بالكفاءة أو رأس المال. سنبدأ بالأصل والسيناريو والدليل — لا بعرض ترويجي لمنتج.</p>
+        </div>
+
+        <form action="https://formsubmit.co/802ad4028d7cdf587421787219a7a80d" method="POST" class="reveal">
+          <input type="hidden" name="_subject" value="New Inquiry from ITology Website">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>اسمك</label>
+              <input type="text" name="full_name" placeholder="الاسم الكامل" required>
+            </div>
+            <div class="form-group">
+              <label>البريد الإلكتروني للعمل</label>
+              <input type="email" name="email" placeholder="you@company.com" required>
+            </div>
+            <div class="form-group">
+              <label>المؤسسة</label>
+              <input type="text" name="organization" placeholder="الشركة أو الأصل">
+            </div>
+            <div class="form-group">
+              <label>مجال الاهتمام</label>
+              <select name="area_of_interest">
+                <option>إحاطة تنفيذية حول المخاطر والقيمة</option>
+                <option>منصة FAIR-ARCHRIQ</option>
+                <option>مشاركة في المكامن ودون السطح</option>
+                <option>مرونة سلسلة الإمداد والمسارات</option>
+                <option>الحوكمة والمعمارية المؤسسية والأمن السيبراني</option>
+                <option>أخرى</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label>التحدي</label>
+              <textarea name="message" placeholder="أي قرار متعلق بالأصل أو المخاطر أو الكفاءة أو الاستدامة أو الاستثمار يحتاج إلى رؤية قابلة للدفاع عنها؟" required></textarea>
+            </div>
+          </div>
+          <div class="form-submit">
+            <button type="submit" id="sendBtn" class="btn-primary" style="border:none;">
+              إرسال الرسالة
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8L14 8M10 4L14 8L10 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    `,
+  };
+
+  /* services & products catalog EN/AR pairs kept separate for readability */
+  arHTML.services = `
+    <div class="wrap">
+      <div class="split">
+        <div class="reveal">
+          <div class="eyebrow">ما تقدمه آيتولوجي</div>
+          <h2>عمق هندسي يتحول إلى نتائج يمكن للقادة التصرف بناءً عليها.</h2>
+        </div>
+        <p class="lede reveal">من علوم الأرض والحفر ودراسات المكامن إلى اقتصاديات المخاطر السيبرانية، تجمع آيتولوجي بين الخبرة في مجال الطاقة وأدوات بيانات ورقمية عملية تساعد القادة على حماية القيمة وتقليل الهدر وتوجيه القرارات بثقة أكبر.</p>
+      </div>
+    </div>
+
+    <div class="wrap sp-grid" style="margin-top:2rem;">
+      <div class="sp-col services">
+        <div class="sp-head"><span class="sp-eyebrow">الخدمات / الاستشارات</span></div>
+        <div class="service-list">
+          <div class="service-item"><h4>إدارة المكامن وأداؤها</h4><p>حوّل أداء المكامن وقيود الإنتاج والإشارات التشغيلية إلى أولويات تحمي القيمة وتحسّن العائد على الأصول القائمة.</p></div>
+          <div class="service-item"><h4>الحفر وتسليم الآبار</h4><p>اربط أهداف البئر وعدم اليقين دون السطحي والأدلة الجيوتقنية والجيوفيزيائية ومخاطر التنفيذ والتكلفة والسلامة وأداء التسليم من التخطيط إلى الإنتاج.</p></div>
+          <div class="service-item"><h4>مرونة سلسلة إمداد ولوجستيات النفط والغاز</h4><p>ارسم وقيّم حركة الهيدروكربونات والمواد الحرجة عبر الطرق البحرية وخطوط الأنابيب والطرق والسكك الحديدية والموانئ والمحطات والتخزين والموردين.</p></div>
+          <div class="service-item"><h4>النقل متعدد الوسائط وسيناريوهات المسارات</h4><p>قارن توافر المسارات والسعة والمهلة الزمنية والتعرض التأميني والتكلفة والتبعات التشغيلية قبل أن تفرض نقطة اختناق أو عطل في البنية التحتية استجابة.</p></div>
+          <div class="service-item"><h4>محاكاة المكامن ونمذجتها</h4><p>اختبر سلوك الحقل وعدم اليقين وخيارات الإنتاج وسيناريوهات التطوير قبل أن تتحول إلى قرارات تشغيلية أو رأسمالية مكلفة.</p></div>
+          <div class="service-item"><h4>الدراسات الفنية وتخطيط التطوير</h4><p>اربط الأدلة دون السطحية وخيارات التطوير وأهداف الإنتاج والمرافق وخيارات الاستثمار في سردية قرار واحدة لقيادة الأصل.</p></div>
+          <div class="service-item"><h4>تحسين الاسترداد وتحسين الحقن</h4><p>حسّن أداء الاسترداد والحقن مع تقليل الخسائر التي يمكن تجنبها وهدر الطاقة والاحتكاك التشغيلي وعدم اليقين في الخطة.</p></div>
+          <div class="service-item"><h4>التحول الرقمي للأصول الطاقوية</h4><p>اربط نماذج الأصول والمراقبة الرقمية ومسارات البيانات والتحليلات المدعومة بالذكاء الاصطناعي بحيث يرى القادة الأداء والتبعيات والهدر والتعرض الناشئ.</p></div>
+          <div class="service-item"><h4>الاستشارات الفنية ودعم القرار</h4><p>ترجم الأدلة الهندسية إلى أولويات يمكن للمشغلين والملاك وقادة التمويل ومجالس الإدارة رعايتها وقياسها والدفاع عنها.</p></div>
+          <div class="service-item"><h4>التحليل الجغرافي المكاني لأصول وممرات النفط والغاز</h4><p>اربط الآبار والحقول والمرافق وخطوط الأنابيب والامتيازات والموانئ والمحطات وممرات النقل ومناطق المخاطر والنشاط الميداني بحيث يدعم الموقع القرار التشغيلي.</p></div>
+          <div class="service-item"><h4>تكامل الأنظمة وتمكين الذكاء الاصطناعي</h4><p>وسّع الاستثمارات القائمة بمسارات بيانات قابلة للتشغيل البيني وسير عمل ذكاء اصطناعي محكوم وملائم محلياً يمكن للفرق استخدامه في سياقه.</p></div>
+          <div class="service-item"><h4>الإحصاء الجيولوجي ونمذجة عدم اليقين</h4><p>قيّم التباين المكاني وعدم اليقين دون السطحي والثقة كمياً بحيث تستند قرارات المكامن والتطوير إلى نطاقات لا إلى دقة زائفة.</p></div>
+          <div class="service-item"><h4>تكامل الجيوتقنية والميكانيكا الجيولوجية</h4><p>أدمج القيود الجيوتقنية والميكانيكية الجيولوجية والسلامة الإنشائية والتشغيلية في تخطيط التطوير وأداء الحقل وقرارات المخاطر.</p></div>
+          <div class="service-item"><h4>الجيوفيزياء والتفسير دون السطحي</h4><p>اربط الأدلة الزلزالية وبيانات الآبار والجيولوجية والبتروفيزيائية والمكامنية في رؤية متسقة للتوصيف وتخطيط السيناريوهات.</p></div>
+          <div class="service-item"><h4>هندسة البيانات الضخمة لقطاع الطاقة</h4><p>نظّم وتحقق من الجودة وأدمج وحلّل كميات كبيرة من البيانات المكانية ودون السطحية والتشغيلية والمخاطر لاتخاذ قرارات جاهزة للذكاء الاصطناعي.</p></div>
+          <div class="service-item"><h4>الأمن السيبراني وأمن المعلومات المستمر</h4><p>صُن السياسات وتدابير الضبط وسجلات المخاطر والأدلة والاختبار وإجراءات التحسين عبر بيئة التشغيل.</p></div>
+          <div class="service-item"><h4>معمارية المؤسسة الطاقوية</h4><p>صمّم واحكم العلاقات بين قدرات الأعمال والبيانات والتطبيقات والتقنية التشغيلية والمعلوماتية والبنية التحتية وعمليات الأصول.</p></div>
+          <div class="service-item"><h4>حوكمة البيانات والتوافق مع المعايير</h4><p>حسّن الملكية والجودة والتتبع والبيانات الوصفية والتبادل وقابلية التشغيل البيني باستخدام ممارسات مستندة إلى DAMA ومتوافقة مع OGC/ISO.</p></div>
+          <div class="service-item"><h4>الأداء والتميّز المؤسسي</h4><p>اربط الحوكمة والأفراد والعمليات والابتكار وقيمة أصحاب المصلحة والنتائج من خلال نهج تحسين متوافق مع EFQM.</p></div>
+        </div>
+      </div>
+
+      <div class="sp-col products dark">
+        <div class="sp-head"><span class="sp-eyebrow">المنتجات / الحلول</span></div>
+        <div class="product-list">
+          <div class="product-item"><div class="p-tag">المنصة الرئيسية</div><h4>FAIR-ARCHRIQ</h4><p>ذكاء مخاطر كمي يربط سيناريوهات التهديد والتعرض التقني وتبعات التقنية التشغيلية والمعلوماتية وتوزيعات الخسائر واقتصاديات المعالجة.</p></div>
+          <div class="product-item"><div class="p-tag">الطاقة الرقمية</div><h4>حلول نموذج الأصول المتكامل</h4><p>نماذج ومسارات بيانات مترابطة تجمع سياق المكامن والإنتاج والبنية التحتية والتشغيل في رؤية استثمارية وأصولية واحدة قابلة للمراجعة.</p></div>
+          <div class="product-item"><div class="p-tag">الذكاء التشغيلي</div><h4>المراقبة الرقمية للمكامن</h4><p>لوحات قرار وسير عمل مراقبة لظروف الأداء التي ينبغي أن تستدعي انتباه الإدارة.</p></div>
+          <div class="product-item"><div class="p-tag">دعم القرار</div><h4>لوحات أداء الطاقة والمخاطر</h4><p>رؤى تنفيذية لمؤشرات الأداء والمخاطر والتكلفة والأداء تساعد القادة على مقارنة السيناريوهات وخيارات المعالجة والتعرض المتبقي وأولويات رأس المال.</p></div>
+          <div class="product-item"><div class="p-tag">تحليل تبعية الأصول</div><h4>تحليل أصول وتبعيات النفط والغاز</h4><p>ارسم وحلّل الآبار والمرافق وخطوط الأنابيب والمحطات والموانئ وممرات النقل والتبعيات التشغيلية وأولويات السلامة وسياق الاستجابة لعمليات الطاقة.</p></div>
+          <div class="product-item"><div class="p-tag">التبني والعائد على الاستثمار</div><h4>الأنظمة القائمة + ذكاء اصطناعي محلي</h4><p>أنماط تكامل وحالات استخدام ذكاء اصطناعي محكومة تحسّن قيمة المنصات والبيانات ومعرفة الكوادر القائمة قبل إدخال إنفاق جديد.</p></div>
+          <div class="product-item"><div class="p-tag">الذكاء دون السطحي</div><h4>منصة عمل بيانات دون السطحية وعدم اليقين</h4><p>حل محدد النطاق لدمج بيانات علوم الأرض وضوابط الجودة والتباين المكاني ونطاقات عدم اليقين ونواتج السيناريوهات في قرارات قابلة للمراجعة.</p></div>
+          <div class="product-item"><div class="p-tag">تمكين البيانات والذكاء الاصطناعي</div><h4>طبقة جاهزية البيانات الضخمة والذكاء الاصطناعي</h4><p>أساس بيانات عملي يربط الأنظمة القائمة ويمكّن التحليلات المحلية وسير عمل المعرفة وحالات استخدام الذكاء الاصطناعي ضمن ضوابط المؤسسة.</p></div>
+          <div class="product-item"><div class="p-tag">حوكمة الأمن</div><h4>غرفة تحكم حوكمة الأمن والمعلومات</h4><p>رؤية عملية للسياسات والضوابط والأدلة والتدابير والاستثناءات ومعالجة المخاطر والتحسين المستمر عبر المؤسسة.</p></div>
+          <div class="product-item"><div class="p-tag">المعمارية المؤسسية</div><h4>مخطط معمارية الطاقة</h4><p>مخطط قابل للمراجعة يربط القدرات والعمليات والبيانات والتطبيقات والتقنية والتقنية التشغيلية والبنية التحتية باستراتيجية الأصل.</p></div>
+          <div class="product-item"><div class="p-tag">الحفر والآبار</div><h4>مساحة عمل قرار تسليم الآبار</h4><p>حل محدد النطاق لربط تخطيط الآبار والمدخلات الجيولوجية والجيوفيزيائية وأداء الحفر والتكلفة والسلامة والمخاطر والتسليم إلى الإنتاج.</p></div>
+          <div class="product-item" style="border-bottom:none;"><div class="p-tag">الإمداد واللوجستيات</div><h4>غرفة مرونة سلسلة إمداد النفط والغاز</h4><p>مساحة عمل سيناريوهات لمقارنة التبعيات البحرية وخطوط الأنابيب والطرق والسكك الحديدية والموانئ والمحطات والتخزين والموردين قبل اضطراب المسار وبعده.</p></div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  function setLanguage(lang){
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+    I18N_IDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.innerHTML = (lang === 'ar') ? arHTML[id] : originalHTML[id];
+    });
+
+    // newly-inserted nodes should be visible immediately, not wait on scroll observer
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+
+    // rebind things lost when innerHTML was replaced
+    attachContactFormHandler();
+    const t1 = document.getElementById('langToggle');
+    const t2 = document.getElementById('langToggleMobile');
+    if (t1) t1.addEventListener('click', toggleLanguage);
+    if (t2) t2.addEventListener('click', toggleLanguage);
+  }
+
+  function toggleLanguage(){
+    const next = (document.documentElement.lang === 'ar') ? 'en' : 'ar';
+    setLanguage(next);
+  }
+
+  document.getElementById('langToggle').addEventListener('click', toggleLanguage);
+  document.getElementById('langToggleMobile').addEventListener('click', toggleLanguage);
+</script>
+</body>
 </html>

@@ -80,19 +80,22 @@
   /* NAV */
   nav{
     position:fixed;top:0;left:0;right:0;z-index:900;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:0 6% 0 3%;height:76px;
+    display:flex;flex-direction:column;
+    padding:0 6% 0 3%;
     background:var(--dark);
     border-bottom:1px solid transparent;transition:border-color .3s;
   }
   nav.scrolled{border-color:var(--border-dark);}
-  .nav-logo{display:flex;align-items:center;gap:11px;color:var(--white);font-family:'Sora',sans-serif;font-weight:800;font-size:1.45rem;letter-spacing:-0.01em;margin-right:2rem;}
+  .nav-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:76px;flex-shrink:0;}
+  .nav-logo{display:flex;align-items:center;gap:11px;color:var(--white);font-family:'Sora',sans-serif;font-weight:800;font-size:1.45rem;letter-spacing:-0.01em;flex-shrink:0;}
   .nav-logo .dot{width:9px;height:9px;background:var(--mint);border-radius:50%;display:inline-block;animation:pulse 2.5s infinite;}
-  .nav-links{display:flex;gap:clamp(0.7rem,1.6vw,1.4rem);list-style:none;align-items:center;flex-wrap:nowrap;white-space:nowrap;}
+  .nav-links-wrap{width:100%;padding-bottom:0.8rem;}
+  .nav-links{display:flex;gap:0.6rem 1.6rem;list-style:none;align-items:center;flex-wrap:wrap;justify-content:center;}
   .nav-links li{white-space:nowrap;}
   .nav-links a{white-space:nowrap;}
-  .nav-links a{font-size:clamp(0.72rem,0.95vw,0.86rem);font-weight:500;color:var(--body-dark);transition:color .2s;}
+  .nav-links a{font-size:0.86rem;font-weight:500;color:var(--body-dark);transition:color .2s;}
   .nav-links a:hover,.nav-links a.active{color:var(--white);}
+  .nav-actions{display:flex;align-items:center;gap:0.7rem;flex-shrink:0;white-space:nowrap;}
   .nav-cta{
     border:1px solid var(--mint);color:var(--mint) !important;
     padding:clamp(0.4rem,0.6vw,0.55rem) clamp(0.8rem,1.4vw,1.3rem);border-radius:100px;
@@ -388,7 +391,7 @@
     cursor:pointer;transition:border-color .2s,color .2s;font-family:'Inter',sans-serif;
   }
   .lang-toggle:hover{color:var(--white);border-color:var(--white);}
-  .nav-links .lang-toggle{
+  .nav-actions .lang-toggle{
     padding:clamp(0.35rem,0.55vw,0.5rem) clamp(0.6rem,1.1vw,1rem);
     font-size:clamp(0.68rem,0.9vw,0.8rem);white-space:nowrap;
   }
@@ -414,7 +417,8 @@
   html[dir="rtl"] .about-stat{border-left:none;border-right:2px solid var(--mint);padding-left:0;padding-right:1rem;}
 
   @media (max-width:900px){
-    .nav-links{display:none;}
+    .nav-links-wrap{display:none;}
+    .nav-actions{display:none;}
     .hamburger{display:flex;}
   }
   @media (max-width:1100px){
@@ -466,28 +470,34 @@
 
 
 <nav id="mainNav">
-  <a href="#home" class="nav-logo">
-    <span class="dot"></span>ITOLOGY
-  </a>
-  <ul class="nav-links" id="navLinksList">
-    <li data-office-section="ad"><a href="#platform">Platform</a></li>
-    <li data-office-section="ad"><a href="#team">For Your Team</a></li>
-    <li data-office-section="ad"><a href="#governance">Governance</a></li>
-    <li data-office-section="ad"><a href="#supply">Supply Resilience</a></li>
-    <li data-office-section="ad"><a href="#services">Services & Products</a></li>
-    <li data-office-section="ad"><a href="#capabilities">Capabilities</a></li>
-    <li data-office-section="ad"><a href="#sectors">Sectors</a></li>
-    <li data-office-section="db"><a href="#dubaiservices">Services</a></li>
-    <li data-office-section="db"><a href="#industries">Industries</a></li>
-    <li data-office-section="db"><a href="#quantification">Quantification</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#ourteam">Our Team</a></li>
-    <li><a href="#partnerships">Partnerships</a></li>
-    <li><a href="#contact" class="nav-cta">Request a Briefing</a></li>
-    <li><button id="switchOffice" class="lang-toggle" type="button" onclick="showGate()">Switch Service</button></li>
-    <li><button id="langToggle" class="lang-toggle" type="button">العربية</button></li>
-  </ul>
-  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-top">
+    <a href="#home" class="nav-logo">
+      <span class="dot"></span>ITOLOGY
+    </a>
+    <div class="nav-actions" id="navActions">
+      <a href="#contact" class="nav-cta">Request a Briefing</a>
+      <button id="switchOffice" class="lang-toggle" type="button" onclick="showGate()">Switch Service</button>
+      <button id="langToggle" class="lang-toggle" type="button">العربية</button>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-links-wrap">
+    <ul class="nav-links" id="navLinksList">
+      <li data-office-section="ad"><a href="#platform">Platform</a></li>
+      <li data-office-section="ad"><a href="#team">For Your Team</a></li>
+      <li data-office-section="ad"><a href="#governance">Governance</a></li>
+      <li data-office-section="ad"><a href="#supply">Supply Resilience</a></li>
+      <li data-office-section="ad"><a href="#services">Services & Products</a></li>
+      <li data-office-section="ad"><a href="#capabilities">Capabilities</a></li>
+      <li data-office-section="ad"><a href="#sectors">Sectors</a></li>
+      <li data-office-section="db"><a href="#dubaiservices">Services</a></li>
+      <li data-office-section="db"><a href="#industries">Industries</a></li>
+      <li data-office-section="db"><a href="#quantification">Quantification</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#ourteam">Our Team</a></li>
+      <li><a href="#partnerships">Partnerships</a></li>
+    </ul>
+  </div>
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
@@ -1265,7 +1275,7 @@
   })();
 
   /* ================= LANGUAGE TOGGLE ================= */
-  const I18N_IDS = ['navLinksList','mobileMenu','officeGate','home','platform','team','valuelevel','supply','governance','capabilities','services','sectors','usecases','dubaiservices','industries','quantification','about','ourteam','partnerships','contact'];
+  const I18N_IDS = ['navLinksList','navActions','mobileMenu','officeGate','home','platform','team','valuelevel','supply','governance','capabilities','services','sectors','usecases','dubaiservices','industries','quantification','about','ourteam','partnerships','contact'];
   const originalHTML = {};
   I18N_IDS.forEach(id => {
     const el = document.getElementById(id);
@@ -1309,9 +1319,11 @@
       <li><a href="#about">من نحن</a></li>
       <li><a href="#ourteam">فريقنا</a></li>
       <li><a href="#partnerships">الشراكات</a></li>
-      <li><a href="#contact" class="nav-cta">اطلب إحاطة</a></li>
-      <li><button id="switchOffice" class="lang-toggle" type="button" onclick="showGate()">تبديل الخدمة</button></li>
-      <li><button id="langToggle" class="lang-toggle" type="button">English</button></li>
+    `,
+    navActions: `
+      <a href="#contact" class="nav-cta">اطلب إحاطة</a>
+      <button id="switchOffice" class="lang-toggle" type="button" onclick="showGate()">تبديل الخدمة</button>
+      <button id="langToggle" class="lang-toggle" type="button">English</button>
     `,
     mobileMenu: `
       <a href="#platform" onclick="closeMobile()" data-office-section="ad">المنصة</a>

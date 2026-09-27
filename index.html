@@ -440,6 +440,128 @@
     .live-signal{text-align:left;}
     .live-signal .tag{justify-content:flex-start;}
   }
+
+  /* ================================================================
+     ATNAAB-STRUCTURE ADDITIONS — hero decorations, hero-card, about
+     stats row, highlight solution cards, image-overlay industry
+     cards, CTA banner, footer
+  ================================================================ */
+
+  /* hero background texture */
+  .hero-grid{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(rgba(59,130,246,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,.08) 1px, transparent 1px);
+    background-size:56px 56px;animation:gDrift 28s linear infinite;
+  }
+  @keyframes gDrift{to{background-position:56px 56px;}}
+  .hero-orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0;}
+  .hero-orb-1{width:640px;height:640px;background:radial-gradient(circle, rgba(37,99,235,.24) 0%, transparent 66%);right:-160px;top:-200px;animation:orbP 7s ease-in-out infinite;}
+  .hero-orb-2{width:380px;height:380px;background:radial-gradient(circle, rgba(59,130,246,.14) 0%, transparent 65%);left:-80px;bottom:-80px;}
+  @keyframes orbP{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+  .hero-pts{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;}
+  .h-p{position:absolute;border-radius:50%;animation:ptR linear infinite;}
+  @keyframes ptR{0%{transform:translateY(660px);opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{transform:translateY(-20px);opacity:0;}}
+
+  /* hero two-column layout + stat card */
+  .hero-inner-grid{position:relative;z-index:2;display:grid;grid-template-columns:1fr 400px;gap:3.5rem;align-items:center;}
+  .hero-card{
+    background:rgba(255,255,255,.06);border:1px solid var(--border-dark);backdrop-filter:blur(14px);
+    padding:2rem;border-radius:16px;
+  }
+  .hc-title{font-size:0.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);
+    margin-bottom:1.3rem;padding-bottom:0.9rem;border-bottom:1px solid var(--border-dark);}
+  .hc-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.1rem;}
+  .hc-num{font-size:1.02rem;font-weight:800;color:#fff;line-height:1.3;font-family:'Sora',sans-serif;}
+  .hc-lbl{font-size:0.72rem;color:rgba(255,255,255,.45);margin-top:2px;}
+  .hc-div{height:1px;background:var(--border-dark);margin:1rem 0;}
+  .hc-tags{display:flex;flex-wrap:wrap;gap:0.45rem;}
+  .hc-tag{font-size:0.7rem;padding:0.3rem 0.7rem;border:1px solid rgba(59,130,246,.3);color:rgba(255,255,255,.62);border-radius:100px;transition:all .2s;}
+  .hc-tag:hover{border-color:var(--mint);color:var(--mint);}
+  @media (max-width:900px){ .hero-inner-grid{grid-template-columns:1fr;} .hero-card{display:none;} }
+
+  /* about stats row */
+  .about-stats-row{display:grid;grid-template-columns:repeat(3,1fr);margin-top:1.8rem;border:1px solid var(--border-light);}
+  section.dark .about-stats-row{border-color:var(--border-dark);}
+  .as-item{padding:1.2rem 1rem;text-align:center;border-right:1px solid var(--border-light);}
+  section.dark .as-item{border-color:var(--border-dark);}
+  .as-item:last-child{border-right:none;}
+  html[dir="rtl"] .as-item{border-right:none;border-left:1px solid var(--border-light);}
+  html[dir="rtl"] .as-item:last-child{border-left:none;}
+  .as-n{font-size:1.02rem;font-weight:800;color:var(--white);font-family:'Sora',sans-serif;}
+  .as-l{font-size:0.7rem;color:var(--body-dark);margin-top:3px;letter-spacing:.05em;text-transform:uppercase;}
+
+  /* highlight solution cards (sits above the detailed lists) */
+  .sol-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.6rem;}
+  .view-all{font-size:0.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mint-deep);display:inline-flex;align-items:center;gap:6px;}
+  section.dark .view-all{color:var(--mint);}
+  .sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:3rem;}
+  .sol-card{border:1px solid var(--border-light);border-radius:14px;padding:1.6rem;position:relative;overflow:hidden;transition:all .3s;background:var(--cream-1);}
+  section.dark .sol-card{border-color:var(--border-dark);background:rgba(255,255,255,.03);}
+  .sol-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(var(--dark-2),var(--mint));transform:scaleY(0);transition:.3s;}
+  .sol-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(8,24,64,.1);}
+  .sol-card:hover::before{transform:scaleY(1);}
+  .sol-num{font-size:0.7rem;font-weight:700;color:var(--mint-deep);letter-spacing:.08em;margin-bottom:0.5rem;opacity:.85;}
+  section.dark .sol-num{color:var(--mint);}
+  .sol-icon{font-size:1.5rem;margin-bottom:0.5rem;}
+  .sol-title{font-size:1.02rem;font-weight:700;color:var(--ink);margin-bottom:0.5rem;}
+  section.dark .sol-title{color:var(--white);}
+  .sol-desc{font-size:0.84rem;color:var(--body-light);line-height:1.6;}
+  section.dark .sol-desc{color:var(--body-dark);}
+  @media (max-width:900px){.sol-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:600px){.sol-grid{grid-template-columns:1fr;}}
+
+  /* image-overlay industry / sector cards */
+  .ind-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2rem;}
+  .ind-card{position:relative;overflow:hidden;aspect-ratio:16/11;border-radius:12px;border:1px solid transparent;transition:border-color .3s;display:block;}
+  .ind-card:hover{border-color:var(--mint);}
+  .ind-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+  .ind-card:hover img{transform:scale(1.07);}
+  .ind-ov{position:absolute;inset:0;background:linear-gradient(to top, rgba(8,24,64,.94) 0%, rgba(8,24,64,.2) 55%, transparent 100%);padding:1.1rem;display:flex;flex-direction:column;justify-content:flex-end;}
+  .ind-cat{font-size:0.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mint);margin-bottom:3px;}
+  .ind-name{font-size:1.02rem;font-weight:800;color:#fff;}
+  .ind-desc{font-size:0.78rem;color:rgba(255,255,255,.6);margin-top:4px;line-height:1.5;}
+  @media (max-width:900px){.ind-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:480px){.ind-grid{grid-template-columns:1fr;}}
+
+  /* CTA banner */
+  #cta{background:linear-gradient(118deg, var(--dark) 0%, var(--dark-2) 55%, var(--dark-3) 100%);position:relative;overflow:hidden;color:var(--white);}
+  #cta::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(59,130,246,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,.05) 1px, transparent 1px);background-size:44px 44px;}
+  .cta-glow{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle, rgba(37,99,235,.22) 0%, transparent 60%);right:-80px;top:50%;transform:translateY(-50%);pointer-events:none;}
+  .cta-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:2.5rem;flex-wrap:wrap;}
+  .cta-h2{font-size:clamp(1.7rem,3.2vw,2.6rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:0.7rem;}
+  .cta-sub{font-size:0.98rem;color:var(--body-dark);max-width:440px;line-height:1.7;}
+  .cta-btns{display:flex;gap:1rem;flex-wrap:wrap;flex-shrink:0;}
+  @media (max-width:768px){.cta-inner{flex-direction:column;align-items:flex-start;}}
+
+  /* footer — 4 column */
+  .site-footer{background:var(--dark);padding:4.5rem 0 2rem;border-top:1px solid var(--border-dark);}
+  .footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:2.6rem;padding-bottom:2.6rem;border-bottom:1px solid var(--border-dark);margin-bottom:1.6rem;}
+  .ft-name{font-size:1.15rem;font-weight:800;letter-spacing:.04em;color:var(--white);margin-bottom:0.9rem;display:flex;align-items:center;gap:8px;}
+  .ft-desc{font-size:0.86rem;color:var(--body-dark);line-height:1.7;margin-bottom:1rem;max-width:260px;}
+  .ft-ci{display:flex;align-items:flex-start;gap:8px;font-size:0.86rem;color:var(--body-dark);margin-bottom:0.55rem;}
+  .ft-ci a{color:var(--body-dark);transition:color .2s;}
+  .ft-ci a:hover{color:var(--mint);}
+  .ft-socs{display:flex;gap:8px;margin-top:1.1rem;}
+  .ft-soc{width:32px;height:32px;border:1px solid var(--border-dark);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--body-dark);font-size:0.72rem;font-weight:700;transition:all .2s;}
+  .ft-soc:hover{background:var(--mint);border-color:var(--mint);color:var(--dark);}
+  .ft-col-t{font-size:0.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--white);margin-bottom:1.1rem;padding-bottom:0.7rem;border-bottom:2px solid var(--mint);display:inline-block;}
+  .ft-links{list-style:none;}
+  .ft-links li{margin-bottom:0.55rem;}
+  .ft-links a{font-size:0.84rem;color:var(--body-dark);transition:color .2s;}
+  .ft-links a:hover{color:var(--white);}
+  .ft-nl-t{font-size:0.84rem;color:var(--body-dark);line-height:1.6;margin-bottom:0.9rem;}
+  .ft-nl-f{display:flex;}
+  .ft-nl-i{flex:1;padding:0.65rem 0.8rem;background:rgba(255,255,255,.05);border:1px solid var(--border-dark);border-right:none;color:var(--white);font-family:'Inter',sans-serif;font-size:0.84rem;outline:none;border-radius:8px 0 0 8px;}
+  .ft-nl-i::placeholder{color:var(--body-dark);}
+  .ft-nl-b{padding:0.65rem 0.9rem;background:var(--mint-deep);border:none;cursor:pointer;color:#fff;border-radius:0 8px 8px 0;transition:background .2s;}
+  .ft-nl-b:hover{background:var(--mint);}
+  .footer-bot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.8rem;}
+  .ft-copy{font-size:0.78rem;color:var(--body-dark);}
+  .ft-leg{display:flex;gap:1.2rem;}
+  .ft-leg a{font-size:0.78rem;color:var(--body-dark);transition:color .2s;}
+  .ft-leg a:hover{color:var(--white);}
+  @media (max-width:900px){.footer-top{grid-template-columns:1fr 1fr;}}
+  @media (max-width:480px){.footer-top{grid-template-columns:1fr;}}
 </style>
 </head>
 
@@ -521,24 +643,44 @@
 
 <!-- HERO -->
 <section id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-pts" id="heroPts"></div>
+
   <div class="hero-slide" data-office-section="ad">
     <div class="hero-bg-img"></div>
     <div class="wrap hero-inner">
-      <span class="office-pill reveal visible">Abu Dhabi</span>
-      <div class="eyebrow reveal visible">Energy Assets / Quantitative Risk Economics</div>
-      <h1 class="reveal visible">Make every risk decision <span class="mint">accountable to the asset.</span></h1>
-      <p class="hero-desc reveal visible">ITology connects subsurface, reservoir, geospatial, operational, and supply-chain expertise with FAIR-led quantification to show how uncertainty, route disruption, and OT/IT threats can affect production, integrity, continuity, and capital — and which treatments deserve action.</p>
-      <div class="hero-actions reveal visible">
-        <a href="#platform" class="btn-primary">See the decision pathway
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="#contact" class="btn-ghost">Request an executive briefing</a>
-      </div>
-      <div class="hero-bottom reveal visible">
-        <span class="field-tag">Field / IT-OT / Risk / Decision</span>
-        <div class="live-signal">
-          <div class="tag"><span class="live-dot"></span>Live Signal</div>
-          <p>From asset dependency to a defensible capital decision.</p>
+      <div class="hero-inner-grid">
+        <div>
+          <span class="office-pill reveal visible">Abu Dhabi</span>
+          <div class="eyebrow reveal visible">Energy Assets / Quantitative Risk Economics</div>
+          <h1 class="reveal visible">Make every risk decision <span class="mint">accountable to the asset.</span></h1>
+          <p class="hero-desc reveal visible">ITology connects subsurface, reservoir, geospatial, operational, and supply-chain expertise with FAIR-led quantification to show how uncertainty, route disruption, and OT/IT threats can affect production, integrity, continuity, and capital — and which treatments deserve action.</p>
+          <div class="hero-actions reveal visible">
+            <a href="#platform" class="btn-primary">See the decision pathway
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="#contact" class="btn-ghost">Request an executive briefing</a>
+          </div>
+        </div>
+        <div class="hero-card reveal visible">
+          <div class="hc-title">Abu Dhabi at a Glance</div>
+          <div class="hc-stats">
+            <div><div class="hc-num">22+ Years</div><div class="hc-lbl">Reservoir Engineering</div></div>
+            <div><div class="hc-num">FAIR-ARCHRIQ</div><div class="hc-lbl">Flagship Platform</div></div>
+            <div><div class="hc-num">Abu Dhabi</div><div class="hc-lbl">Headquartered</div></div>
+            <div><div class="hc-num">IT/OT + FAIR</div><div class="hc-lbl">Risk Quantification</div></div>
+          </div>
+          <div class="hc-div"></div>
+          <div class="hc-tags">
+            <a href="#platform" class="hc-tag">Reservoir Engineering</a>
+            <a href="#governance" class="hc-tag">OT/IT Governance</a>
+            <a href="#supply" class="hc-tag">Supply Chain Resilience</a>
+            <a href="#sectors" class="hc-tag">Asset Governance</a>
+            <a href="#capabilities" class="hc-tag">Energy Architecture</a>
+            <a href="#usecases" class="hc-tag">Geoscience &amp; Subsurface</a>
+          </div>
         </div>
       </div>
     </div>
@@ -547,21 +689,36 @@
   <div class="hero-slide" data-office-section="db">
     <div class="hero-bg-img hero-bg-img-2"></div>
     <div class="wrap hero-inner">
-      <span class="office-pill reveal visible">Dubai</span>
-      <div class="eyebrow reveal visible">AI / Cybersecurity / Data &amp; Analytics</div>
-      <h1 class="reveal visible">Secure the systems. <span class="mint">Scale the intelligence.</span></h1>
-      <p class="hero-desc reveal visible">From Dubai, ITology helps organizations build secure, AI-ready data foundations — protecting critical systems, uncovering insight from complex data, and turning analytics into a genuine competitive advantage.</p>
-      <div class="hero-actions reveal visible">
-        <a href="#dubaiservices" class="btn-primary">Explore AI &amp; Data Services
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="#contact" class="btn-ghost">Talk to our Dubai team</a>
-      </div>
-      <div class="hero-bottom reveal visible">
-        <span class="field-tag">AI / Cybersecurity / Data / Analytics</span>
-        <div class="live-signal">
-          <div class="tag"><span class="live-dot"></span>Live Signal</div>
-          <p>From raw data to a defensible AI and security roadmap.</p>
+      <div class="hero-inner-grid">
+        <div>
+          <span class="office-pill reveal visible">Dubai</span>
+          <div class="eyebrow reveal visible">AI / Cybersecurity / Data &amp; Analytics</div>
+          <h1 class="reveal visible">Secure the systems. <span class="mint">Scale the intelligence.</span></h1>
+          <p class="hero-desc reveal visible">From Dubai, ITology helps organizations build secure, AI-ready data foundations — protecting critical systems, uncovering insight from complex data, and turning analytics into a genuine competitive advantage.</p>
+          <div class="hero-actions reveal visible">
+            <a href="#dubaiservices" class="btn-primary">Explore AI &amp; Data Services
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="#contact" class="btn-ghost">Talk to our Dubai team</a>
+          </div>
+        </div>
+        <div class="hero-card reveal visible">
+          <div class="hc-title">Dubai at a Glance</div>
+          <div class="hc-stats">
+            <div><div class="hc-num">AI + Cyber</div><div class="hc-lbl">Core Practice</div></div>
+            <div><div class="hc-num">IT/OT</div><div class="hc-lbl">CyberSecurity Quantification</div></div>
+            <div><div class="hc-num">Dubai</div><div class="hc-lbl">Headquartered</div></div>
+            <div><div class="hc-num">Data &amp; BI</div><div class="hc-lbl">Analytics Practice</div></div>
+          </div>
+          <div class="hc-div"></div>
+          <div class="hc-tags">
+            <a href="#dubaiservices" class="hc-tag">AI Strategy &amp; Advisory</a>
+            <a href="#dubaiservices" class="hc-tag">Cybersecurity &amp; Threat Mgmt</a>
+            <a href="#quantification" class="hc-tag">Cyber Risk Quantification</a>
+            <a href="#industries" class="hc-tag">Data Engineering</a>
+            <a href="#quantification" class="hc-tag">Enterprise Architecture</a>
+            <a href="#dubaiservices" class="hc-tag">Analytics &amp; BI</a>
+          </div>
         </div>
       </div>
     </div>
@@ -804,9 +961,52 @@
       </div>
       <p class="lede reveal">From geoscience, drilling, and reservoir studies to cyber-risk economics, ITology combines energy-domain expertise with practical data and digital tools that help leaders protect value, reduce waste, and direct decisions with greater confidence.</p>
     </div>
+
+    <div class="sol-head reveal" style="margin-top:3rem;">
+      <div></div>
+      <a href="#services-detail" class="view-all">Full services &amp; products list &#8594;</a>
+    </div>
+    <div class="sol-grid reveal">
+      <div class="sol-card">
+        <div class="sol-num">01 — Flagship Platform</div>
+        <div class="sol-icon">🛡️</div>
+        <div class="sol-title">FAIR-ARCHRIQ</div>
+        <div class="sol-desc">Quantitative risk intelligence connecting threat scenarios, IT/OT dependencies, loss distributions, and treatment economics.</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">02 — Reservoir &amp; Subsurface</div>
+        <div class="sol-icon">⛏️</div>
+        <div class="sol-title">Reservoir Management &amp; Simulation</div>
+        <div class="sol-desc">Reservoir performance, simulation, and development planning that turn subsurface evidence into defensible capital decisions.</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">03 — Drilling &amp; Wells</div>
+        <div class="sol-icon">🛠️</div>
+        <div class="sol-title">Drilling &amp; Well Delivery</div>
+        <div class="sol-desc">Connecting well planning, geotechnical evidence, execution risk, cost, safety, and delivery performance from plan to production.</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">04 — Supply &amp; Logistics</div>
+        <div class="sol-icon">🚢</div>
+        <div class="sol-title">Supply Chain &amp; Route Resilience</div>
+        <div class="sol-desc">Scenario comparisons of maritime, pipeline, road, rail, port, and storage dependencies before and after a route disruption.</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">05 — Governance &amp; Architecture</div>
+        <div class="sol-icon">🏗️</div>
+        <div class="sol-title">Energy Enterprise Architecture</div>
+        <div class="sol-desc">Governing the relationships between capabilities, data, applications, IT/OT, infrastructure, and asset operations.</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">06 — Data &amp; AI</div>
+        <div class="sol-icon">📊</div>
+        <div class="sol-title">Large-Data Engineering &amp; AI Enablement</div>
+        <div class="sol-desc">Organizing and quality-checking large volumes of spatial, subsurface, and operational data for AI-ready, governed decisions.</div>
+      </div>
+    </div>
   </div>
 
-  <div class="wrap sp-grid" style="margin-top:2rem;">
+  <div class="wrap sp-grid" style="margin-top:2rem;" id="services-detail">
     <div class="sp-col services">
       <div class="sp-head"><span class="sp-eyebrow">Services / Advisory</span></div>
       <div class="service-list">
@@ -863,12 +1063,27 @@
       <p class="lede reveal">Our first wedge is Oil &amp; Gas: operators, asset teams, finance leaders, insurers, and critical suppliers working across interconnected, high-consequence environments.</p>
     </div>
 
-    <div class="sector-grid reveal" style="margin-top:3rem;">
-      <div class="sector-item"><div class="s-num">01</div><h3>Oil &amp; Gas Operators</h3><span class="arrow">&#8594;</span></div>
-      <div class="sector-item"><div class="s-num">02</div><h3>Energy &amp; Utilities</h3><span class="arrow">&#8594;</span></div>
-      <div class="sector-item"><div class="s-num">03</div><h3>Industrial Operations</h3><span class="arrow">&#8594;</span></div>
-      <div class="sector-item"><div class="s-num">04</div><h3>Renewable Energy</h3><span class="arrow">&#8594;</span></div>
-      <div class="sector-item"><div class="s-num">05</div><h3>Government Infrastructure</h3><span class="arrow">&#8594;</span></div>
+    <div class="ind-grid reveal">
+      <div class="ind-card">
+        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=800&auto=format&fit=crop" alt="Oil &amp; Gas Operators">
+        <div class="ind-ov"><div class="ind-cat">01</div><div class="ind-name">Oil &amp; Gas Operators</div></div>
+      </div>
+      <div class="ind-card">
+        <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=800&auto=format&fit=crop" alt="Energy &amp; Utilities">
+        <div class="ind-ov"><div class="ind-cat">02</div><div class="ind-name">Energy &amp; Utilities</div></div>
+      </div>
+      <div class="ind-card">
+        <img src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=800&auto=format&fit=crop" alt="Industrial Operations">
+        <div class="ind-ov"><div class="ind-cat">03</div><div class="ind-name">Industrial Operations</div></div>
+      </div>
+      <div class="ind-card">
+        <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=800&auto=format&fit=crop" alt="Renewable Energy">
+        <div class="ind-ov"><div class="ind-cat">04</div><div class="ind-name">Renewable Energy</div></div>
+      </div>
+      <div class="ind-card">
+        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop" alt="Government Infrastructure">
+        <div class="ind-ov"><div class="ind-cat">05</div><div class="ind-name">Government Infrastructure</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -910,40 +1125,46 @@
     </div>
 
 
-    <div class="card-grid cols-3 reveal" style="margin-top:3rem;">
-      <div class="g-card">
-        <span class="gc-eyebrow">AI Strategy &amp; Advisory</span>
-        <h3 style="margin-top:1.2rem;">Decide where AI actually pays off.</h3>
-        <p>Roadmaps, use-case prioritization, and governance so AI investment lands on measurable business outcomes.</p>
+    <div class="sol-grid reveal" style="margin-top:3rem;margin-bottom:0;">
+      <div class="sol-card">
+        <div class="sol-num">01 — Strategy</div>
+        <div class="sol-icon">🧭</div>
+        <div class="sol-title">AI Strategy &amp; Advisory</div>
+        <div class="sol-desc">Roadmaps, use-case prioritization, and governance so AI investment lands on measurable business outcomes.</div>
       </div>
-      <div class="g-card">
-        <span class="gc-eyebrow">Machine Learning &amp; Automation</span>
-        <h3 style="margin-top:1.2rem;">Turn repetitive work into models that run themselves.</h3>
-        <p>Custom ML models and workflow automation that reduce manual effort and scale with your operation.</p>
+      <div class="sol-card">
+        <div class="sol-num">02 — Automation</div>
+        <div class="sol-icon">🤖</div>
+        <div class="sol-title">Machine Learning &amp; Automation</div>
+        <div class="sol-desc">Custom ML models and workflow automation that reduce manual effort and scale with your operation.</div>
       </div>
-      <div class="g-card">
-        <span class="gc-eyebrow">Cybersecurity &amp; Threat Management</span>
-        <h3 style="margin-top:1.2rem;">Know your exposure before someone else finds it.</h3>
-        <p>Threat assessments, penetration testing, and continuous monitoring built around real attacker behavior.</p>
+      <div class="sol-card">
+        <div class="sol-num">03 — Cyber Defense</div>
+        <div class="sol-icon">🔐</div>
+        <div class="sol-title">Cybersecurity &amp; Threat Management</div>
+        <div class="sol-desc">Threat assessments, penetration testing, and continuous monitoring built around real attacker behavior.</div>
       </div>
-      <div class="g-card">
-        <span class="gc-eyebrow">Security Architecture &amp; Governance</span>
-        <h3 style="margin-top:1.2rem;">Build security in, not bolted on.</h3>
-        <p>Zero-trust architecture, policy frameworks, and compliance programs designed around how your teams actually work.</p>
+      <div class="sol-card">
+        <div class="sol-num">04 — Architecture</div>
+        <div class="sol-icon">🏛️</div>
+        <div class="sol-title">Security Architecture &amp; Governance</div>
+        <div class="sol-desc">Zero-trust architecture, policy frameworks, and compliance programs designed around how your teams actually work.</div>
       </div>
-      <div class="g-card">
-        <span class="gc-eyebrow">Data Engineering &amp; Integration</span>
-        <h3 style="margin-top:1.2rem;">Get your data into one usable shape.</h3>
-        <p>Pipelines, warehousing, and integration that connect fragmented systems into a single reliable source of truth.</p>
+      <div class="sol-card">
+        <div class="sol-num">05 — Data</div>
+        <div class="sol-icon">🗄️</div>
+        <div class="sol-title">Data Engineering &amp; Integration</div>
+        <div class="sol-desc">Pipelines, warehousing, and integration that connect fragmented systems into a single reliable source of truth.</div>
       </div>
-      <div class="g-card">
-        <span class="gc-eyebrow">Analytics &amp; Business Intelligence</span>
-        <h3 style="margin-top:1.2rem;">See what's happening before it costs you.</h3>
-        <p>Dashboards and reporting that turn raw numbers into decisions your teams can act on immediately.</p>
+      <div class="sol-card">
+        <div class="sol-num">06 — Analytics</div>
+        <div class="sol-icon">📈</div>
+        <div class="sol-title">Analytics &amp; Business Intelligence</div>
+        <div class="sol-desc">Dashboards and reporting that turn raw numbers into decisions your teams can act on immediately.</div>
       </div>
     </div>
 
-    <a href="#contact" class="text-link" style="margin-top:2.5rem;display:inline-flex;">Talk to our Dubai team &#8594;</a>
+    <a href="#contact" class="text-link" style="margin-top:1rem;display:inline-flex;">Talk to our Dubai team &#8594;</a>
   </div>
 </section>
 
@@ -958,46 +1179,38 @@
       <p class="lede reveal">Deep domain expertise across the industries shaping the UAE's digital economy.</p>
     </div>
 
-    <div class="card-grid cols-4 reveal" style="margin-top:3rem;">
-      <div class="g-card">
-        <div class="g-card-icon">🏦</div>
-        <h3>Banking &amp; Finance</h3>
-        <p>Secure platforms, compliance frameworks, and fintech integrations.</p>
+    <div class="ind-grid reveal">
+      <div class="ind-card">
+        <img src="https://images.unsplash.com/photo-1554774853-719586f82d77?q=80&w=800&auto=format&fit=crop" alt="Banking &amp; Finance">
+        <div class="ind-ov"><div class="ind-cat">Finance</div><div class="ind-name">Banking &amp; Finance</div><div class="ind-desc">Secure platforms, compliance frameworks, and fintech integrations.</div></div>
       </div>
-      <div class="g-card">
-        <div class="g-card-icon">🏥</div>
-        <h3>Healthcare</h3>
-        <p>Digital health systems and patient data management solutions.</p>
+      <div class="ind-card">
+        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&auto=format&fit=crop" alt="Healthcare">
+        <div class="ind-ov"><div class="ind-cat">Health</div><div class="ind-name">Healthcare</div><div class="ind-desc">Digital health systems and patient data management solutions.</div></div>
       </div>
-      <div class="g-card">
-        <div class="g-card-icon">🏗️</div>
-        <h3>Real Estate</h3>
-        <p>PropTech platforms, smart building systems, and project tools.</p>
+      <div class="ind-card">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop" alt="Real Estate">
+        <div class="ind-ov"><div class="ind-cat">Property</div><div class="ind-name">Real Estate</div><div class="ind-desc">PropTech platforms, smart building systems, and project tools.</div></div>
       </div>
-      <div class="g-card">
-        <div class="g-card-icon">🛒</div>
-        <h3>Retail &amp; E-Commerce</h3>
-        <p>Omnichannel platforms, ERP integration, and CX optimization.</p>
+      <div class="ind-card">
+        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=800&auto=format&fit=crop" alt="Retail &amp; E-Commerce">
+        <div class="ind-ov"><div class="ind-cat">Retail</div><div class="ind-name">Retail &amp; E-Commerce</div><div class="ind-desc">Omnichannel platforms, ERP integration, and CX optimization.</div></div>
       </div>
-      <div class="g-card">
-        <div class="g-card-icon">🏭</div>
-        <h3>Manufacturing</h3>
-        <p>Supply chain digitalization, IoT integration, and automation.</p>
+      <div class="ind-card">
+        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop" alt="Manufacturing">
+        <div class="ind-ov"><div class="ind-cat">Industry</div><div class="ind-name">Manufacturing</div><div class="ind-desc">Supply chain digitalization, IoT integration, and automation.</div></div>
       </div>
-      <div class="g-card">
-        <div class="g-card-icon">🎓</div>
-        <h3>Education</h3>
-        <p>Learning management systems and digital campus infrastructure.</p>
+      <div class="ind-card">
+        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop" alt="Education">
+        <div class="ind-ov"><div class="ind-cat">Education</div><div class="ind-name">Education</div><div class="ind-desc">Learning management systems and digital campus infrastructure.</div></div>
       </div>
-      <div class="g-card">
-        <div class="g-card-icon">⚡</div>
-        <h3>Energy &amp; Utilities</h3>
-        <p>Smart grid tech, asset management, and operational analytics.</p>
+      <div class="ind-card">
+        <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=800&auto=format&fit=crop" alt="Energy &amp; Utilities">
+        <div class="ind-ov"><div class="ind-cat">Utilities</div><div class="ind-name">Energy &amp; Utilities</div><div class="ind-desc">Smart grid tech, asset management, and operational analytics.</div></div>
       </div>
-      <div class="g-card">
-        <div class="g-card-icon">🏛️</div>
-        <h3>Government</h3>
-        <p>e-Government solutions and smart city infrastructure platforms.</p>
+      <div class="ind-card">
+        <img src="https://images.unsplash.com/photo-1555848962-6e79363ec58f?q=80&w=800&auto=format&fit=crop" alt="Government">
+        <div class="ind-ov"><div class="ind-cat">Public Sector</div><div class="ind-name">Government</div><div class="ind-desc">e-Government solutions and smart city infrastructure platforms.</div></div>
       </div>
     </div>
   </div>
@@ -1057,7 +1270,14 @@
       <div class="about-copy reveal">
         <p>ITology was founded by <strong>Eng. Omar Hilal Saeed Alzaabi</strong>, a UAE national and former Oil &amp; Gas leader whose career across ADNOC Onshore spans reservoir management, reservoir simulation, technical studies, and efficiency experience.</p>
         <p>That experience shapes how we build: grounded in the asset, fluent in the operation, and focused on translating technical uncertainty into financial clarity for business, risk, and investment leaders.</p>
-        <a href="#contact" class="text-link">Meet the founder &#8594;</a>
+        <div class="about-stats-row">
+          <div class="as-item"><div class="as-n">22+ Years</div><div class="as-l">Reservoir Engineering</div></div>
+          <div class="as-item"><div class="as-n">2 Offices</div><div class="as-l">Abu Dhabi &amp; Dubai</div></div>
+          <div class="as-item"><div class="as-n">Energy + AI/Cyber</div><div class="as-l">Dual Practice</div></div>
+        </div>
+        <div style="margin-top:1.6rem;">
+          <a href="#contact" class="text-link">Meet the founder &#8594;</a>
+        </div>
       </div>
     </div>
   </div>
@@ -1189,22 +1409,91 @@
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="nav-logo">
-    <span class="dot"></span>ITOLOGY
+<!-- CTA BANNER -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="wrap">
+    <div class="cta-inner">
+      <div class="reveal" data-office-section="ad">
+        <h2 class="cta-h2">Ready to make your next risk decision <em style="color:var(--mint);font-style:normal;">accountable?</em></h2>
+        <p class="cta-sub">From reservoir engineering to IT/OT risk quantification, ITology turns technical uncertainty into evidence your board can act on. Let's discuss what's possible for your asset.</p>
+      </div>
+      <div class="reveal" data-office-section="db">
+        <h2 class="cta-h2">Ready to secure your systems and <em style="color:var(--mint);font-style:normal;">scale your intelligence?</em></h2>
+        <p class="cta-sub">From AI strategy to cybersecurity economics, our Dubai practice turns complex data and risk into a real operating advantage. Let's discuss what's possible for your organization.</p>
+      </div>
+      <div class="cta-btns reveal">
+        <a href="#contact" class="btn-primary">Request a Briefing</a>
+        <a href="#partnerships" class="btn-ghost" style="border-color:rgba(255,255,255,.45);color:#fff;">Our Partnerships</a>
+      </div>
+    </div>
   </div>
-  <p class="footer-text">&copy; 2026 ITology For Information Technology Consultants Co. L.L.C — Abu Dhabi, UAE</p>
-  <div class="footer-links">
-    <a href="#home">Home</a>
-    <a href="#platform">Platform</a>
-    <a href="#services">Services</a>
-    <a href="#sectors">Sectors</a>
-    <a href="#contact">Contact</a>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="ft-name"><span class="dot" style="width:8px;height:8px;background:var(--mint);border-radius:50%;display:inline-block;"></span>ITOLOGY</div>
+        <p class="ft-desc">Connecting energy-domain engineering and AI, cybersecurity &amp; data expertise across two dedicated practices — Abu Dhabi and Dubai.</p>
+        <div class="ft-ci"><span>📍</span><span>Abu Dhabi &amp; Dubai, UAE</span></div>
+        <div class="ft-ci"><span>✉️</span><span><a href="mailto:info@itology.ae">info@itology.ae</a></span></div>
+        <div class="ft-socs">
+          <a href="#" class="ft-soc" title="LinkedIn">in</a>
+          <a href="#" class="ft-soc" title="X">𝕏</a>
+        </div>
+      </div>
+      <div data-office-section="ad">
+        <div class="ft-col-t">Abu Dhabi</div>
+        <ul class="ft-links">
+          <li><a href="#platform">Platform</a></li>
+          <li><a href="#services">Services &amp; Products</a></li>
+          <li><a href="#sectors">Sectors</a></li>
+          <li><a href="#governance">Governance</a></li>
+        </ul>
+      </div>
+      <div data-office-section="db">
+        <div class="ft-col-t">Dubai</div>
+        <ul class="ft-links">
+          <li><a href="#dubaiservices">Services</a></li>
+          <li><a href="#industries">Industries</a></li>
+          <li><a href="#quantification">Quantification</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-t">Company</div>
+        <ul class="ft-links">
+          <li><a href="#about">About ITology</a></li>
+          <li><a href="#ourteam">Our Team</a></li>
+          <li><a href="#partnerships">Partnerships</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bot">
+      <div class="ft-copy">&copy; 2026 ITology For Information Technology Consultants Co. L.L.C — Abu Dhabi &amp; Dubai, UAE</div>
+      <div class="ft-leg">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
   </div>
 </footer>
 
 <script>
+  /* Hero particles (Atnaab-style floating dots behind the hero) */
+  function spawnHeroParticles(){
+    const pt = document.getElementById('heroPts');
+    if (!pt || pt.children.length) return;
+    for (let i = 0; i < 24; i++){
+      const p = document.createElement('div'); p.className = 'h-p';
+      p.style.cssText = `left:${Math.random()*100}%;width:${1+Math.random()*2.5}px;height:${1+Math.random()*2.5}px;animation-duration:${8+Math.random()*10}s;animation-delay:${Math.random()*14}s;background:${['rgba(37,99,235,.7)','rgba(59,130,246,.7)','rgba(147,197,253,.5)'][Math.floor(Math.random()*3)]}`;
+      pt.appendChild(p);
+    }
+  }
+  spawnHeroParticles();
+
   const nav = document.getElementById('mainNav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
 
@@ -1275,7 +1564,7 @@
   })();
 
   /* ================= LANGUAGE TOGGLE ================= */
-  const I18N_IDS = ['navLinksList','navActions','mobileMenu','officeGate','home','platform','team','valuelevel','supply','governance','capabilities','services','sectors','usecases','dubaiservices','industries','quantification','about','ourteam','partnerships','contact'];
+  const I18N_IDS = ['navLinksList','navActions','mobileMenu','officeGate','home','platform','team','valuelevel','supply','governance','capabilities','services','sectors','usecases','dubaiservices','industries','quantification','about','ourteam','partnerships','contact','cta'];
   const originalHTML = {};
   I18N_IDS.forEach(id => {
     const el = document.getElementById(id);
@@ -1344,24 +1633,44 @@
       <button id="langToggleMobile" class="lang-toggle" type="button" style="align-self:flex-start;">English</button>
     `,
     home: `
+      <div class="hero-grid"></div>
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-pts" id="heroPts"></div>
+
       <div class="hero-slide" data-office-section="ad">
         <div class="hero-bg-img"></div>
         <div class="wrap hero-inner">
-          <span class="office-pill reveal visible">أبوظبي</span>
-          <div class="eyebrow reveal visible">الأصول الطاقوية / اقتصاديات المخاطر الكمية</div>
-          <h1 class="reveal visible">اجعل كل قرار للمخاطر <span class="mint">خاضعاً للمساءلة تجاه الأصل.</span></h1>
-          <p class="hero-desc reveal visible">تربط آيتولوجي الخبرات دون السطحية والمكامن والجغرافيا المكانية والتشغيل وسلسلة الإمداد بتقييم كمي قائم على منهجية FAIR، لبيان كيف يمكن لعدم اليقين واضطراب المسارات وتهديدات التقنية التشغيلية والمعلوماتية أن تؤثر على الإنتاج والسلامة والاستمرارية ورأس المال — وأي المعالجات تستحق اتخاذ إجراء.</p>
-          <div class="hero-actions reveal visible">
-            <a href="#platform" class="btn-primary">استعرض مسار القرار
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <a href="#contact" class="btn-ghost">اطلب إحاطة تنفيذية</a>
-          </div>
-          <div class="hero-bottom reveal visible">
-            <span class="field-tag">الحقل / التقنية التشغيلية والمعلوماتية / المخاطر / القرار</span>
-            <div class="live-signal">
-              <div class="tag"><span class="live-dot"></span>إشارة حيّة</div>
-              <p>من الاعتماد على الأصل إلى قرار استثماري قابل للدفاع عنه.</p>
+          <div class="hero-inner-grid">
+            <div>
+              <span class="office-pill reveal visible">أبوظبي</span>
+              <div class="eyebrow reveal visible">الأصول الطاقوية / اقتصاديات المخاطر الكمية</div>
+              <h1 class="reveal visible">اجعل كل قرار للمخاطر <span class="mint">خاضعاً للمساءلة تجاه الأصل.</span></h1>
+              <p class="hero-desc reveal visible">تربط آيتولوجي الخبرات دون السطحية والمكامن والجغرافيا المكانية والتشغيل وسلسلة الإمداد بتقييم كمي قائم على منهجية FAIR، لبيان كيف يمكن لعدم اليقين واضطراب المسارات وتهديدات التقنية التشغيلية والمعلوماتية أن تؤثر على الإنتاج والسلامة والاستمرارية ورأس المال — وأي المعالجات تستحق اتخاذ إجراء.</p>
+              <div class="hero-actions reveal visible">
+                <a href="#platform" class="btn-primary">استعرض مسار القرار
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="#contact" class="btn-ghost">اطلب إحاطة تنفيذية</a>
+              </div>
+            </div>
+            <div class="hero-card reveal visible">
+              <div class="hc-title">أبوظبي في لمحة</div>
+              <div class="hc-stats">
+                <div><div class="hc-num">22+ عاماً</div><div class="hc-lbl">هندسة المكامن</div></div>
+                <div><div class="hc-num">FAIR-ARCHRIQ</div><div class="hc-lbl">المنصة الرئيسية</div></div>
+                <div><div class="hc-num">أبوظبي</div><div class="hc-lbl">المقر الرئيسي</div></div>
+                <div><div class="hc-num">FAIR + التقنية التشغيلية</div><div class="hc-lbl">تقييم كمي للمخاطر</div></div>
+              </div>
+              <div class="hc-div"></div>
+              <div class="hc-tags">
+                <a href="#platform" class="hc-tag">هندسة المكامن</a>
+                <a href="#governance" class="hc-tag">حوكمة التقنية التشغيلية والمعلوماتية</a>
+                <a href="#supply" class="hc-tag">مرونة سلسلة الإمداد</a>
+                <a href="#sectors" class="hc-tag">حوكمة الأصول</a>
+                <a href="#capabilities" class="hc-tag">معمارية الطاقة</a>
+                <a href="#usecases" class="hc-tag">الجيولوجيا وما دون السطح</a>
+              </div>
             </div>
           </div>
         </div>
@@ -1370,21 +1679,36 @@
       <div class="hero-slide" data-office-section="db">
         <div class="hero-bg-img hero-bg-img-2"></div>
         <div class="wrap hero-inner">
-          <span class="office-pill reveal visible">دبي</span>
-          <div class="eyebrow reveal visible">الذكاء الاصطناعي / الأمن السيبراني / البيانات والتحليلات</div>
-          <h1 class="reveal visible">أمّن الأنظمة. <span class="mint">وسّع نطاق الذكاء.</span></h1>
-          <p class="hero-desc reveal visible">من مكتبها في دبي، تساعد آيتولوجي المؤسسات على بناء أسس بيانات آمنة وجاهزة للذكاء الاصطناعي — بحماية الأنظمة الحرجة، واستخلاص رؤى من بيانات معقدة، وتحويل التحليلات إلى ميزة تنافسية حقيقية.</p>
-          <div class="hero-actions reveal visible">
-            <a href="#dubaiservices" class="btn-primary">استكشف خدمات الذكاء الاصطناعي والبيانات
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <a href="#contact" class="btn-ghost">تحدّث مع فريق دبي</a>
-          </div>
-          <div class="hero-bottom reveal visible">
-            <span class="field-tag">الذكاء الاصطناعي / الأمن السيبراني / البيانات / التحليلات</span>
-            <div class="live-signal">
-              <div class="tag"><span class="live-dot"></span>إشارة حيّة</div>
-              <p>من البيانات الخام إلى خارطة طريق آمنة ومدعومة بالذكاء الاصطناعي.</p>
+          <div class="hero-inner-grid">
+            <div>
+              <span class="office-pill reveal visible">دبي</span>
+              <div class="eyebrow reveal visible">الذكاء الاصطناعي / الأمن السيبراني / البيانات والتحليلات</div>
+              <h1 class="reveal visible">أمّن الأنظمة. <span class="mint">وسّع نطاق الذكاء.</span></h1>
+              <p class="hero-desc reveal visible">من مكتبها في دبي، تساعد آيتولوجي المؤسسات على بناء أسس بيانات آمنة وجاهزة للذكاء الاصطناعي — بحماية الأنظمة الحرجة، واستخلاص رؤى من بيانات معقدة، وتحويل التحليلات إلى ميزة تنافسية حقيقية.</p>
+              <div class="hero-actions reveal visible">
+                <a href="#dubaiservices" class="btn-primary">استكشف خدمات الذكاء الاصطناعي والبيانات
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="#contact" class="btn-ghost">تحدّث مع فريق دبي</a>
+              </div>
+            </div>
+            <div class="hero-card reveal visible">
+              <div class="hc-title">دبي في لمحة</div>
+              <div class="hc-stats">
+                <div><div class="hc-num">الذكاء الاصطناعي + الأمن السيبراني</div><div class="hc-lbl">الممارسة الأساسية</div></div>
+                <div><div class="hc-num">IT/OT</div><div class="hc-lbl">القياس الكمي للأمن السيبراني</div></div>
+                <div><div class="hc-num">دبي</div><div class="hc-lbl">المقر الرئيسي</div></div>
+                <div><div class="hc-num">البيانات والتحليلات</div><div class="hc-lbl">ممارسة التحليلات</div></div>
+              </div>
+              <div class="hc-div"></div>
+              <div class="hc-tags">
+                <a href="#dubaiservices" class="hc-tag">استراتيجية الذكاء الاصطناعي</a>
+                <a href="#dubaiservices" class="hc-tag">الأمن السيبراني وإدارة التهديدات</a>
+                <a href="#quantification" class="hc-tag">القياس الكمي للمخاطر السيبرانية</a>
+                <a href="#industries" class="hc-tag">هندسة البيانات</a>
+                <a href="#quantification" class="hc-tag">هندسة المؤسسات</a>
+                <a href="#dubaiservices" class="hc-tag">التحليلات وذكاء الأعمال</a>
+              </div>
             </div>
           </div>
         </div>
@@ -1600,12 +1924,27 @@
         <p class="lede reveal">نقطة انطلاقنا الأولى هي قطاع النفط والغاز: المشغّلون وفرق الأصول وقادة التمويل وشركات التأمين والموردون الحيويون العاملون عبر بيئات مترابطة وعالية التبعات.</p>
       </div>
 
-      <div class="sector-grid reveal" style="margin-top:3rem;">
-        <div class="sector-item"><div class="s-num">01</div><h3>مشغّلو النفط والغاز</h3><span class="arrow">&#8592;</span></div>
-        <div class="sector-item"><div class="s-num">02</div><h3>الطاقة والمرافق</h3><span class="arrow">&#8592;</span></div>
-        <div class="sector-item"><div class="s-num">03</div><h3>العمليات الصناعية</h3><span class="arrow">&#8592;</span></div>
-        <div class="sector-item"><div class="s-num">04</div><h3>الطاقة المتجددة</h3><span class="arrow">&#8592;</span></div>
-        <div class="sector-item"><div class="s-num">05</div><h3>البنية التحتية الحكومية</h3><span class="arrow">&#8592;</span></div>
+      <div class="ind-grid reveal">
+        <div class="ind-card">
+          <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=800&auto=format&fit=crop" alt="مشغّلو النفط والغاز">
+          <div class="ind-ov"><div class="ind-cat">01</div><div class="ind-name">مشغّلو النفط والغاز</div></div>
+        </div>
+        <div class="ind-card">
+          <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=800&auto=format&fit=crop" alt="الطاقة والمرافق">
+          <div class="ind-ov"><div class="ind-cat">02</div><div class="ind-name">الطاقة والمرافق</div></div>
+        </div>
+        <div class="ind-card">
+          <img src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=800&auto=format&fit=crop" alt="العمليات الصناعية">
+          <div class="ind-ov"><div class="ind-cat">03</div><div class="ind-name">العمليات الصناعية</div></div>
+        </div>
+        <div class="ind-card">
+          <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=800&auto=format&fit=crop" alt="الطاقة المتجددة">
+          <div class="ind-ov"><div class="ind-cat">04</div><div class="ind-name">الطاقة المتجددة</div></div>
+        </div>
+        <div class="ind-card">
+          <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop" alt="البنية التحتية الحكومية">
+          <div class="ind-ov"><div class="ind-cat">05</div><div class="ind-name">البنية التحتية الحكومية</div></div>
+        </div>
       </div>
     `,
     usecases: `
@@ -1639,40 +1978,46 @@
           <p class="lede reveal">مكتب دبي هو ممارسة مستقلة مخصصة للمؤسسات التي تحتاج إلى التقدّم بسرعة في الذكاء الاصطناعي، وتعزيز وضعها الأمني، وتحويل بياناتها إلى ميزة تشغيلية حقيقية.</p>
         </div>
 
-        <div class="card-grid cols-3 reveal" style="margin-top:3rem;">
-          <div class="g-card">
-            <span class="gc-eyebrow">استراتيجية الذكاء الاصطناعي والاستشارات</span>
-            <h3 style="margin-top:1.2rem;">حدّد أين يحقق الذكاء الاصطناعي عائداً فعلياً.</h3>
-            <p>خرائط طريق وترتيب أولويات حالات الاستخدام وحوكمة بحيث يصل استثمار الذكاء الاصطناعي إلى نتائج أعمال قابلة للقياس.</p>
+        <div class="sol-grid reveal" style="margin-top:3rem;margin-bottom:0;">
+          <div class="sol-card">
+            <div class="sol-num">01 — الاستراتيجية</div>
+            <div class="sol-icon">🧭</div>
+            <div class="sol-title">استراتيجية الذكاء الاصطناعي والاستشارات</div>
+            <div class="sol-desc">خرائط طريق وترتيب أولويات حالات الاستخدام وحوكمة بحيث يصل استثمار الذكاء الاصطناعي إلى نتائج أعمال قابلة للقياس.</div>
           </div>
-          <div class="g-card">
-            <span class="gc-eyebrow">التعلم الآلي والأتمتة</span>
-            <h3 style="margin-top:1.2rem;">حوّل العمل المتكرر إلى نماذج تعمل من تلقاء نفسها.</h3>
-            <p>نماذج تعلم آلي مخصصة وأتمتة لسير العمل تقلّل الجهد اليدوي وتتوسّع مع عملك.</p>
+          <div class="sol-card">
+            <div class="sol-num">02 — الأتمتة</div>
+            <div class="sol-icon">🤖</div>
+            <div class="sol-title">التعلم الآلي والأتمتة</div>
+            <div class="sol-desc">نماذج تعلم آلي مخصصة وأتمتة لسير العمل تقلّل الجهد اليدوي وتتوسّع مع عملك.</div>
           </div>
-          <div class="g-card">
-            <span class="gc-eyebrow">الأمن السيبراني وإدارة التهديدات</span>
-            <h3 style="margin-top:1.2rem;">اعرف تعرضك قبل أن يكتشفه أحد غيرك.</h3>
-            <p>تقييمات التهديد واختبار الاختراق والمراقبة المستمرة المبنية على سلوك المهاجمين الحقيقي.</p>
+          <div class="sol-card">
+            <div class="sol-num">03 — الدفاع السيبراني</div>
+            <div class="sol-icon">🔐</div>
+            <div class="sol-title">الأمن السيبراني وإدارة التهديدات</div>
+            <div class="sol-desc">تقييمات التهديد واختبار الاختراق والمراقبة المستمرة المبنية على سلوك المهاجمين الحقيقي.</div>
           </div>
-          <div class="g-card">
-            <span class="gc-eyebrow">معمارية الأمن والحوكمة</span>
-            <h3 style="margin-top:1.2rem;">ابنِ الأمن من الداخل، لا كإضافة لاحقة.</h3>
-            <p>معمارية الثقة الصفرية وأطر السياسات وبرامج الامتثال المصمّمة حول طريقة عمل فرقك فعلياً.</p>
+          <div class="sol-card">
+            <div class="sol-num">04 — المعمارية</div>
+            <div class="sol-icon">🏛️</div>
+            <div class="sol-title">معمارية الأمن والحوكمة</div>
+            <div class="sol-desc">معمارية الثقة الصفرية وأطر السياسات وبرامج الامتثال المصمّمة حول طريقة عمل فرقك فعلياً.</div>
           </div>
-          <div class="g-card">
-            <span class="gc-eyebrow">هندسة البيانات وتكاملها</span>
-            <h3 style="margin-top:1.2rem;">اجعل بياناتك في شكل واحد قابل للاستخدام.</h3>
-            <p>مسارات بيانات ومستودعات وتكامل يربط الأنظمة المتفرقة في مصدر موثوق واحد للحقيقة.</p>
+          <div class="sol-card">
+            <div class="sol-num">05 — البيانات</div>
+            <div class="sol-icon">🗄️</div>
+            <div class="sol-title">هندسة البيانات وتكاملها</div>
+            <div class="sol-desc">مسارات بيانات ومستودعات وتكامل يربط الأنظمة المتفرقة في مصدر موثوق واحد للحقيقة.</div>
           </div>
-          <div class="g-card">
-            <span class="gc-eyebrow">التحليلات وذكاء الأعمال</span>
-            <h3 style="margin-top:1.2rem;">اعرف ما يحدث قبل أن يكلّفك ذلك.</h3>
-            <p>لوحات معلومات وتقارير تحوّل الأرقام الخام إلى قرارات يمكن لفرقك التصرف بناءً عليها فوراً.</p>
+          <div class="sol-card">
+            <div class="sol-num">06 — التحليلات</div>
+            <div class="sol-icon">📈</div>
+            <div class="sol-title">التحليلات وذكاء الأعمال</div>
+            <div class="sol-desc">لوحات معلومات وتقارير تحوّل الأرقام الخام إلى قرارات يمكن لفرقك التصرف بناءً عليها فوراً.</div>
           </div>
         </div>
 
-        <a href="#contact" class="text-link" style="margin-top:2.5rem;display:inline-flex;">تحدّث مع فريق دبي &#8592;</a>
+        <a href="#contact" class="text-link" style="margin-top:1rem;display:inline-flex;">تحدّث مع فريق دبي &#8592;</a>
       </div>
     `,
     industries: `
@@ -1685,46 +2030,38 @@
           <p class="lede reveal">خبرة عميقة في الصناعات التي تشكّل الاقتصاد الرقمي في الإمارات.</p>
         </div>
 
-        <div class="card-grid cols-4 reveal" style="margin-top:3rem;">
-          <div class="g-card">
-            <div class="g-card-icon">🏦</div>
-            <h3>الخدمات المصرفية والمالية</h3>
-            <p>منصات آمنة، وأطر امتثال، وتكاملات تقنية مالية.</p>
+        <div class="ind-grid reveal">
+          <div class="ind-card">
+            <img src="https://images.unsplash.com/photo-1554774853-719586f82d77?q=80&w=800&auto=format&fit=crop" alt="الخدمات المصرفية والمالية">
+            <div class="ind-ov"><div class="ind-cat">المال</div><div class="ind-name">الخدمات المصرفية والمالية</div><div class="ind-desc">منصات آمنة، وأطر امتثال، وتكاملات تقنية مالية.</div></div>
           </div>
-          <div class="g-card">
-            <div class="g-card-icon">🏥</div>
-            <h3>الرعاية الصحية</h3>
-            <p>أنظمة صحية رقمية وحلول إدارة بيانات المرضى.</p>
+          <div class="ind-card">
+            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&auto=format&fit=crop" alt="الرعاية الصحية">
+            <div class="ind-ov"><div class="ind-cat">الصحة</div><div class="ind-name">الرعاية الصحية</div><div class="ind-desc">أنظمة صحية رقمية وحلول إدارة بيانات المرضى.</div></div>
           </div>
-          <div class="g-card">
-            <div class="g-card-icon">🏗️</div>
-            <h3>العقارات</h3>
-            <p>منصات تقنية عقارية، وأنظمة مباني ذكية، وأدوات إدارة المشاريع.</p>
+          <div class="ind-card">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop" alt="العقارات">
+            <div class="ind-ov"><div class="ind-cat">العقار</div><div class="ind-name">العقارات</div><div class="ind-desc">منصات تقنية عقارية، وأنظمة مباني ذكية، وأدوات إدارة المشاريع.</div></div>
           </div>
-          <div class="g-card">
-            <div class="g-card-icon">🛒</div>
-            <h3>التجزئة والتجارة الإلكترونية</h3>
-            <p>منصات متعددة القنوات، وتكامل أنظمة ERP، وتحسين تجربة العملاء.</p>
+          <div class="ind-card">
+            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=800&auto=format&fit=crop" alt="التجزئة والتجارة الإلكترونية">
+            <div class="ind-ov"><div class="ind-cat">التجزئة</div><div class="ind-name">التجزئة والتجارة الإلكترونية</div><div class="ind-desc">منصات متعددة القنوات، وتكامل أنظمة ERP، وتحسين تجربة العملاء.</div></div>
           </div>
-          <div class="g-card">
-            <div class="g-card-icon">🏭</div>
-            <h3>الصناعة والتصنيع</h3>
-            <p>رقمنة سلسلة الإمداد، وتكامل إنترنت الأشياء، والأتمتة.</p>
+          <div class="ind-card">
+            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop" alt="الصناعة والتصنيع">
+            <div class="ind-ov"><div class="ind-cat">الصناعة</div><div class="ind-name">الصناعة والتصنيع</div><div class="ind-desc">رقمنة سلسلة الإمداد، وتكامل إنترنت الأشياء، والأتمتة.</div></div>
           </div>
-          <div class="g-card">
-            <div class="g-card-icon">🎓</div>
-            <h3>التعليم</h3>
-            <p>أنظمة إدارة التعلم والبنية التحتية الرقمية للحرم الجامعي.</p>
+          <div class="ind-card">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop" alt="التعليم">
+            <div class="ind-ov"><div class="ind-cat">التعليم</div><div class="ind-name">التعليم</div><div class="ind-desc">أنظمة إدارة التعلم والبنية التحتية الرقمية للحرم الجامعي.</div></div>
           </div>
-          <div class="g-card">
-            <div class="g-card-icon">⚡</div>
-            <h3>الطاقة والمرافق</h3>
-            <p>تقنية الشبكات الذكية، وإدارة الأصول، والتحليلات التشغيلية.</p>
+          <div class="ind-card">
+            <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=800&auto=format&fit=crop" alt="الطاقة والمرافق">
+            <div class="ind-ov"><div class="ind-cat">المرافق</div><div class="ind-name">الطاقة والمرافق</div><div class="ind-desc">تقنية الشبكات الذكية، وإدارة الأصول، والتحليلات التشغيلية.</div></div>
           </div>
-          <div class="g-card">
-            <div class="g-card-icon">🏛️</div>
-            <h3>الحكومة</h3>
-            <p>حلول الحكومة الإلكترونية ومنصات البنية التحتية للمدن الذكية.</p>
+          <div class="ind-card">
+            <img src="https://images.unsplash.com/photo-1555848962-6e79363ec58f?q=80&w=800&auto=format&fit=crop" alt="الحكومة">
+            <div class="ind-ov"><div class="ind-cat">القطاع العام</div><div class="ind-name">الحكومة</div><div class="ind-desc">حلول الحكومة الإلكترونية ومنصات البنية التحتية للمدن الذكية.</div></div>
           </div>
         </div>
       </div>
@@ -1779,7 +2116,14 @@
         <div class="about-copy reveal">
           <p>آيتولوجي أسسها المهندس <strong>عمر هلال سعيد الزعابي</strong>، مواطن إماراتي ومهندس خبير في قطاع النفط والغاز، اشتغل سنين طويلة في أدنوك البرّية في إدارة المكامن ومحاكاتها والدراسات الفنية وتحسين الكفاءة.</p>
           <p>هالخبرة هي اللي تشكّل طريقتنا في الشغل: نرجع للأصل دايماً، نفهم العملية زين، ونركّز على إننا نحوّل الغموض التقني إلى صورة مالية واضحة لقادة الأعمال والمخاطر والاستثمار.</p>
-          <a href="#contact" class="text-link">تعرّف على المؤسس &#8592;</a>
+          <div class="about-stats-row">
+            <div class="as-item"><div class="as-n">22+ عاماً</div><div class="as-l">هندسة المكامن</div></div>
+            <div class="as-item"><div class="as-n">مكتبان</div><div class="as-l">أبوظبي ودبي</div></div>
+            <div class="as-item"><div class="as-n">الطاقة + الذكاء الاصطناعي</div><div class="as-l">ممارسة مزدوجة</div></div>
+          </div>
+          <div style="margin-top:1.6rem;">
+            <a href="#contact" class="text-link">تعرّف على المؤسس &#8592;</a>
+          </div>
         </div>
       </div>
     `,
@@ -1899,6 +2243,26 @@
     `,
   };
 
+  arHTML.cta = `
+    <div class="cta-glow"></div>
+    <div class="wrap">
+      <div class="cta-inner">
+        <div class="reveal" data-office-section="ad">
+          <h2 class="cta-h2">هل أنت جاهز لجعل قرارك القادم بشأن المخاطر <em style="color:var(--mint);font-style:normal;">قابلاً للمساءلة؟</em></h2>
+          <p class="cta-sub">من هندسة المكامن إلى تحديد مخاطر تقنية المعلومات والتشغيل، تحوّل آيتولوجي عدم اليقين التقني إلى أدلة يمكن لمجلس إدارتك التصرف بناءً عليها. دعنا نناقش ما هو ممكن لأصولك.</p>
+        </div>
+        <div class="reveal" data-office-section="db">
+          <h2 class="cta-h2">هل أنت جاهز لتأمين أنظمتك و<em style="color:var(--mint);font-style:normal;">توسيع نطاق ذكائك؟</em></h2>
+          <p class="cta-sub">من استراتيجية الذكاء الاصطناعي إلى اقتصاديات الأمن السيبراني، تحوّل ممارستنا في دبي البيانات والمخاطر المعقدة إلى ميزة تشغيلية حقيقية. دعنا نناقش ما هو ممكن لمؤسستك.</p>
+        </div>
+        <div class="cta-btns reveal">
+          <a href="#contact" class="btn-primary">اطلب إحاطة</a>
+          <a href="#partnerships" class="btn-ghost" style="border-color:rgba(255,255,255,.45);color:#fff;">شراكاتنا</a>
+        </div>
+      </div>
+    </div>
+  `;
+
   /* services & products catalog EN/AR pairs kept separate for readability */
   arHTML.services = `
     <div class="wrap">
@@ -1909,9 +2273,52 @@
         </div>
         <p class="lede reveal">من علوم الأرض والحفر ودراسات المكامن إلى اقتصاديات المخاطر السيبرانية، تجمع آيتولوجي بين الخبرة في مجال الطاقة وأدوات بيانات ورقمية عملية تساعد القادة على حماية القيمة وتقليل الهدر وتوجيه القرارات بثقة أكبر.</p>
       </div>
+
+      <div class="sol-head reveal" style="margin-top:3rem;">
+        <div></div>
+        <a href="#services-detail" class="view-all">القائمة الكاملة للخدمات والمنتجات &#8592;</a>
+      </div>
+      <div class="sol-grid reveal">
+        <div class="sol-card">
+          <div class="sol-num">01 — المنصة الرئيسية</div>
+          <div class="sol-icon">🛡️</div>
+          <div class="sol-title">FAIR-ARCHRIQ</div>
+          <div class="sol-desc">تقييم كمي للمخاطر يربط سيناريوهات التهديد وتبعيات التقنية التشغيلية والمعلوماتية وتوزيعات الخسائر واقتصاديات المعالجة.</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-num">02 — المكامن وما دون السطح</div>
+          <div class="sol-icon">⛏️</div>
+          <div class="sol-title">إدارة المكامن ومحاكاتها</div>
+          <div class="sol-desc">أداء المكامن والمحاكاة وتخطيط التطوير التي تحوّل الأدلة دون السطحية إلى قرارات استثمارية قابلة للدفاع عنها.</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-num">03 — الحفر والآبار</div>
+          <div class="sol-icon">🛠️</div>
+          <div class="sol-title">الحفر وتسليم الآبار</div>
+          <div class="sol-desc">ربط تخطيط الآبار والأدلة الجيوتقنية ومخاطر التنفيذ والتكلفة والسلامة وأداء التسليم من التخطيط إلى الإنتاج.</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-num">04 — الإمداد واللوجستيات</div>
+          <div class="sol-icon">🚢</div>
+          <div class="sol-title">مرونة سلسلة الإمداد والمسارات</div>
+          <div class="sol-desc">مقارنة سيناريوهات التبعيات البحرية وخطوط الأنابيب والطرق والسكك الحديدية والموانئ والتخزين قبل اضطراب المسار وبعده.</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-num">05 — الحوكمة والمعمارية</div>
+          <div class="sol-icon">🏗️</div>
+          <div class="sol-title">معمارية المؤسسات للطاقة</div>
+          <div class="sol-desc">حوكمة العلاقات بين القدرات والبيانات والتطبيقات والتقنية التشغيلية والمعلوماتية والبنية التحتية وعمليات الأصول.</div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-num">06 — البيانات والذكاء الاصطناعي</div>
+          <div class="sol-icon">📊</div>
+          <div class="sol-title">هندسة البيانات الضخمة وتمكين الذكاء الاصطناعي</div>
+          <div class="sol-desc">تنظيم والتحقق من جودة كميات كبيرة من البيانات المكانية ودون السطحية والتشغيلية لاتخاذ قرارات جاهزة للذكاء الاصطناعي وخاضعة للحوكمة.</div>
+        </div>
+      </div>
     </div>
 
-    <div class="wrap sp-grid" style="margin-top:2rem;">
+    <div class="wrap sp-grid" style="margin-top:2rem;" id="services-detail">
       <div class="sp-col services">
         <div class="sp-head"><span class="sp-eyebrow">الخدمات / الاستشارات</span></div>
         <div class="service-list">
@@ -1972,6 +2379,7 @@
 
     // rebind things lost when innerHTML was replaced
     attachContactFormHandler();
+    spawnHeroParticles();
     const t1 = document.getElementById('langToggle');
     const t2 = document.getElementById('langToggleMobile');
     if (t1) t1.addEventListener('click', toggleLanguage);

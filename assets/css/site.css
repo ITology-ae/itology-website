@@ -650,3 +650,39 @@ a.practice-btn { display: inline-block; text-decoration: none; }
 .section-head h1 { font-size: clamp(1.9rem, 3.8vw, 3.1rem); margin-bottom: 0.8rem; }
 #contact h1 { font-size: clamp(1.9rem, 3.6vw, 2.9rem); margin-bottom: 1rem; }
 .contact-val span[dir="ltr"] { direction: ltr; unicode-bidi: isolate; display: inline-block; }
+/* Optional photos/logos: shown only when the file exists in assets/img/ */
+.team-photo-wrap { position: relative; }
+.team-photo-opt { position: absolute; inset: 4px; width: calc(100% - 8px) !important; height: calc(100% - 8px) !important; object-fit: cover; border-radius: 50%; border: 4px solid #fff; animation: spin 8s linear infinite reverse; }
+.logo-slot img { display: none; max-width: 80%; max-height: 70%; object-fit: contain; }
+.logo-slot.has-logo img { display: block; }
+.logo-slot.has-logo .logo-text { display: none; }
+.osc-mark.has-logo { background: #fff; padding: .35rem .7rem; }
+.osc-mark img { height: 24px; max-height: none; max-width: 120px; }
+.partner-feature .logo-slot.has-logo { background: #fff; border: 1px solid var(--border); }
+img[data-optional].img-missing { display: none !important; }
+@media (max-width: 640px) { .team-photo-opt { animation: none; } }
+
+/* ===== Dubai practice identity: same layout, its own accent colours ===== */
+body[data-page-office="db"] {
+  --blue-600: #7c3aed; --blue-500: #8b5cf6; --blue-400: #a78bfa; --blue-100: #ede9fe;
+  --mint-500: #06b6d4; --mint-400: #22d3ee;
+  --navy-950: #0b0a2b; --navy-900: #120f3d; --navy-800: #1d1856;
+}
+body[data-page-office="db"] .btn-primary { box-shadow: 0 4px 15px rgba(124,58,237,.35); }
+body[data-page-office="db"] .hero-tagline { background: rgba(139,92,246,.14); border-color: rgba(139,92,246,.35); }
+body[data-page-office="db"] .practice-btn.active { box-shadow: 0 4px 12px rgba(124,58,237,.45); }
+
+/* ===== Our other practice ===== */
+.other-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+.other-title { font-size: clamp(1.8rem, 3.4vw, 2.8rem); margin-bottom: 1rem; }
+.other-lede { color: rgba(255,255,255,.75); font-size: 1.05rem; }
+.other-grid .gate-option { display: block; color: #fff; }
+.other-grid .gate-option.dubai { --blue-600: #7c3aed; --blue-500: #8b5cf6; --blue-400: #a78bfa; }
+.other-grid .gate-option:not(.dubai) { --blue-600: #2563eb; --blue-500: #3b82f6; --blue-400: #60a5fa; background: #0d2460; }
+.map-link { display: inline-flex; margin-top: .3rem; font-size: .85rem; color: var(--blue-400); text-decoration: underline; text-underline-offset: 3px; }
+.map-link:hover { color: #fff; }
+
+/* Chooser page has no menu */
+body[data-gate] .nav-actions { margin-inline-start: auto; }
+@media (max-width: 900px) { .other-grid { grid-template-columns: 1fr; gap: 2rem; } }
+@media (max-width: 640px) { body[data-gate] .nav-actions .practice-toggle { display: flex; } body[data-gate] .practice-btn { padding: .4rem .7rem; } }

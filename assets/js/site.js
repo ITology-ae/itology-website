@@ -29,6 +29,12 @@
   };
   var pageOffice = document.body.getAttribute('data-page-office'); // 'ad', 'db' or ''
 
+  /* ---------- Chooser page: send returning visitors straight to their last practice ---------- */
+  if (document.body.hasAttribute('data-gate') && location.search.indexOf('choose') === -1) {
+    var last = store.get('itology_office');
+    if (last === 'ad' || last === 'db') { location.replace(last === 'ad' ? 'abu-dhabi.html' : 'dubai.html'); return; }
+  }
+
   /* ---------- Header, scroll progress, back to top ---------- */
   var header = document.getElementById('mainNav');
   var progress = document.getElementById('scrollProgress');
@@ -51,10 +57,10 @@
   var mq = window.matchMedia('(max-width: 1100px)');
   function closeNav() {
     document.body.classList.remove('nav-open', 'no-scroll');
-    burger.setAttribute('aria-expanded', 'false');
+    if (burger) burger.setAttribute('aria-expanded', 'false');
     document.querySelectorAll('.nav-item.open').forEach(function (i) { i.classList.remove('open'); });
   }
-  burger.addEventListener('click', function () {
+  if (burger) burger.addEventListener('click', function () {
     var open = document.body.classList.toggle('nav-open');
     document.body.classList.toggle('no-scroll', open);
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -216,9 +222,23 @@
   var wa = document.getElementById('waFloat');
   if (wa && WHATSAPP_NUMBER) { wa.href = 'https://wa.me/' + WHATSAPP_NUMBER; wa.classList.add('on'); }
 
-  /* ---------- Images that fail to load show the designed fallback ---------- */
+  /* ---------- Photos: local file first, then the stock photo, then the designed fallback ---------- */
   document.querySelectorAll('img[data-fallback]').forEach(function (img) {
-    function fail() { img.classList.add('img-failed'); }
-    if (img.complete && img.naturalWidth === 0) fail(); else img.addEventListener('error', fail);
+    function fail() {
+      var alt = img.getAttribute('data-alt-src');
+      if (alt && img.src !== alt) { img.removeAttribute('data-alt-src'); img.src = alt; return; }
+      img.classList.add('img-failed');
+    }
+    img.addEventListener('error', fail);
+    if (img.complete && img.naturalWidth === 0) fail();
+  });
+
+  /* ---------- Optional photos and logos: appear only when the file exists ---------- */
+  document.querySelectorAll('img[data-optional]').forEach(function (img) {
+    var slot = img.closest('.logo-slot');
+    function ok() { if (slot) slot.classList.add('has-logo'); }
+    function missing() { img.classList.add('img-missing'); if (slot) slot.classList.remove('has-logo'); }
+    img.addEventListener('load', ok); img.addEventListener('error', missing);
+    if (img.complete) { if (img.naturalWidth > 0) ok(); else missing(); }
   });
 })();

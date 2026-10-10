@@ -686,3 +686,90 @@ body[data-page-office="db"] .practice-btn.active { box-shadow: 0 4px 12px rgba(1
 body[data-gate] .nav-actions { margin-inline-start: auto; }
 @media (max-width: 900px) { .other-grid { grid-template-columns: 1fr; gap: 2rem; } }
 @media (max-width: 640px) { body[data-gate] .nav-actions .practice-toggle { display: flex; } body[data-gate] .practice-btn { padding: .4rem .7rem; } }
+
+/* ===================================================================
+   Polish: calmer, more editorial. Same layout and colours, fewer effects.
+   =================================================================== */
+:root {
+  --shadow-sm: 0 1px 2px rgba(8,24,64,.05);
+  --shadow-md: 0 10px 24px rgba(8,24,64,.08);
+  --shadow-lg: 0 18px 40px rgba(8,24,64,.16);
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+
+/* Hero: no floating blobs, no moving grid, one quiet light source */
+.orb, .hero-lines, .scroll-cue { display: none; }
+.hero-bg::before { animation: none; opacity: .55; }
+#home { background: radial-gradient(900px 520px at 88% -8%, rgba(37,99,235,.30), transparent 62%), var(--navy-950); }
+body[data-page-office="db"] #home { background: radial-gradient(900px 520px at 88% -8%, rgba(124,58,237,.32), transparent 62%), var(--navy-950); }
+.hero-title { font-weight: 700; letter-spacing: -0.03em; }
+html[dir="rtl"] .hero-title { letter-spacing: 0; }
+
+/* Solid accent colour instead of gradient text */
+section.dark .accent-blue, #home .accent-blue { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: var(--blue-400); }
+.accent-mint { color: var(--mint-400); }
+section:not(.dark):not(.dark-alt) .accent-mint { color: var(--mint-500); }
+
+/* Eyebrows and tags: plain labels, not glowing pills */
+.eyebrow::before { display: none; }
+.eyebrow { letter-spacing: .14em; font-size: .74rem; }
+.hero-tagline { background: none !important; border: none; padding: 0; border-radius: 0; color: var(--blue-400); }
+.hero-card-header .hero-tagline { border: 1px solid var(--border-dark); padding: .3rem .7rem; border-radius: 6px; }
+.brand-logo .dot { animation: none; }
+.pill-tag { border-radius: 6px; }
+.pill-tag:hover, .mode-tag:hover, .filter-chip:hover { transform: none; }
+
+/* Buttons: no shine sweep, slightly squarer */
+.btn::after { display: none; }
+.btn { border-radius: 10px; }
+.btn-primary { box-shadow: none; }
+.btn-primary:hover { transform: none; box-shadow: 0 6px 16px rgba(37,99,235,.28); }
+body[data-page-office="db"] .btn-primary, body[data-page-office="db"] .btn-primary:hover { box-shadow: none; }
+.btn-secondary:hover { transform: none; }
+.filter-chip { border-radius: 8px; }
+.practice-toggle, .practice-btn, .lang-btn { border-radius: 10px; }
+.practice-btn.active { box-shadow: none !important; }
+
+/* Cards: hairline borders, small lift, no glow bars or spinning icons */
+.feature-card::before, .feature-card::after { display: none; }
+.feature-card:hover, .flow-step:hover, .stage-card:hover, .engage-step:hover, .team-card:hover,
+.partner-feature:hover, .partner-card:hover, .stat-card:hover, .office-card:hover, .sector-card:hover { transform: translateY(-3px); }
+.feature-card:hover .card-icon, .flow-step:hover .card-icon, .engage-step:hover .card-icon { transform: none; box-shadow: none; background: var(--blue-600); }
+.stat-card:hover .stat-icon, .sector-card:hover .sector-glyph, .brand-logo:hover .brand-mark { transform: none; }
+.partner-card:hover .partner-logo { transform: none; background: var(--blue-600); color: #fff; }
+.sector-card:hover img { transform: scale(1.03); filter: none; }
+.gate-option:hover { transform: translateY(-4px); box-shadow: 0 18px 36px rgba(0,0,0,.35); }
+.contact-info-item:hover, html[dir="rtl"] .contact-info-item:hover { transform: none; }
+.flow-step-num, .engage-step::before { color: rgba(8,24,64,.07); }
+.card-icon, .stat-icon, .partner-logo { border-radius: 10px; }
+.wa-float:hover { transform: scale(1.05); }
+
+/* Team: static photo frame instead of a spinning ring */
+.team-photo-wrap, .team-photo-wrap img, .team-avatar, .team-photo-opt { animation: none; }
+.team-photo-wrap { background: var(--blue-100); padding: 3px; }
+.team-avatar { background: var(--navy-800); font-size: 2.2rem; }
+.team-card { align-items: start; }
+.team-bio p { margin-bottom: .7rem; }
+.expandable-content.bio-more.open { max-height: 4000px; }
+.expandable-content.bio-more .team-bio p { padding: 0; border: 0; }
+.team-card .expand-trigger { margin-top: 0; margin-bottom: .4rem; }
+.team-edu { margin-top: .4rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.team-edu-title { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .6rem; }
+html[dir="rtl"] .team-edu-title { letter-spacing: 0; font-size: .9rem; }
+.team-edu ul { list-style: none; display: grid; gap: .45rem; }
+.team-edu li { display: flex; gap: .55rem; align-items: center; font-size: .92rem; color: var(--text-dark); }
+.team-edu li svg { width: 18px; height: 18px; color: var(--blue-600); }
+
+/* Quote block: flatter */
+.quote-block { box-shadow: none; }
+
+/* Gentler reveal */
+.reveal { transform: translateY(14px); transition-duration: .6s; }
+
+/* Contact: city map and spam trap */
+.hp { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); border: 0; white-space: nowrap; opacity: 0; }
+.map-embed { margin-top: 2.5rem; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-dark); background: var(--navy-800); height: 340px; }
+.map-embed iframe { width: 100%; height: 100%; border: 0; display: block; filter: grayscale(.25) contrast(1.05); }
+.btn[disabled] { opacity: .6; pointer-events: none; }
+@media (max-width: 640px) { .map-embed { height: 260px; } }

@@ -3,12 +3,11 @@
   'use strict';
 
   /* ================= SETTINGS YOU CAN EDIT ================= */
-  // 1) Contact form: paste your Formspree (or similar) endpoint, e.g. 'https://formspree.io/f/abcdwxyz'.
-  //    While empty, the form opens the visitor's email app with the message filled in.
-  var FORM_ENDPOINT = '';
+  // Contact form: sent by FormSubmit (formsubmit.co) to this inbox.
   var FORM_EMAIL = 'contact@itology.ae';
-  // 2) WhatsApp: international format, digits only, e.g. '971501234567'. Empty = button hidden.
-  var WHATSAPP_NUMBER = '';
+  var FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + FORM_EMAIL;
+  // WhatsApp: international format, digits only.
+  var WHATSAPP_NUMBER = '971506224664';
   /* ========================================================== */
 
   var doc = document.documentElement;
@@ -198,19 +197,28 @@
   }
 
   /* ---------- Forms ---------- */
+  function mailtoFallback(data, subject) {
+    var body = [];
+    data.forEach(function (v, k) { if (v && k.charAt(0) !== '_') body.push(k + ': ' + v); });
+    window.location.href = 'mailto:' + FORM_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body.join('\n'));
+    toast(STR.mailOpened);
+  }
   function sendForm(form, subject, okMsg) {
     var data = new FormData(form);
-    if (FORM_ENDPOINT) {
-      data.append('_subject', subject);
-      fetch(FORM_ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
-        .then(function (r) { if (!r.ok) throw new Error(); form.reset(); toast(okMsg); })
-        .catch(function () { toast(STR.error); });
-    } else {
-      var body = [];
-      data.forEach(function (v, k) { if (v) body.push(k + ': ' + v); });
-      window.location.href = 'mailto:' + FORM_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body.join('\n'));
-      toast(STR.mailOpened);
-    }
+    if (data.get('_honey')) return; // spam bot
+    data.append('_subject', subject);
+    data.append('_captcha', 'false');
+    data.append('page', document.title);
+    var btn = form.querySelector('[type="submit"]');
+    if (btn) btn.disabled = true;
+    fetch(FORM_ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok || String(res.j.success) !== 'true') throw new Error(res.j && res.j.message);
+        form.reset(); toast(okMsg);
+      })
+      .catch(function () { mailtoFallback(data, subject); })
+      .then(function () { if (btn) btn.disabled = false; });
   }
   var bf = document.getElementById('briefingForm');
   if (bf) bf.addEventListener('submit', function (e) { e.preventDefault(); sendForm(bf, 'Executive briefing request (ITology website)', STR.thanks); });

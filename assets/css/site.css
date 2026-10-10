@@ -780,3 +780,37 @@ html[dir="rtl"] .team-edu-title { letter-spacing: 0; font-size: .9rem; }
 .partner-feature .logo-slot.has-logo { width: 168px; height: 84px; padding: 10px 14px; }
 .partner-feature .logo-slot.has-logo img { max-width: 100%; max-height: 100%; }
 @media (max-width: 640px) { .partner-feature .logo-slot.has-logo { width: 150px; height: 72px; } }
+
+/* ===== Real ITology logo ===== */
+.brand-logo { gap: 0; }
+.brand-img { display: block; height: 26px; width: auto; }
+.footer-brand { display: inline-block; margin-bottom: 1.3rem; }
+.footer-brand .brand-img { height: 32px; }
+.switch-logo { height: 30px; width: auto; opacity: .9; margin-bottom: .4rem; }
+.chooser-logo { display: block; height: 40px; width: auto; margin: 0 auto 1.6rem; }
+.section-logo { display: block; height: 28px; width: auto; margin-bottom: 1rem; opacity: .9; }
+@media (max-width: 640px) { .brand-img { height: 20px; } .chooser-logo { height: 30px; } }
+
+/* ===== About: graphics live inside the Vision / Mission / Values cards ===== */
+.about-card { padding: 0; overflow: hidden; }
+.about-card .card-art { position: relative; height: 150px; background: var(--navy-800); overflow: hidden; }
+.about-card .card-art svg { position: absolute; inset: 0; width: 100%; height: 100%; transition: transform .6s var(--ease); }
+.about-card:hover .card-art svg { transform: scale(1.04); }
+.about-card > div:last-child { padding: 1.6rem 1.8rem 1.9rem; position: relative; }
+.about-card .card-icon { margin-top: -2.9rem; position: relative; z-index: 1; border: 3px solid #fff; background: var(--blue-100); }
+.about-card:hover .card-icon { background: var(--blue-600); }
+
+/* ===== Leadership photo on white ===== */
+.team-photo-wrap { background: #fff; border: 1px solid var(--border); padding: 4px; }
+.team-photo-wrap img { border-color: #fff; background: #fff; }
+
+/* ===== Contact form and newsletter polish ===== */
+.contact-form h3 { margin-bottom: 1.4rem; }
+.form-input::placeholder, .form-textarea::placeholder { color: #94a3b8; }
+.form-select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+html[dir="rtl"] .form-select { background-position: left 1rem center; padding-right: 1rem; padding-left: 2.5rem; }
+.newsletter-form { display: flex; gap: .5rem; align-items: stretch; }
+.newsletter-form .form-input { flex: 1; min-width: 0; background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16); color: #fff; }
+.newsletter-form .form-input::placeholder { color: rgba(255,255,255,.5); }
+.newsletter-form .form-input:focus { background: rgba(255,255,255,.1); }
+.newsletter-form .btn { flex-shrink: 0; }

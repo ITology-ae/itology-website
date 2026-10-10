@@ -4,7 +4,7 @@
 
   /* ================= SETTINGS YOU CAN EDIT ================= */
   // Contact form: sent by FormSubmit (formsubmit.co) to this inbox.
-  var FORM_EMAIL = 'contact@itology.ae';
+  var FORM_EMAIL = 'info@itology.ae';
   var FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + FORM_EMAIL;
   // WhatsApp: international format, digits only.
   var WHATSAPP_NUMBER = '971506224664';
@@ -244,7 +244,7 @@
   /* ---------- Optional photos and logos: appear only when the file exists ---------- */
   document.querySelectorAll('img[data-optional]').forEach(function (img) {
     var slot = img.closest('.logo-slot');
-    function ok() { if (slot) slot.classList.add('has-logo'); }
+    function ok() { if (slot) slot.classList.add('has-logo'); if (img.parentElement) img.parentElement.classList.add('has-photo'); }
     function missing() { img.classList.add('img-missing'); if (slot) slot.classList.remove('has-logo'); }
     img.addEventListener('load', ok); img.addEventListener('error', missing);
     if (img.complete) { if (img.naturalWidth > 0) ok(); else missing(); }

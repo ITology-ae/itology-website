@@ -773,3 +773,10 @@ html[dir="rtl"] .team-edu-title { letter-spacing: 0; font-size: .9rem; }
 .map-embed iframe { width: 100%; height: 100%; border: 0; display: block; filter: grayscale(.25) contrast(1.05); }
 .btn[disabled] { opacity: .6; pointer-events: none; }
 @media (max-width: 640px) { .map-embed { height: 260px; } }
+
+/* Real photo and logos in place */
+.team-photo-wrap.has-photo .team-avatar { visibility: hidden; }
+.team-photo-wrap.has-photo .team-photo-opt { background: linear-gradient(180deg, #e8eefc, #dbe4f7); }
+.partner-feature .logo-slot.has-logo { width: 168px; height: 84px; padding: 10px 14px; }
+.partner-feature .logo-slot.has-logo img { max-width: 100%; max-height: 100%; }
+@media (max-width: 640px) { .partner-feature .logo-slot.has-logo { width: 150px; height: 72px; } }

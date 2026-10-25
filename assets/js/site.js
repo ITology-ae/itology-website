@@ -250,3 +250,96 @@
     if (img.complete) { if (img.naturalWidth > 0) ok(); else missing(); }
   });
 })();
+
+/* ---------- Tabs (shorter page: related sections share one block) ---------- */
+(function () {
+  'use strict';
+  function show(btn, focus) {
+    var box = btn.closest('[data-tabs]');
+    box.querySelectorAll('[role="tab"]').forEach(function (b) {
+      var on = b === btn;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.tabIndex = on ? 0 : -1;
+      var p = document.getElementById(b.getAttribute('aria-controls'));
+      p.hidden = !on; p.classList.toggle('active', on);
+      if (on) p.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
+    });
+    var list = btn.parentElement;
+    if (list.scrollWidth > list.clientWidth) {
+      var lr = list.getBoundingClientRect(), br = btn.getBoundingClientRect();
+      list.scrollLeft += (br.left + br.width / 2) - (lr.left + lr.width / 2);
+    }
+    if (focus) btn.focus({ preventScroll: true });
+  }
+  document.querySelectorAll('[data-tabs]').forEach(function (box) {
+    var btns = Array.prototype.slice.call(box.querySelectorAll('[role="tab"]'));
+    btns.forEach(function (b, i) {
+      b.tabIndex = i === 0 ? 0 : -1;
+      b.addEventListener('click', function () { show(b); });
+      b.addEventListener('keydown', function (e) {
+        var rtl = document.documentElement.dir === 'rtl', d = 0;
+        if (e.key === 'ArrowRight') d = rtl ? -1 : 1;
+        if (e.key === 'ArrowLeft') d = rtl ? 1 : -1;
+        if (!d) return;
+        e.preventDefault();
+        show(btns[(i + d + btns.length) % btns.length], true);
+      });
+    });
+  });
+  // Menu links to a section that now lives inside a tab: open that tab, then scroll to the block
+  function openFor(id, smooth) {
+    var el = id && document.getElementById(id);
+    if (!el) return false;
+    var panel = el.closest('[role="tabpanel"]');
+    if (!panel) return false;
+    show(document.getElementById(panel.getAttribute('aria-labelledby')));
+    var box = panel.closest('[data-tabs]');
+    var y = box.getBoundingClientRect().top + window.scrollY - 90;
+    window.scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' });
+    return true;
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    if (openFor(a.getAttribute('href').slice(1), true)) {
+      e.preventDefault();
+      history.replaceState(null, '', a.getAttribute('href'));
+    }
+  });
+  if (location.hash) setTimeout(function () { openFor(location.hash.slice(1), false); }, 60);
+})();
+
+/* ---------- "Learn about the service / product": open the contact form with the service already written ---------- */
+(function () {
+  'use strict';
+  var ar = (document.documentElement.lang || '').slice(0, 2) === 'ar';
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('[data-ask]');
+    if (!a) return;
+    var card = a.closest('.feature-card'), t = card && card.querySelector('.card-title');
+    var msg = document.getElementById('f-msg');
+    if (msg && t) {
+      msg.value = (ar ? 'أرغب في معرفة المزيد عن: ' : 'I would like to learn more about: ') + t.textContent.trim();
+    }
+    var sel = document.getElementById('f-practice'), office = document.body.getAttribute('data-page-office');
+    if (sel && office) sel.value = office;
+    setTimeout(function () { var n = document.getElementById('f-name'); if (n) n.focus({ preventScroll: true }); }, 700);
+  });
+})();
+
+/* ---------- Phones (Abu Dhabi): small "swipe for more" hint under swipe rows ---------- */
+(function () {
+  'use strict';
+  if (document.body.getAttribute('data-page-office') !== 'ad') return;
+  var ar = (document.documentElement.lang || '').slice(0, 2) === 'ar';
+  document.querySelectorAll('.card-grid-3, .card-grid-4, .flow-grid, .engage-grid').forEach(function (g) {
+    var n = Array.prototype.filter.call(g.children, function (c) { return !c.classList.contains('tab-anchor'); }).length;
+    if (n < 2) return;
+    var h = document.createElement('div');
+    h.className = 'swipe-hint';
+    h.setAttribute('aria-hidden', 'true');
+    h.textContent = ar ? '← اسحب لرؤية المزيد' : 'Swipe for more →';
+    g.parentNode.insertBefore(h, g.nextSibling);
+  });
+})();

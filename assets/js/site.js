@@ -28,11 +28,7 @@
   };
   var pageOffice = document.body.getAttribute('data-page-office'); // 'ad', 'db' or ''
 
-  /* ---------- Chooser page: send returning visitors straight to their last practice ---------- */
-  if (document.body.hasAttribute('data-gate') && location.search.indexOf('choose') === -1) {
-    var last = store.get('itology_office');
-    if (last === 'ad' || last === 'db') { location.replace(last === 'ad' ? 'abu-dhabi.html' : 'dubai.html'); return; }
-  }
+  /* The chooser page always shows both practices (no remembered choice). */
 
   /* ---------- Header, scroll progress, back to top ---------- */
   var header = document.getElementById('mainNav');
@@ -175,7 +171,7 @@
 
   // Highlight the current or last chosen practice, and finish the transition after arriving
   if (pageOffice) store.set('itology_office', pageOffice);
-  markOffice(pageOffice || store.get('itology_office') || 'ad');
+  markOffice(pageOffice || '');
   var arriving = null;
   try { arriving = sessionStorage.getItem('itology_arrive'); sessionStorage.removeItem('itology_arrive'); } catch (e) {}
   if (arriving && arriving === pageOffice && !reduceMotion) {
@@ -318,14 +314,28 @@
     var a = e.target.closest && e.target.closest('[data-ask]');
     if (!a) return;
     var card = a.closest('.feature-card'), t = card && card.querySelector('.card-title');
+    var title = t ? t.textContent.trim() : '';
     var msg = document.getElementById('f-msg');
-    if (msg && t) {
-      msg.value = (ar ? 'أرغب في معرفة المزيد عن: ' : 'I would like to learn more about: ') + t.textContent.trim();
+    if (!msg) {
+      // Contact form lives on the practice home page: carry the service name there
+      var home = document.body.getAttribute('data-page-office') === 'db' ? 'dubai.html' : 'abu-dhabi.html';
+      e.preventDefault();
+      window.location.href = home + '?ask=' + encodeURIComponent(title) + '#contact';
+      return;
     }
+    if (title) msg.value = (ar ? 'أرغب في معرفة المزيد عن: ' : 'I would like to learn more about: ') + title;
     var sel = document.getElementById('f-practice'), office = document.body.getAttribute('data-page-office');
     if (sel && office) sel.value = office;
     setTimeout(function () { var n = document.getElementById('f-name'); if (n) n.focus({ preventScroll: true }); }, 700);
   });
+  // Arriving from a "Learn about" button on another page
+  var m = /[?&]ask=([^&#]*)/.exec(location.search), msg = document.getElementById('f-msg');
+  if (m && msg) {
+    var t = decodeURIComponent(m[1].replace(/\+/g, ' '));
+    if (t) msg.value = (ar ? 'أرغب في معرفة المزيد عن: ' : 'I would like to learn more about: ') + t;
+    var sel = document.getElementById('f-practice'), office = document.body.getAttribute('data-page-office');
+    if (sel && office) sel.value = office;
+  }
 })();
 
 /* ---------- Phones: tap-to-open service index, product tiles; card spotlight on desktop ---------- */
@@ -415,4 +425,21 @@
     setTimeout(function () { ov.classList.remove('leaving'); }, 1000);
   }
   window.addEventListener('pageshow', function (e) { if (e.persisted) { ov.classList.remove('active', 'arrive', 'leaving'); going = false; } });
+})();
+
+/* ---------- Opening a service from the home page: unfold that card ---------- */
+(function () {
+  'use strict';
+  function openHash() {
+    var id = location.hash.slice(1), el = id && document.getElementById(id);
+    if (!el || !el.classList.contains('feature-card')) return;
+    if (el.parentElement && el.parentElement.classList.contains('m-acc')) {
+      el.classList.add('m-open');
+      if (el.firstElementChild) el.firstElementChild.setAttribute('aria-expanded', 'true');
+    }
+    el.classList.add('flash');
+    setTimeout(function () { el.classList.remove('flash'); }, 1600);
+  }
+  setTimeout(openHash, 80);
+  window.addEventListener('hashchange', openHash);
 })();

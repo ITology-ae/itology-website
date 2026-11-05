@@ -328,18 +328,91 @@
   });
 })();
 
-/* ---------- Phones (Abu Dhabi): small "swipe for more" hint under swipe rows ---------- */
+/* ---------- Phones: tap-to-open service index, product tiles; card spotlight on desktop ---------- */
 (function () {
   'use strict';
-  if (document.body.getAttribute('data-page-office') !== 'ad') return;
-  var ar = (document.documentElement.lang || '').slice(0, 2) === 'ar';
-  document.querySelectorAll('.card-grid-3, .card-grid-4, .flow-grid, .engage-grid').forEach(function (g) {
-    var n = Array.prototype.filter.call(g.children, function (c) { return !c.classList.contains('tab-anchor'); }).length;
-    if (n < 2) return;
-    var h = document.createElement('div');
-    h.className = 'swipe-hint';
-    h.setAttribute('aria-hidden', 'true');
-    h.textContent = ar ? '← اسحب لرؤية المزيد' : 'Swipe for more →';
-    g.parentNode.insertBefore(h, g.nextSibling);
+  var mq = window.matchMedia('(max-width: 760px)');
+  document.querySelectorAll('.card-grid-3, .card-grid-4').forEach(function (g) {
+    var cards = Array.prototype.filter.call(g.children, function (c) { return c.classList.contains('feature-card') && !c.classList.contains('about-card'); });
+    if (cards.length < 2) return;
+    var products = cards.every(function (c) { return c.querySelector('a.learn-btn[data-ask]'); });
+    if (products) { g.classList.add('m-tiles'); return; }
+    g.classList.add('m-acc');
+    cards.forEach(function (c, i) {
+      var head = c.firstElementChild;
+      var ic = document.createElement('span');
+      ic.className = 'm-acc-ic'; ic.setAttribute('aria-hidden', 'true');
+      head.appendChild(ic);
+      if (i === 0) c.classList.add('m-open');
+      head.setAttribute('aria-expanded', i === 0 ? 'true' : 'false');
+      function toggle() {
+        if (!mq.matches) return;
+        var open = c.classList.toggle('m-open');
+        head.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+      head.addEventListener('click', toggle);
+      head.addEventListener('keydown', function (e) { if (mq.matches && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggle(); } });
+      function a11y() { if (mq.matches) { head.setAttribute('role', 'button'); head.tabIndex = 0; } else { head.removeAttribute('role'); head.removeAttribute('tabindex'); } }
+      a11y(); if (mq.addEventListener) mq.addEventListener('change', a11y);
+    });
   });
+  if (window.matchMedia('(hover: hover)').matches) {
+    document.addEventListener('pointermove', function (e) {
+      var c = e.target.closest && e.target.closest('.feature-card, .flow-step, .engage-step, .team-card');
+      if (!c) return;
+      var r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+  }
+})();
+
+/* ---------- Language switch transition (like the office switch) ---------- */
+(function () {
+  'use strict';
+  var ov = document.getElementById('langOverlay');
+  if (!ov) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cur = document.documentElement.lang === 'ar' ? 'ar' : 'en';
+  var T = {
+    ar: { from: 'Aa', to: 'أب', title: 'العربية', sub: 'جارٍ عرض الموقع باللغة العربية', cls: 'lg-ar' },
+    en: { from: 'أب', to: 'Aa', title: 'English', sub: 'Switching the site to English', cls: '' }
+  };
+  function fill(target) {
+    var t = T[target];
+    var from = ov.querySelector('.lang-glyph.from'), to = ov.querySelector('.lang-glyph.to');
+    from.textContent = t.from; to.textContent = t.to;
+    from.className = 'lang-glyph from' + (target === 'en' ? ' lg-ar' : '');
+    to.className = 'lang-glyph to' + (target === 'ar' ? ' lg-ar' : '');
+    var ti = document.getElementById('lgTitle'), su = document.getElementById('lgSub');
+    ti.textContent = t.title; su.textContent = t.sub;
+    ti.className = 'switch-title ' + t.cls; su.className = 'switch-sub ' + t.cls;
+    ti.setAttribute('lang', target); su.setAttribute('lang', target);
+    ti.dir = su.dir = target === 'ar' ? 'rtl' : 'ltr';
+  }
+  var going = false;
+  document.querySelectorAll('a[hreflang]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || reduce || going) return;
+      e.preventDefault();
+      going = true;
+      var target = cur === 'ar' ? 'en' : 'ar';
+      var href = a.getAttribute('href') + (location.hash || '');
+      if (document.body.classList.contains('nav-open')) { document.body.classList.remove('nav-open', 'no-scroll'); }
+      if (e.clientX) { ov.style.setProperty('--cx', e.clientX + 'px'); ov.style.setProperty('--cy', e.clientY + 'px'); }
+      fill(target);
+      ov.classList.remove('leaving', 'arrive'); void ov.offsetWidth; ov.classList.add('active');
+      try { sessionStorage.setItem('itology_lang_arrive', target); } catch (err) {}
+      setTimeout(function () { window.location.href = href; }, 1900);
+    });
+  });
+  var arr = null;
+  try { arr = sessionStorage.getItem('itology_lang_arrive'); sessionStorage.removeItem('itology_lang_arrive'); } catch (e) {}
+  if (arr && arr === cur && !reduce) {
+    fill(cur);
+    ov.classList.add('arrive');
+    setTimeout(function () { ov.classList.remove('arrive'); ov.classList.add('leaving'); }, 250);
+    setTimeout(function () { ov.classList.remove('leaving'); }, 1000);
+  }
+  window.addEventListener('pageshow', function (e) { if (e.persisted) { ov.classList.remove('active', 'arrive', 'leaving'); going = false; } });
 })();

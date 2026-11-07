@@ -1278,3 +1278,12 @@ body[data-page-office="db"] section#home.page-top { background: #fff; }
 section#home.page-top.person-top, body[data-page-office="db"] section#home.page-top.person-top { background: var(--bg-alt); padding-bottom: 64px; }
 @media (max-width: 760px) { section#home.page-top { padding: calc(var(--header-h) + 26px) 0 30px; } }
 .page-top .person-card .person-info p, .page-top .person-card h1 { color: #fff; }
+
+/* Legal details in the footer */
+.footer-legal { padding-top: 1.6rem; border-top: 1px solid var(--border-dark); margin-bottom: .6rem; }
+.fl-name { display: flex; flex-wrap: wrap; gap: .4rem .8rem; align-items: center; font-weight: 700; font-size: .86rem; color: rgba(255,255,255,.85); letter-spacing: .02em; }
+.fl-ar { font-family: 'Tajawal', 'DejaVu Sans', sans-serif; letter-spacing: 0; }
+.fl-sep { opacity: .4; }
+.footer-ids { display: flex; flex-wrap: wrap; gap: .35rem 1.4rem; font-size: .78rem; color: rgba(255,255,255,.55); margin-bottom: 1.4rem; }
+.footer-ids span { white-space: normal; }
+.footer-legal + .footer-ids + .footer-bottom { border-top: 0; padding-top: 0; }
